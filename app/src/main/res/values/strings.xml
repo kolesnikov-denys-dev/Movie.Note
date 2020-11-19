@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Movie note</string>
+    <string name="title_movies">Movies</string>
+    <string name="title_tv_shows">Tv Shows</string>
+    <string name="title_celebrities">Celebrities</string>
+    <string name="title_search">Search</string>
+    <string name="title_tmdb">TMDB</string>
+</resources>
