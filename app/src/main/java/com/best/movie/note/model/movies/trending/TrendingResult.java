@@ -28,27 +28,11 @@ public class TrendingResult {
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("release_date")
-    @Expose
-    private String releaseDate;
-    @SerializedName("original_language")
-    @Expose
-    private String originalLanguage;
-    @SerializedName("original_title")
     @Expose
     private String originalTitle;
     @SerializedName("genre_ids")
     @Expose
     private List<Integer> genreIds = null;
-    @SerializedName("backdrop_path")
-    @Expose
-    private String backdropPath;
-    @SerializedName("adult")
-    @Expose
-    private Boolean adult;
-    @SerializedName("overview")
-    @Expose
-    private String overview;
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
@@ -65,9 +49,6 @@ public class TrendingResult {
     @SerializedName("popularity")
     @Expose
     private Double popularity;
-    @SerializedName("media_type")
-    @Expose
-    private String mediaType;
 
     public Integer getId() {
         return id;
@@ -109,22 +90,6 @@ public class TrendingResult {
         this.title = title;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
-    }
-
     public String getOriginalTitle() {
         return originalTitle;
     }
@@ -141,30 +106,6 @@ public class TrendingResult {
         this.genreIds = genreIds;
     }
 
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
     public String getPosterPath() {
         return posterPath;
     }
@@ -179,14 +120,6 @@ public class TrendingResult {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
-    }
-
-    public String getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
     }
 
 }

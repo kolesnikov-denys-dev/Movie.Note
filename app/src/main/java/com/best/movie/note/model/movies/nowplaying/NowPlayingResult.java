@@ -19,13 +19,9 @@ public class NowPlayingResult {
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
-    @SerializedName("video")
-    @Expose
-    private Boolean video;
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
-
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView imageView, String imageUrl) {
         String imagePath = "https://image.tmdb.org/t/p/w500/" + imageUrl;
@@ -34,19 +30,9 @@ public class NowPlayingResult {
                 .placeholder(R.drawable.ic_arrow_right_24)
                 .into(imageView);
     }
-
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("adult")
-    @Expose
-    private Boolean adult;
-    @SerializedName("backdrop_path")
-    @Expose
-    private String backdropPath;
-    @SerializedName("original_language")
-    @Expose
-    private String originalLanguage;
     @SerializedName("original_title")
     @Expose
     private String originalTitle;
@@ -59,12 +45,6 @@ public class NowPlayingResult {
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
-    @SerializedName("overview")
-    @Expose
-    private String overview;
-    @SerializedName("release_date")
-    @Expose
-    private String releaseDate;
 
     public Double getPopularity() {
         return popularity;
@@ -82,14 +62,6 @@ public class NowPlayingResult {
         this.voteCount = voteCount;
     }
 
-    public Boolean getVideo() {
-        return video;
-    }
-
-    public void setVideo(Boolean video) {
-        this.video = video;
-    }
-
     public String getPosterPath() {
         return posterPath;
     }
@@ -104,30 +76,6 @@ public class NowPlayingResult {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
-    }
-
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
     }
 
     public String getOriginalTitle() {
@@ -160,22 +108,6 @@ public class NowPlayingResult {
 
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
 }

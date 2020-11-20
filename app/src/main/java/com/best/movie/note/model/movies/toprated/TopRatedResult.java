@@ -38,12 +38,6 @@ public class TopRatedResult {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("adult")
-    @Expose
-    private Boolean adult;
-    @SerializedName("backdrop_path")
-    @Expose
-    private String backdropPath;
     @SerializedName("original_language")
     @Expose
     private String originalLanguage;
@@ -59,12 +53,6 @@ public class TopRatedResult {
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
-    @SerializedName("overview")
-    @Expose
-    private String overview;
-    @SerializedName("release_date")
-    @Expose
-    private String releaseDate;
 
     public Double getPopularity() {
         return popularity;
@@ -106,22 +94,6 @@ public class TopRatedResult {
         this.id = id;
     }
 
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
-    }
-
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
     public String getOriginalLanguage() {
         return originalLanguage;
     }
@@ -160,22 +132,6 @@ public class TopRatedResult {
 
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
 }
