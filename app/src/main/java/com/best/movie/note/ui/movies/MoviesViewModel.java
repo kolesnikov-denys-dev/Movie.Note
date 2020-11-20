@@ -1,19 +1,38 @@
 package com.best.movie.note.ui.movies;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class MoviesViewModel extends ViewModel {
+import com.best.movie.note.model.MoviesRepository;
+import com.best.movie.note.model.movies.nowplaying.NowPlayingResult;
+import com.best.movie.note.model.movies.popular.PopularResult;
+import com.best.movie.note.model.movies.trending.TrendingResult;
 
-    private MutableLiveData<String> mText;
+import java.util.List;
 
-    public MoviesViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+public class MoviesViewModel extends AndroidViewModel {
+
+    private MoviesRepository moviesRepository;
+
+    public MoviesViewModel(@NonNull Application application) {
+        super(application);
+
+        moviesRepository = new MoviesRepository(application);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<PopularResult>> getPopularMoviesData() {
+        return moviesRepository.getPopularMoviesMutableLiveData();
     }
+
+    public LiveData<List<NowPlayingResult>> getNowPlayingMoviesData() {
+        return moviesRepository.getNowPlayingMoviesMutableLiveData();
+    }
+
+    public LiveData<List<TrendingResult>> getTrendingMoviesData() {
+        return moviesRepository.getTrendingMoviesMutableLiveData();
+    }
+
 }

@@ -5,9 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="nowPlayingResult"
-            type="com.best.movie.note.model.movies.nowplaying.NowPlayingResult" />
+            name="popularResult"
+            type="com.best.movie.note.model.movies.trending.TrendingResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,21 +20,21 @@
 
         <ImageView
             android:id="@+id/posterImageView"
-            android:layout_width="220dp"
-            android:layout_height="145dp"
-            android:scaleType="centerCrop"
+            android:layout_width="110dp"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:posterPath="@{nowPlayingResult.posterPath}"
+            bind:posterPath="@{popularResult.posterPath}"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/movieNameTextView"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{nowPlayingResult.originalTitle}"
+            android:text="@{popularResult.originalTitle}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/posterImageView"
@@ -41,10 +42,10 @@
 
         <TextView
             android:id="@+id/genreTextView"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{Double.toString(nowPlayingResult.popularity)}"
+            android:text="@{Double.toString(popularResult.popularity)}"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -21,12 +21,16 @@ public class CelebritiesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         celebritiesViewModel = new ViewModelProvider(this).get(CelebritiesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_celebrities, container, false);
+
+
         celebritiesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
 
             }
         });
+
+
         return root;
     }
 }

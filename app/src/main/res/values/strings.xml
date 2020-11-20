@@ -5,4 +5,5 @@
     <string name="title_celebrities">Celebrities</string>
     <string name="title_search">Search</string>
     <string name="title_tmdb">TMDB</string>
+    <string name="api_key">f3398ff250b7533decbfd407e06e07b8</string>
 </resources>
