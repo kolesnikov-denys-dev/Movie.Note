@@ -4,19 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.celebrities.NotificationsFragment">
+    tools:context=".ui.celebrities.CelebritiesFragment">
 
-    <TextView
-        android:id="@+id/text_notifications"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/popularCelebritiesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:text="Popular"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/popularCelebritiesSeeAllTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/popularCelebritiesSeeAllTextView" />
+
+            <Button
+                android:id="@+id/popularCelebritiesSeeAllTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_arrow_right_24"
+                android:drawablePadding="3dp"
+                android:text="See All"
+                android:textAllCaps="false"
+                android:textColor="#000"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularCelebritiesOneRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesSeeAllTextView"
+                tools:listitem="@layout/movie_vertical_item" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularCelebritiesTwoRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesOneRecyclerView"
+                tools:listitem="@layout/movie_vertical_item" />
+
+            <TextView
+                android:id="@+id/trendingCelebritiesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:text="Trending"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/trendingCelebritiesSeeAllTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/trendingCelebritiesSeeAllTextView" />
+
+            <Button
+                android:id="@+id/trendingCelebritiesSeeAllTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_arrow_right_24"
+                android:drawablePadding="3dp"
+                android:text="See All"
+                android:textAllCaps="false"
+                android:textColor="#000"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesTwoRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trendingCelebritiesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/trendingCelebritiesTextView"
+                tools:layout_editor_absoluteX="-16dp"
+                tools:listitem="@layout/celebrities_horizontal_small_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

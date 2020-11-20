@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,19 +13,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.best.movie.note.R;
 
-public class NotificationsFragment extends Fragment {
+public class CelebritiesFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private CelebritiesViewModel celebritiesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel = new ViewModelProvider(this).get(NotificationsViewModel.class);
+        celebritiesViewModel = new ViewModelProvider(this).get(CelebritiesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_celebrities, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        celebritiesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
         return root;

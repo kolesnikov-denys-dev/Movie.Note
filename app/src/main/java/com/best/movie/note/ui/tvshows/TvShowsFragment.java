@@ -22,11 +22,10 @@ public class TvShowsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         TvShowsViewModel = new ViewModelProvider(this).get(TvShowsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tv_shows, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
         TvShowsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
         return root;
