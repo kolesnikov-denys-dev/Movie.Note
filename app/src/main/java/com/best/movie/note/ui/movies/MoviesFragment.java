@@ -22,11 +22,10 @@ public class MoviesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         moviesViewModel = new ViewModelProvider(this).get(MoviesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_movies, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
         moviesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
         return root;
