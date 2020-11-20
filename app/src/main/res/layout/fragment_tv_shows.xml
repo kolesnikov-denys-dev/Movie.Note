@@ -119,7 +119,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/topRatedSeeAllTextView"
-            tools:listitem="@layout/movie_horizontal_small_item" />
+            tools:listitem="@layout/movie_top_rated_horizontal_small_item" />
 
         <TextView
             android:id="@+id/popularTextView"

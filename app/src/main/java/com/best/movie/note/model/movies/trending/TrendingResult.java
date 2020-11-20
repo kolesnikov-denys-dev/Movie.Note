@@ -1,5 +1,11 @@
 package com.best.movie.note.model.movies.trending;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.best.movie.note.R;
+import com.bumptech.glide.Glide;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -46,6 +52,16 @@ public class TrendingResult {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
+
+    @BindingAdapter({"posterPath"})
+    public static void loadImage(ImageView imageView, String imageUrl) {
+        String imagePath = "https://image.tmdb.org/t/p/w500/" + imageUrl;
+        Glide.with(imageView.getContext())
+                .load(imagePath)
+                .placeholder(R.drawable.ic_arrow_right_24)
+                .into(imageView);
+    }
+
     @SerializedName("popularity")
     @Expose
     private Double popularity;

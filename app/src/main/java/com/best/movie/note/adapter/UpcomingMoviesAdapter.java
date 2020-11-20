@@ -9,32 +9,32 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.MovieTrendingVerticalItemBinding;
-import com.best.movie.note.model.movies.trending.TrendingResult;
+import com.best.movie.note.databinding.MovieUpcomingVerticalItemBinding;
+import com.best.movie.note.model.movies.upcoming.UpcomingResult;
 
 import java.util.ArrayList;
 
 
-public class TrendingMoviesAdapter extends RecyclerView.Adapter<TrendingMoviesAdapter.PopularMoviesViewHolder> {
+public class UpcomingMoviesAdapter extends RecyclerView.Adapter<UpcomingMoviesAdapter.UpcomingMoviesViewHolder> {
 
-    private ArrayList<TrendingResult> moviesList;
+    private ArrayList<UpcomingResult> moviesList;
 
-    public TrendingMoviesAdapter(ArrayList<TrendingResult> moviesList) {
+    public UpcomingMoviesAdapter(ArrayList<UpcomingResult> moviesList) {
         this.moviesList = moviesList;
     }
 
     @NonNull
     @Override
-    public PopularMoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        MovieTrendingVerticalItemBinding movieVerticalItemBinding = DataBindingUtil
+    public UpcomingMoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        MovieUpcomingVerticalItemBinding movieVerticalItemBinding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.movie_trending_vertical_item, parent, false);
-        return new PopularMoviesViewHolder(movieVerticalItemBinding);
+                        R.layout.movie_upcoming_vertical_item, parent, false);
+        return new UpcomingMoviesViewHolder(movieVerticalItemBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-        holder.resultListItemBinding.setTrendingResult(moviesList.get(position));
+    public void onBindViewHolder(@NonNull UpcomingMoviesViewHolder holder, int position) {
+        holder.resultListItemBinding.setUpcomingResult(moviesList.get(position));
     }
 
     @Override
@@ -42,10 +42,10 @@ public class TrendingMoviesAdapter extends RecyclerView.Adapter<TrendingMoviesAd
         return moviesList.size();
     }
 
-    public class PopularMoviesViewHolder extends RecyclerView.ViewHolder {
-        private MovieTrendingVerticalItemBinding resultListItemBinding;
+    public class UpcomingMoviesViewHolder extends RecyclerView.ViewHolder {
+        private MovieUpcomingVerticalItemBinding resultListItemBinding;
 
-        public PopularMoviesViewHolder(@NonNull MovieTrendingVerticalItemBinding resultListItemBinding) {
+        public UpcomingMoviesViewHolder(@NonNull MovieUpcomingVerticalItemBinding resultListItemBinding) {
             super(resultListItemBinding.getRoot());
             this.resultListItemBinding = resultListItemBinding;
 

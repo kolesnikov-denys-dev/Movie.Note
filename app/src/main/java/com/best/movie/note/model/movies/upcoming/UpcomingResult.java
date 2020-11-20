@@ -1,4 +1,4 @@
-package com.best.movie.note.model.movies.nowplaying;
+package com.best.movie.note.model.movies.upcoming;
 
 import android.widget.ImageView;
 
@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NowPlayingResult {
+public class UpcomingResult {
 
     @SerializedName("popularity")
     @Expose

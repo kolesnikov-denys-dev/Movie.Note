@@ -9,7 +9,9 @@ import androidx.lifecycle.LiveData;
 import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.movies.nowplaying.NowPlayingResult;
 import com.best.movie.note.model.movies.popular.PopularResult;
+import com.best.movie.note.model.movies.toprated.TopRatedResult;
 import com.best.movie.note.model.movies.trending.TrendingResult;
+import com.best.movie.note.model.movies.upcoming.UpcomingResult;
 
 import java.util.List;
 
@@ -33,6 +35,14 @@ public class MoviesViewModel extends AndroidViewModel {
 
     public LiveData<List<TrendingResult>> getTrendingMoviesData() {
         return moviesRepository.getTrendingMoviesMutableLiveData();
+    }
+
+    public LiveData<List<TopRatedResult>> getTopRatedMoviesData() {
+        return moviesRepository.getTopRatedMoviesMutableLiveData();
+    }
+
+    public LiveData<List<UpcomingResult>> getUpcomingMoviesData() {
+        return moviesRepository.getUpcomingMoviesMutableLiveData();
     }
 
 }

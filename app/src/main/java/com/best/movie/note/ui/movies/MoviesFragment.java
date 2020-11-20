@@ -12,17 +12,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.adapter.NowPlayingMoviesAdapter;
 import com.best.movie.note.adapter.PopularMoviesAdapter;
+import com.best.movie.note.adapter.TopRatedMoviesAdapter;
 import com.best.movie.note.adapter.TrendingMoviesAdapter;
+import com.best.movie.note.adapter.UpcomingMoviesAdapter;
 import com.best.movie.note.databinding.FragmentMoviesBinding;
 import com.best.movie.note.model.movies.nowplaying.NowPlayingResult;
 import com.best.movie.note.model.movies.popular.PopularResult;
+import com.best.movie.note.model.movies.toprated.TopRatedResult;
 import com.best.movie.note.model.movies.trending.TrendingResult;
+import com.best.movie.note.model.movies.upcoming.UpcomingResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,15 @@ public class MoviesFragment extends Fragment {
     private ArrayList<TrendingResult> trendingResults;
     private RecyclerView trendingRecyclerView;
     private TrendingMoviesAdapter trendingMoviesAdapter;
+    // Top Rated Movies
+    private ArrayList<TopRatedResult> topRatedResults;
+    private RecyclerView topRatedRecyclerView;
+    private TopRatedMoviesAdapter topRatedMoviesAdapter;
+    // Upcoming Movies
+    private ArrayList<UpcomingResult> upcomingResults;
+    private RecyclerView upcomingRecyclerView;
+    private UpcomingMoviesAdapter upcomingMoviesAdapter;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,9 +78,13 @@ public class MoviesFragment extends Fragment {
         moviesViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getActivity().getApplication())
                 .create(MoviesViewModel.class);
+
         getPopularMovies();
         getNowPlayingMovies();
         getTrendingMovies();
+        getTopRatedMovies();
+        getUpcomingMovies();
+
     }
 
     public void getPopularMovies() {
@@ -97,7 +115,36 @@ public class MoviesFragment extends Fragment {
                     @Override
                     public void onChanged(List<TrendingResult> data) {
                         trendingResults = (ArrayList<TrendingResult>) data;
+
+//                        Log.i("check", "trendingResults size:" + trendingResults.size());
+//
+//                        for (TrendingResult res : trendingResults) {
+//                            Log.i("check", "Original title: " + res.getOriginalTitle());
+//                        }
+
                         fillTrendingRecyclerView();
+                    }
+                });
+    }
+
+    public void getTopRatedMovies() {
+        moviesViewModel.getTopRatedMoviesData().observe(getActivity(),
+                new Observer<List<TopRatedResult>>() {
+                    @Override
+                    public void onChanged(List<TopRatedResult> data) {
+                        topRatedResults = (ArrayList<TopRatedResult>) data;
+                        fillTopRatedRecyclerView();
+                    }
+                });
+    }
+
+    public void getUpcomingMovies() {
+        moviesViewModel.getUpcomingMoviesData().observe(getActivity(),
+                new Observer<List<UpcomingResult>>() {
+                    @Override
+                    public void onChanged(List<UpcomingResult> data) {
+                        upcomingResults = (ArrayList<UpcomingResult>) data;
+                        fillUpcomingRecyclerView();
                     }
                 });
     }
@@ -127,6 +174,24 @@ public class MoviesFragment extends Fragment {
         trendingRecyclerView.setItemAnimator(new DefaultItemAnimator());
         trendingRecyclerView.setAdapter(trendingMoviesAdapter);
         trendingMoviesAdapter.notifyDataSetChanged();
+    }
+
+    private void fillTopRatedRecyclerView() {
+        topRatedRecyclerView = binding.topRatedRecyclerView;
+        topRatedMoviesAdapter = new TopRatedMoviesAdapter(topRatedResults);
+        topRatedRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, GridLayoutManager.HORIZONTAL, false));
+        topRatedRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        topRatedRecyclerView.setAdapter(topRatedMoviesAdapter);
+        topRatedMoviesAdapter.notifyDataSetChanged();
+    }
+
+    private void fillUpcomingRecyclerView() {
+        upcomingRecyclerView = binding.upComingRecyclerView;
+        upcomingMoviesAdapter = new UpcomingMoviesAdapter(upcomingResults);
+        upcomingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        upcomingRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        upcomingRecyclerView.setAdapter(upcomingMoviesAdapter);
+        upcomingMoviesAdapter.notifyDataSetChanged();
     }
 
 }
