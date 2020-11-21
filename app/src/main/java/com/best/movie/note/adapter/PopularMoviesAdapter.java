@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.MoviePopularVerticalItemBinding;
-import com.best.movie.note.model.movies.popular.PopularResult;
+import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
 
 
 public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdapter.PopularMoviesViewHolder> {
 
-    private ArrayList<PopularResult> moviesList;
+    private ArrayList<MovieResult> moviesList;
 
-    public PopularMoviesAdapter(ArrayList<PopularResult> moviesList) {
+    public PopularMoviesAdapter(ArrayList<MovieResult> moviesList) {
         this.moviesList = moviesList;
     }
 
@@ -34,7 +34,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
     @Override
     public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-        holder.resultListItemBinding.setPopularResult(moviesList.get(position));
+        holder.resultListItemBinding.setMovieResult(moviesList.get(position));
     }
 
     @Override

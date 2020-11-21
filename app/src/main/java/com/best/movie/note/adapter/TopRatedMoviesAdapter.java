@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieTopRatedHorizontalSmallItemBinding;
-import com.best.movie.note.model.movies.toprated.TopRatedResult;
+import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
 
 
 public class TopRatedMoviesAdapter extends RecyclerView.Adapter<TopRatedMoviesAdapter.TopRatedMoviesViewHolder> {
 
-    private ArrayList<TopRatedResult> moviesList;
+    private ArrayList<MovieResult> moviesList;
 
-    public TopRatedMoviesAdapter(ArrayList<TopRatedResult> moviesList) {
+    public TopRatedMoviesAdapter(ArrayList<MovieResult> moviesList) {
         this.moviesList = moviesList;
     }
 
@@ -34,7 +34,7 @@ public class TopRatedMoviesAdapter extends RecyclerView.Adapter<TopRatedMoviesAd
 
     @Override
     public void onBindViewHolder(@NonNull TopRatedMoviesViewHolder holder, int position) {
-        holder.resultListItemBinding.setTopRatedResult(moviesList.get(position));
+        holder.resultListItemBinding.setMovieResult(moviesList.get(position));
     }
 
     @Override

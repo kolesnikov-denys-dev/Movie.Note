@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieHorizontalItemBinding;
-import com.best.movie.note.model.movies.nowplaying.NowPlayingResult;
+import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
 
 
 public class NowPlayingMoviesAdapter extends RecyclerView.Adapter<NowPlayingMoviesAdapter.NowPlayingMoviesViewHolder> {
 
-    private ArrayList<NowPlayingResult> moviesList;
+    private ArrayList<MovieResult> moviesList;
 
-    public NowPlayingMoviesAdapter(ArrayList<NowPlayingResult> moviesList) {
+    public NowPlayingMoviesAdapter(ArrayList<MovieResult> moviesList) {
         this.moviesList = moviesList;
     }
 
@@ -34,7 +34,7 @@ public class NowPlayingMoviesAdapter extends RecyclerView.Adapter<NowPlayingMovi
 
     @Override
     public void onBindViewHolder(@NonNull NowPlayingMoviesViewHolder holder, int position) {
-        holder.movieHorizontalItemBinding.setNowPlayingResult(moviesList.get(position));
+        holder.movieHorizontalItemBinding.setMovieResult(moviesList.get(position));
     }
 
     @Override

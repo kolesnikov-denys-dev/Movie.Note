@@ -8,7 +8,7 @@
 
         <variable
             name="upcomingResult"
-            type="com.best.movie.note.model.movies.upcoming.UpcomingResult" />
+            type="com.best.movie.note.model.movies.cards.MovieResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

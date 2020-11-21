@@ -7,11 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.best.movie.note.model.MoviesRepository;
-import com.best.movie.note.model.movies.nowplaying.NowPlayingResult;
-import com.best.movie.note.model.movies.popular.PopularResult;
-import com.best.movie.note.model.movies.toprated.TopRatedResult;
-import com.best.movie.note.model.movies.trending.TrendingResult;
-import com.best.movie.note.model.movies.upcoming.UpcomingResult;
+import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.List;
 
@@ -25,23 +21,23 @@ public class MoviesViewModel extends AndroidViewModel {
         moviesRepository = new MoviesRepository(application);
     }
 
-    public LiveData<List<PopularResult>> getPopularMoviesData() {
+    public LiveData<List<MovieResult>> getPopularMoviesData() {
         return moviesRepository.getPopularMoviesMutableLiveData();
     }
 
-    public LiveData<List<NowPlayingResult>> getNowPlayingMoviesData() {
+    public LiveData<List<MovieResult>> getNowPlayingMoviesData() {
         return moviesRepository.getNowPlayingMoviesMutableLiveData();
     }
 
-    public LiveData<List<TrendingResult>> getTrendingMoviesData() {
+    public LiveData<List<MovieResult>> getTrendingMoviesData() {
         return moviesRepository.getTrendingMoviesMutableLiveData();
     }
 
-    public LiveData<List<TopRatedResult>> getTopRatedMoviesData() {
+    public LiveData<List<MovieResult>> getTopRatedMoviesData() {
         return moviesRepository.getTopRatedMoviesMutableLiveData();
     }
 
-    public LiveData<List<UpcomingResult>> getUpcomingMoviesData() {
+    public LiveData<List<MovieResult>> getUpcomingMoviesData() {
         return moviesRepository.getUpcomingMoviesMutableLiveData();
     }
 

@@ -7,8 +7,8 @@ import androidx.paging.PageKeyedDataSource;
 
 
 import com.best.movie.note.R;
-import com.best.movie.note.model.movies.popular.PopularResult;
-import com.best.movie.note.model.movies.popular.PopularMoviesApiResponse;
+import com.best.movie.note.model.movies.cards.MovieResult;
+import com.best.movie.note.model.movies.cards.MoviesApiResponse;
 import com.best.movie.note.network.MovieApiService;
 import com.best.movie.note.network.RetrofitInstance;
 
@@ -48,7 +48,7 @@ import retrofit2.Response;
 //    тянем данные, например, из БД, то можем указать, с какой позиции и сколько данных грузить.
 //    Если данные из файла, то указываем с какой строки и сколько строк грузить.
 
-public class MovieDataSource extends PageKeyedDataSource<Long, PopularResult> {
+public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
 
     private Application application;
     private MovieApiService movieApiService;
@@ -59,54 +59,54 @@ public class MovieDataSource extends PageKeyedDataSource<Long, PopularResult> {
     }
 
     @Override
-    public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long, PopularResult> callback) {
+    public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long, MovieResult> callback) {
         movieApiService = RetrofitInstance.getService();
-        Call<PopularMoviesApiResponse> call = movieApiService.getPopularMoviesWithPaging(
+        Call<MoviesApiResponse> call = movieApiService.getPopularMoviesWithPaging(
                 application.getApplicationContext().getString(R.string.api_key),
                 1);
 
 //        params  --- int requestedLoadSize - сколько данных грузить
 //        boolean --- placeholdersEnabled - включены ли placeholders
 
-        call.enqueue(new Callback<PopularMoviesApiResponse>() {
+        call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
-            public void onResponse(Call<PopularMoviesApiResponse> call, Response<PopularMoviesApiResponse> response) {
-                PopularMoviesApiResponse popularMoviesApiResponse = response.body();
-                if (popularMoviesApiResponse != null && popularMoviesApiResponse.getPopularResults() != null) {
-                    callback.onResult((ArrayList<PopularResult>) popularMoviesApiResponse.getPopularResults(), null, (long) 2);
+            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
+                MoviesApiResponse moviesApiResponse = response.body();
+                if (moviesApiResponse != null && moviesApiResponse.getPopularResults() != null) {
+                    callback.onResult((ArrayList<MovieResult>) moviesApiResponse.getPopularResults(), null, (long) 2);
                 }
             }
 
             @Override
-            public void onFailure(Call<PopularMoviesApiResponse> call, Throwable t) {
+            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
 
             }
         });
     }
 
     @Override
-    public void loadBefore(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, PopularResult> callback) {
+    public void loadBefore(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, MovieResult> callback) {
 
     }
 
     @Override
-    public void loadAfter(@NonNull LoadParams<Long> params, @NonNull final LoadCallback<Long, PopularResult> callback) {
+    public void loadAfter(@NonNull LoadParams<Long> params, @NonNull final LoadCallback<Long, MovieResult> callback) {
         movieApiService = RetrofitInstance.getService();
-        Call<PopularMoviesApiResponse> call = movieApiService.getPopularMoviesWithPaging(
+        Call<MoviesApiResponse> call = movieApiService.getPopularMoviesWithPaging(
                 application.getApplicationContext().getString(R.string.api_key),
                 params.key);
 
-        call.enqueue(new Callback<PopularMoviesApiResponse>() {
+        call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
-            public void onResponse(Call<PopularMoviesApiResponse> call, Response<PopularMoviesApiResponse> response) {
-                PopularMoviesApiResponse popularMoviesApiResponse = response.body();
-                if (popularMoviesApiResponse != null && popularMoviesApiResponse.getPopularResults() != null) {
+            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
+                MoviesApiResponse moviesApiResponse = response.body();
+                if (moviesApiResponse != null && moviesApiResponse.getPopularResults() != null) {
                     callback.onResult(null, params.key + 1);
                 }
             }
 
             @Override
-            public void onFailure(Call<PopularMoviesApiResponse> call, Throwable t) {
+            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
 
             }
         });

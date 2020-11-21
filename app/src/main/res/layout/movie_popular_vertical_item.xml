@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="popularResult"
-            type="com.best.movie.note.model.movies.popular.PopularResult" />
+            name="movieResult"
+            type="com.best.movie.note.model.movies.cards.MovieResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:posterPath="@{popularResult.posterPath}"
+            bind:posterPath="@{movieResult.posterPath}"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
@@ -34,7 +33,7 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{popularResult.originalTitle}"
+            android:text="@{movieResult.originalTitle}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/posterImageView"
@@ -45,7 +44,7 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{Double.toString(popularResult.popularity)}"
+            android:text="@{Double.toString(movieResult.popularity)}"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

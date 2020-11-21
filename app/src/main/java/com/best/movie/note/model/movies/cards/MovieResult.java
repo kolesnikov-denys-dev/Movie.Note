@@ -1,8 +1,11 @@
-package com.best.movie.note.model.movies.nowplaying;
+package com.best.movie.note.model.movies.cards;
 
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.BaseObservable;
 import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 
 import com.best.movie.note.R;
 import com.bumptech.glide.Glide;
@@ -11,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NowPlayingResult {
+public class MovieResult extends BaseObservable {
 
     @SerializedName("popularity")
     @Expose
@@ -109,5 +112,17 @@ public class NowPlayingResult {
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
     }
+
+    public static final DiffUtil.ItemCallback<MovieResult> CALLBACK = new DiffUtil.ItemCallback<MovieResult>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull MovieResult oldItem, @NonNull MovieResult newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull MovieResult oldItem, @NonNull MovieResult newItem) {
+            return true;
+        }
+    };
 
 }

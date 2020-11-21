@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="topRatedResult"
-            type="com.best.movie.note.model.movies.toprated.TopRatedResult" />
+            name="movieResult"
+            type="com.best.movie.note.model.movies.cards.MovieResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:posterPath="@{topRatedResult.posterPath}"
+            bind:posterPath="@{movieResult.posterPath}"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="@{topRatedResult.originalTitle}"
+            android:text="@{movieResult.originalTitle}"
             app:layout_constraintStart_toEndOf="@+id/posterImageView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Iron Man" />
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="5dp"
-            android:text="@{Double.toString(topRatedResult.popularity)}"
+            android:text="@{Double.toString(movieResult.popularity)}"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/posterImageView"
             app:layout_constraintTop_toBottomOf="@+id/movieNameTextView"

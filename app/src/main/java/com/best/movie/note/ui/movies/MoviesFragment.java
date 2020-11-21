@@ -23,11 +23,7 @@ import com.best.movie.note.adapter.TopRatedMoviesAdapter;
 import com.best.movie.note.adapter.TrendingMoviesAdapter;
 import com.best.movie.note.adapter.UpcomingMoviesAdapter;
 import com.best.movie.note.databinding.FragmentMoviesBinding;
-import com.best.movie.note.model.movies.nowplaying.NowPlayingResult;
-import com.best.movie.note.model.movies.popular.PopularResult;
-import com.best.movie.note.model.movies.toprated.TopRatedResult;
-import com.best.movie.note.model.movies.trending.TrendingResult;
-import com.best.movie.note.model.movies.upcoming.UpcomingResult;
+import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,23 +34,23 @@ public class MoviesFragment extends Fragment {
     private FragmentMoviesBinding binding;
 
     // Popular Movies
-    private ArrayList<PopularResult> popularResults;
+    private ArrayList<MovieResult> movieResults;
     private RecyclerView popularMoviesRecyclerView;
     private PopularMoviesAdapter popularMoviesAdapter;
     // Playing Now Movies
-    private ArrayList<NowPlayingResult> playingNowResults;
+    private ArrayList<MovieResult> playingNowResults;
     private RecyclerView nowPlayingMoviesRecyclerView;
     private NowPlayingMoviesAdapter nowPlayingMoviesAdapter;
     // Trending Movies
-    private ArrayList<TrendingResult> trendingResults;
+    private ArrayList<MovieResult> trendingResults;
     private RecyclerView trendingRecyclerView;
     private TrendingMoviesAdapter trendingMoviesAdapter;
     // Top Rated Movies
-    private ArrayList<TopRatedResult> topRatedResults;
+    private ArrayList<MovieResult> topRatedResults;
     private RecyclerView topRatedRecyclerView;
     private TopRatedMoviesAdapter topRatedMoviesAdapter;
     // Upcoming Movies
-    private ArrayList<UpcomingResult> upcomingResults;
+    private ArrayList<MovieResult> upcomingResults;
     private RecyclerView upcomingRecyclerView;
     private UpcomingMoviesAdapter upcomingMoviesAdapter;
 
@@ -89,10 +85,10 @@ public class MoviesFragment extends Fragment {
 
     public void getPopularMovies() {
         moviesViewModel.getPopularMoviesData().observe(getActivity(),
-                new Observer<List<PopularResult>>() {
+                new Observer<List<MovieResult>>() {
                     @Override
-                    public void onChanged(List<PopularResult> data) {
-                        popularResults = (ArrayList<PopularResult>) data;
+                    public void onChanged(List<MovieResult> data) {
+                        movieResults = (ArrayList<MovieResult>) data;
                         fillPopularRecyclerView();
                     }
                 });
@@ -100,10 +96,10 @@ public class MoviesFragment extends Fragment {
 
     public void getNowPlayingMovies() {
         moviesViewModel.getNowPlayingMoviesData().observe(getActivity(),
-                new Observer<List<NowPlayingResult>>() {
+                new Observer<List<MovieResult>>() {
                     @Override
-                    public void onChanged(List<NowPlayingResult> data) {
-                        playingNowResults = (ArrayList<NowPlayingResult>) data;
+                    public void onChanged(List<MovieResult> data) {
+                        playingNowResults = (ArrayList<MovieResult>) data;
                         fillPlayingNowRecyclerView();
                     }
                 });
@@ -111,10 +107,10 @@ public class MoviesFragment extends Fragment {
 
     public void getTrendingMovies() {
         moviesViewModel.getTrendingMoviesData().observe(getActivity(),
-                new Observer<List<TrendingResult>>() {
+                new Observer<List<MovieResult>>() {
                     @Override
-                    public void onChanged(List<TrendingResult> data) {
-                        trendingResults = (ArrayList<TrendingResult>) data;
+                    public void onChanged(List<MovieResult> data) {
+                        trendingResults = (ArrayList<MovieResult>) data;
 
 //                        Log.i("check", "trendingResults size:" + trendingResults.size());
 //
@@ -129,10 +125,10 @@ public class MoviesFragment extends Fragment {
 
     public void getTopRatedMovies() {
         moviesViewModel.getTopRatedMoviesData().observe(getActivity(),
-                new Observer<List<TopRatedResult>>() {
+                new Observer<List<MovieResult>>() {
                     @Override
-                    public void onChanged(List<TopRatedResult> data) {
-                        topRatedResults = (ArrayList<TopRatedResult>) data;
+                    public void onChanged(List<MovieResult> data) {
+                        topRatedResults = (ArrayList<MovieResult>) data;
                         fillTopRatedRecyclerView();
                     }
                 });
@@ -140,10 +136,10 @@ public class MoviesFragment extends Fragment {
 
     public void getUpcomingMovies() {
         moviesViewModel.getUpcomingMoviesData().observe(getActivity(),
-                new Observer<List<UpcomingResult>>() {
+                new Observer<List<MovieResult>>() {
                     @Override
-                    public void onChanged(List<UpcomingResult> data) {
-                        upcomingResults = (ArrayList<UpcomingResult>) data;
+                    public void onChanged(List<MovieResult> data) {
+                        upcomingResults = (ArrayList<MovieResult>) data;
                         fillUpcomingRecyclerView();
                     }
                 });
@@ -151,7 +147,7 @@ public class MoviesFragment extends Fragment {
 
     private void fillPopularRecyclerView() {
         popularMoviesRecyclerView = binding.popularRecyclerView;
-        popularMoviesAdapter = new PopularMoviesAdapter(popularResults);
+        popularMoviesAdapter = new PopularMoviesAdapter(movieResults);
         popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         popularMoviesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         popularMoviesRecyclerView.setAdapter(popularMoviesAdapter);

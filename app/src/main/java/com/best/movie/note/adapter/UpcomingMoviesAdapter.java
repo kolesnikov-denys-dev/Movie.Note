@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieUpcomingVerticalItemBinding;
-import com.best.movie.note.model.movies.upcoming.UpcomingResult;
+import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
 
 
 public class UpcomingMoviesAdapter extends RecyclerView.Adapter<UpcomingMoviesAdapter.UpcomingMoviesViewHolder> {
 
-    private ArrayList<UpcomingResult> moviesList;
+    private ArrayList<MovieResult> moviesList;
 
-    public UpcomingMoviesAdapter(ArrayList<UpcomingResult> moviesList) {
+    public UpcomingMoviesAdapter(ArrayList<MovieResult> moviesList) {
         this.moviesList = moviesList;
     }
 
