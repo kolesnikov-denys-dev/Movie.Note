@@ -5,5 +5,12 @@
     <string name="title_celebrities">Celebrities</string>
     <string name="title_search">Search</string>
     <string name="title_tmdb">TMDB</string>
+    <string name="title_movies_list">Movies list</string>
     <string name="api_key">f3398ff250b7533decbfd407e06e07b8</string>
+    <string name="popular">Popular</string>
+    <string name="playing_in_theathres">Playing In Theatres</string>
+    <string name="trending">Trending</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="see_all">See All</string>
 </resources>

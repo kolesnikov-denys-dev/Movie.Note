@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="buttonHandler"
+            type="com.best.movie.note.ui.movies.MoviesFragment.MoviesFragmentButtonsHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,27 +26,29 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:context=".ui.movies.MoviesFragment">
 
                 <TextView
                     android:id="@+id/popularTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left"
-                    android:text="Popular"
+                    android:text="@string/popular"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/popularSeeAllTextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/popularSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/popularSeeAllTextView" />
+                    app:layout_constraintTop_toTopOf="@+id/popularSeeAllButton" />
 
                 <Button
-                    android:id="@+id/popularSeeAllTextView"
+                    android:id="@+id/popularSeeAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:drawablePadding="3dp"
-                    android:text="See All"
+                    android:onClick="@{buttonHandler::popularSeeAll}"
+                    android:text="@string/see_all"
                     android:textAllCaps="false"
                     android:textColor="#000"
                     android:textSize="10sp"
@@ -66,20 +71,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left"
-                    android:text="Playing In Theatres"
+                    android:text="@string/playing_in_theathres"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/playingInTheatresSeeAllTextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/playingInTheatresSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/playingInTheatresSeeAllTextView" />
+                    app:layout_constraintTop_toTopOf="@+id/playingInTheatresSeeAllButton" />
 
                 <Button
-                    android:id="@+id/playingInTheatresSeeAllTextView"
+                    android:id="@+id/playingInTheatresSeeAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:drawablePadding="3dp"
-                    android:text="See All"
+                    android:onClick="@{buttonHandler.nowPlayingSeeAll}"
+                    android:text="@string/see_all"
                     android:textAllCaps="false"
                     android:textColor="#000"
                     android:textSize="10sp"
@@ -103,20 +109,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left"
-                    android:text="Trending"
+                    android:text="@string/trending"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/trendingSeeAllTextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/trendingSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/trendingSeeAllTextView" />
+                    app:layout_constraintTop_toTopOf="@+id/trendingSeeAllButton" />
 
                 <Button
-                    android:id="@+id/trendingSeeAllTextView"
+                    android:id="@+id/trendingSeeAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:drawablePadding="3dp"
-                    android:text="See All"
+                    android:onClick="@{buttonHandler.trendingSeeAll}"
+                    android:text="@string/see_all"
                     android:textAllCaps="false"
                     android:textColor="#000"
                     android:textSize="10sp"
@@ -139,20 +146,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left"
-                    android:text="Top Rated"
+                    android:text="@string/top_rated"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/topRatedSeeAllTextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/topRatedSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/topRatedSeeAllTextView" />
+                    app:layout_constraintTop_toTopOf="@+id/topRatedSeeAllButton" />
 
                 <Button
-                    android:id="@+id/topRatedSeeAllTextView"
+                    android:id="@+id/topRatedSeeAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:drawablePadding="3dp"
-                    android:text="See All"
+                    android:onClick="@{buttonHandler.topRatedSeeAll}"
+                    android:text="@string/see_all"
                     android:textAllCaps="false"
                     android:textColor="#000"
                     android:textSize="10sp"
@@ -167,7 +175,7 @@
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/topRatedSeeAllTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/topRatedSeeAllButton"
                     tools:listitem="@layout/movie_horizontal_small_item" />
 
                 <TextView
@@ -175,21 +183,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left"
-                    android:text="Upcoming"
+                    android:text="@string/upcoming"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/upComingSeeAllTextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/upComingSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/upComingSeeAllTextView" />
+                    app:layout_constraintTop_toTopOf="@+id/upComingSeeAllButton" />
 
                 <Button
-                    android:id="@+id/upComingSeeAllTextView"
+                    android:id="@+id/upComingSeeAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:drawablePadding="3dp"
-                    android:text="See All"
+                    android:text="@string/see_all"
                     android:textAllCaps="false"
+                    android:onClick="@{buttonHandler.upComingSeeAll}"
                     android:textColor="#000"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -201,9 +210,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="16dp"
+                    android:onClick="@{buttonHandler.upComingSeeAll}"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/upComingSeeAllTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/upComingSeeAllButton"
                     tools:listitem="@layout/movie_vertical_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

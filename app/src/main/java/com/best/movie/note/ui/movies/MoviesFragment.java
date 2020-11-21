@@ -1,6 +1,7 @@
 package com.best.movie.note.ui.movies;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +30,7 @@ public class MoviesFragment extends Fragment {
 
     private MoviesViewModel moviesViewModel;
     private FragmentMoviesBinding binding;
+    private NavController navController;
 
     // Popular Movies
     private ArrayList<MovieResult> movieResults;
@@ -52,14 +56,10 @@ public class MoviesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 //         binding = FragmentMoviesBinding.inflate(inflater, container, false);
-//        //set variables in Binding
 //        return binding.getRoot();
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_movies, container, false);
-        View view = binding.getRoot();
-        //here data must be an instance of the class MarsDataProvider
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
 //        binding.setMarsdata(data);
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -69,12 +69,21 @@ public class MoviesFragment extends Fragment {
                 .AndroidViewModelFactory(getActivity().getApplication())
                 .create(MoviesViewModel.class);
 
+        navController = Navigation.findNavController(view);
+        binding.setButtonHandler(new MoviesFragment.MoviesFragmentButtonsHandler());
+
         getPopularMovies();
         getNowPlayingMovies();
         getTrendingMovies();
         getTopRatedMovies();
         getUpcomingMovies();
 
+//        binding.popularSeeAllButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 
     public void getPopularMovies() {
@@ -177,6 +186,36 @@ public class MoviesFragment extends Fragment {
         upcomingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         upcomingRecyclerView.setAdapter(upcomingMoviesAdapter);
         upcomingMoviesAdapter.notifyDataSetChanged();
+    }
+
+    public class MoviesFragmentButtonsHandler {
+
+        Bundle bundle = new Bundle();
+
+        public void popularSeeAll(View view) {
+            bundle.putString("what_open", getString(R.string.popular));
+            navController.navigate(R.id.navigation_movies_list, bundle);
+        }
+
+        public void nowPlayingSeeAll(View view) {
+            bundle.putString("what_open", getString(R.string.playing_in_theathres));
+            navController.navigate(R.id.navigation_movies_list, bundle);
+        }
+
+        public void trendingSeeAll(View view) {
+            bundle.putString("what_open", getString(R.string.trending));
+            navController.navigate(R.id.navigation_movies_list, bundle);
+        }
+
+        public void topRatedSeeAll(View view) {
+            bundle.putString("what_open", getString(R.string.top_rated));
+            navController.navigate(R.id.navigation_movies_list, bundle);
+        }
+
+        public void upComingSeeAll(View view) {
+            bundle.putString("what_open", getString(R.string.upcoming));
+            navController.navigate(R.id.navigation_movies_list, bundle);
+        }
     }
 
 }

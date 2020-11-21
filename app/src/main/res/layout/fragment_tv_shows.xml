@@ -55,12 +55,12 @@
             android:layout_marginLeft="@dimen/margin_left"
             android:text="Trending"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/trendingSeeAllTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/trendingSeeAllButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/trendingSeeAllTextView" />
+            app:layout_constraintTop_toTopOf="@+id/trendingSeeAllButton" />
 
         <Button
-            android:id="@+id/trendingSeeAllTextView"
+            android:id="@+id/trendingSeeAllButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -92,12 +92,12 @@
             android:layout_marginLeft="@dimen/margin_left"
             android:text="Top Rated"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/topRatedSeeAllTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/topRatedSeeAllButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/topRatedSeeAllTextView" />
+            app:layout_constraintTop_toTopOf="@+id/topRatedSeeAllButton" />
 
         <Button
-            android:id="@+id/topRatedSeeAllTextView"
+            android:id="@+id/topRatedSeeAllButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -118,7 +118,7 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/topRatedSeeAllTextView"
+            app:layout_constraintTop_toBottomOf="@+id/topRatedSeeAllButton"
             tools:listitem="@layout/movie_horizontal_small_item" />
 
         <TextView
@@ -128,12 +128,12 @@
             android:layout_marginLeft="@dimen/margin_left"
             android:text="Popular"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/popularSeeAllTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/popularSeeAllButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/popularSeeAllTextView" />
+            app:layout_constraintTop_toTopOf="@+id/popularSeeAllButton" />
 
         <Button
-            android:id="@+id/popularSeeAllTextView"
+            android:id="@+id/popularSeeAllButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -154,7 +154,7 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/popularSeeAllTextView"
+            app:layout_constraintTop_toBottomOf="@+id/popularSeeAllButton"
             tools:listitem="@layout/movie_vertical_item" />
 
         <TextView

@@ -9,7 +9,15 @@
         android:id="@+id/navigation_movies"
         android:name="com.best.movie.note.ui.movies.MoviesFragment"
         android:label="@string/title_movies"
-        tools:layout="@layout/fragment_movies" />
+        tools:layout="@layout/fragment_movies" >
+        <action
+            android:id="@+id/action_navigation_movies_to_navigation_movies_list"
+            app:destination="@id/navigation_movies_list" >
+            <argument
+                android:name="movies_id"
+                android:defaultValue="0" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_tv_shows"
@@ -32,4 +40,14 @@
         android:name="com.best.movie.note.ui.tmdb.TmdbFragment"
         android:label="@string/title_tmdb"
         tools:layout="@layout/fragment_tmdb" />
+    <fragment
+        android:id="@+id/navigation_movies_list"
+        android:name="com.best.movie.note.ui.list.movies.MoviesListFragment"
+        android:label="@string/title_movies_list"
+        tools:layout="@layout/movies_list_fragment" >
+        <argument
+            android:name="what_open"
+            app:argType="string"
+            android:defaultValue="popular" />
+    </fragment>
 </navigation>

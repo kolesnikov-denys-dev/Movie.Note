@@ -88,7 +88,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         public MoviesViewHolder(@NonNull MovieHorizontalSmallItemBinding view) {
             super(view.getRoot());
             this.horizontalSmallCard = view;
-
         }
     }
 
