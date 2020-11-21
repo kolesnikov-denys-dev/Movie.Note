@@ -45,7 +45,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesSeeAllTextView"
-            tools:listitem="@layout/movie_popular_vertical_item" />
+            tools:listitem="@layout/movie_vertical_item" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/popularCelebritiesTwoRecyclerView"
@@ -56,7 +56,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesOneRecyclerView"
-            tools:listitem="@layout/movie_popular_vertical_item" />
+            tools:listitem="@layout/movie_vertical_item" />
 
         <TextView
             android:id="@+id/trendingCelebritiesTextView"

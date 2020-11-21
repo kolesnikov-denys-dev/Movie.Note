@@ -83,7 +83,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/trendingTextView"
             tools:layout_editor_absoluteX="-16dp"
-            tools:listitem="@layout/movie_popular_vertical_item" />
+            tools:listitem="@layout/movie_vertical_item" />
 
         <TextView
             android:id="@+id/topRatedTextView"
@@ -119,7 +119,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/topRatedSeeAllTextView"
-            tools:listitem="@layout/movie_top_rated_horizontal_small_item" />
+            tools:listitem="@layout/movie_horizontal_small_item" />
 
         <TextView
             android:id="@+id/popularTextView"
@@ -155,7 +155,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/popularSeeAllTextView"
-            tools:listitem="@layout/movie_popular_vertical_item" />
+            tools:listitem="@layout/movie_vertical_item" />
 
         <TextView
             android:layout_width="match_parent"

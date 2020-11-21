@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieHorizontalItemBinding;
-import com.best.movie.note.databinding.MoviePopularVerticalItemBinding;
-import com.best.movie.note.databinding.MovieTopRatedHorizontalSmallItemBinding;
+import com.best.movie.note.databinding.MovieHorizontalSmallItemBinding;
+import com.best.movie.note.databinding.MovieVerticalItemBinding;
 import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
@@ -34,7 +34,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         // 2 - top rated small
         // default - popular vertical, trending vertical, Upcoming vertical
 
-
         switch (cardsType) {
             case 1:
                 MovieHorizontalItemBinding horizontalCard = DataBindingUtil
@@ -42,14 +41,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                                 R.layout.movie_horizontal_item, parent, false);
                 return new MoviesViewHolder(horizontalCard);
             case 2:
-                MovieTopRatedHorizontalSmallItemBinding smallHorizontalCard = DataBindingUtil
+                MovieHorizontalSmallItemBinding smallHorizontalCard = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()),
-                                R.layout.movie_top_rated_horizontal_small_item, parent, false);
+                                R.layout.movie_horizontal_small_item, parent, false);
                 return new MoviesViewHolder(smallHorizontalCard);
             default:
-                MoviePopularVerticalItemBinding verticalCard = DataBindingUtil
+                MovieVerticalItemBinding verticalCard = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()),
-                                R.layout.movie_popular_vertical_item, parent, false);
+                                R.layout.movie_vertical_item, parent, false);
                 return new MoviesViewHolder(verticalCard);
         }
     }
@@ -72,11 +71,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     public static class MoviesViewHolder extends RecyclerView.ViewHolder {
 
-        private MoviePopularVerticalItemBinding verticalCard;
+        private MovieVerticalItemBinding verticalCard;
         private MovieHorizontalItemBinding horizontalCard;
-        private MovieTopRatedHorizontalSmallItemBinding horizontalSmallCard;
+        private MovieHorizontalSmallItemBinding horizontalSmallCard;
 
-        public MoviesViewHolder(@NonNull MoviePopularVerticalItemBinding view) {
+        public MoviesViewHolder(@NonNull MovieVerticalItemBinding view) {
             super(view.getRoot());
             this.verticalCard = view;
         }
@@ -86,7 +85,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             this.horizontalCard = view;
         }
 
-        public MoviesViewHolder(@NonNull MovieTopRatedHorizontalSmallItemBinding view) {
+        public MoviesViewHolder(@NonNull MovieHorizontalSmallItemBinding view) {
             super(view.getRoot());
             this.horizontalSmallCard = view;
 

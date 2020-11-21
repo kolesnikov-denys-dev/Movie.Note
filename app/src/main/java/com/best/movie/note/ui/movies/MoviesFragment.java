@@ -49,7 +49,6 @@ public class MoviesFragment extends Fragment {
     private RecyclerView upcomingRecyclerView;
     private MoviesAdapter upcomingMoviesAdapter;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 //         binding = FragmentMoviesBinding.inflate(inflater, container, false);
