@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.best.movie.note.R;
 import com.best.movie.note.adapter.MoviesAdapter;
 import com.best.movie.note.databinding.FragmentMoviesBinding;
+import com.best.movie.note.model.genres.GenreResult;
 import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ public class MoviesFragment extends Fragment {
     private RecyclerView upcomingRecyclerView;
     private MoviesAdapter upcomingMoviesAdapter;
 
+
+    // Genres Movies
+    private ArrayList<GenreResult> genresResults;
+
     private boolean firstOpen = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -79,20 +84,24 @@ public class MoviesFragment extends Fragment {
         navController = Navigation.findNavController(view);
         binding.setButtonHandler(new MoviesFragment.MoviesFragmentButtonsHandler());
 
-        if (!firstOpen){
-            getPopularMovies();
-            getNowPlayingMovies();
-            getTrendingMovies();
-            getTopRatedMovies();
-            getUpcomingMovies();
+        if (!firstOpen) {
+            getGenres();
         }
+    }
 
-//        binding.popularSeeAllButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+    private void getGenres() {
+        moviesViewModel.getGenresMoviesData().observe(getActivity(),
+                new Observer<List<GenreResult>>() {
+                    @Override
+                    public void onChanged(List<GenreResult> data) {
+                        genresResults = (ArrayList<GenreResult>) data;
+                        getPopularMovies();
+                        getNowPlayingMovies();
+                        getTrendingMovies();
+                        getTopRatedMovies();
+                        getUpcomingMovies();
+                    }
+                });
     }
 
     public void getPopularMovies() {
@@ -152,7 +161,7 @@ public class MoviesFragment extends Fragment {
 
     private void fillPopularRecyclerView() {
         popularMoviesRecyclerView = binding.popularRecyclerView;
-        moviesAdapter = new MoviesAdapter(movieResults, 99);
+        moviesAdapter = new MoviesAdapter(movieResults, 99, genresResults);
         popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         popularMoviesRecyclerView.setAdapter(moviesAdapter);
         moviesAdapter.notifyDataSetChanged();
@@ -160,7 +169,7 @@ public class MoviesFragment extends Fragment {
 
     private void fillPlayingNowRecyclerView() {
         nowPlayingMoviesRecyclerView = binding.playingInTheatresRecyclerView;
-        nowPlayingMoviesAdapter = new MoviesAdapter(playingNowResults, 1);
+        nowPlayingMoviesAdapter = new MoviesAdapter(playingNowResults, 1, genresResults);
         nowPlayingMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         nowPlayingMoviesRecyclerView.setAdapter(nowPlayingMoviesAdapter);
         nowPlayingMoviesAdapter.notifyDataSetChanged();
@@ -168,7 +177,7 @@ public class MoviesFragment extends Fragment {
 
     private void fillTrendingRecyclerView() {
         trendingRecyclerView = binding.trendingRecyclerView;
-        trendingMoviesAdapter = new MoviesAdapter(trendingResults, 99);
+        trendingMoviesAdapter = new MoviesAdapter(trendingResults, 99, genresResults);
         trendingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         trendingRecyclerView.setAdapter(trendingMoviesAdapter);
         trendingMoviesAdapter.notifyDataSetChanged();
@@ -176,7 +185,7 @@ public class MoviesFragment extends Fragment {
 
     private void fillTopRatedRecyclerView() {
         topRatedRecyclerView = binding.topRatedRecyclerView;
-        topRatedMoviesAdapter = new MoviesAdapter(topRatedResults, 2);
+        topRatedMoviesAdapter = new MoviesAdapter(topRatedResults, 2, genresResults);
         topRatedRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, GridLayoutManager.HORIZONTAL, false));
         topRatedRecyclerView.setAdapter(topRatedMoviesAdapter);
         topRatedMoviesAdapter.notifyDataSetChanged();
@@ -184,7 +193,7 @@ public class MoviesFragment extends Fragment {
 
     private void fillUpcomingRecyclerView() {
         upcomingRecyclerView = binding.upComingRecyclerView;
-        upcomingMoviesAdapter = new MoviesAdapter(upcomingResults, 99);
+        upcomingMoviesAdapter = new MoviesAdapter(upcomingResults, 99, genresResults);
         upcomingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         upcomingRecyclerView.setAdapter(upcomingMoviesAdapter);
         upcomingMoviesAdapter.notifyDataSetChanged();

@@ -2,6 +2,7 @@ package com.best.movie.note.model.movies.cards;
 
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -15,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MovieResult extends BaseObservable {
+public class MovieResult {
 
     @SerializedName("popularity")
     @Expose
@@ -23,19 +24,6 @@ public class MovieResult extends BaseObservable {
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
-    @SerializedName("poster_path")
-    @Expose
-    private String posterPath;
-
-    @BindingAdapter({"posterPath"})
-    public static void loadImage(ImageView imageView, String imageUrl) {
-        String imagePath = "https://image.tmdb.org/t/p/w500/" + imageUrl;
-        Glide.with(imageView.getContext())
-                .load(imagePath)
-                .placeholder(R.drawable.ic_arrow_right_24)
-                .into(imageView);
-    }
-
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -51,24 +39,41 @@ public class MovieResult extends BaseObservable {
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
-
-
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
+    @SerializedName("backdrop_path")
+    @Expose
+    private String backdropPath;
+    @SerializedName("poster_path")
+    @Expose
+    private String posterPath;
 
+    @BindingAdapter({"posterPath"})
+    public static void loadImage(ImageView imageView, String imageUrl) {
+        setImage(imageView, imageUrl);
+    }
 
+    @BindingAdapter({"backdropPath"})
+    public static void loadIBackdropImage(ImageView imageView, String imageUrl) {
+        setImage(imageView, imageUrl);
+    }
 
+    public static void setImage(ImageView imageView, String imageUrl) {
+        String imagePath = "https://image.tmdb.org/t/p/w500/" + imageUrl;
+        Glide.with(imageView.getContext())
+                .load(imagePath)
+                .placeholder(R.drawable.ic_arrow_right_24)
+                .into(imageView);
+    }
 
-//    @BindingAdapter({"app:set_vote"})
-//    public static void setVote(RatingBar ratingBar, Double vote) {
-//        if (vote == null) {
-//            ratingBar.setRating(vote.floatValue());
-//        } else {
-//            ratingBar.setRating(0f);
-//        }
-//    }
+    public String getBackdropPath() {
+        return backdropPath;
+    }
 
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
 
     public String getReleaseDate() {
         return releaseDate;

@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 
 
 import com.best.movie.note.R;
+import com.best.movie.note.model.genres.GenreResult;
+import com.best.movie.note.model.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.movies.cards.MovieResult;
 import com.best.movie.note.model.movies.cards.MoviesApiResponse;
 import com.best.movie.note.network.MovieApiService;
@@ -38,6 +40,16 @@ public class MoviesRepository {
     // Upcoming Movies
     private ArrayList<MovieResult> upcomingResults = new ArrayList<>();
     private final MutableLiveData<List<MovieResult>> upcomingMutableLiveData = new MutableLiveData<>();
+
+
+
+
+    // Genres Movies
+    private ArrayList<GenreResult> genreResults = new ArrayList<>();
+    private final MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
+
+
+
 
 
     // Paging Library
@@ -179,5 +191,48 @@ public class MoviesRepository {
         });
         return upcomingMutableLiveData;
     }
+
+
+
+
+
+
+    public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
+        Call<GenresMovieApiResponse> call = movieApiService
+                .getGenresMovies(application.getApplicationContext()
+                                .getString(R.string.api_key),
+                        "en-US");
+        call.enqueue(new Callback<GenresMovieApiResponse>() {
+            @Override
+            public void onResponse(Call<GenresMovieApiResponse> call, Response<GenresMovieApiResponse> response) {
+                GenresMovieApiResponse trendingMoviesApiResponse = response.body();
+                Log.d("check", "getUpcomingMoviesMutableLiveData : " + response.toString());
+                if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getGenres() != null) {
+                    genreResults = (ArrayList<GenreResult>) trendingMoviesApiResponse.getGenres();
+                    genresMutableLiveData.setValue(genreResults);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenresMovieApiResponse> call, Throwable t) {
+                Log.d("check", "onFailure : " + t.getLocalizedMessage());
+            }
+        });
+        return genresMutableLiveData;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

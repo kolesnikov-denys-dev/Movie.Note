@@ -1,6 +1,7 @@
 package com.best.movie.note.network;
 
 
+import com.best.movie.note.model.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.movies.cards.MoviesApiResponse;
 
 import retrofit2.Call;
@@ -31,6 +32,11 @@ public interface MovieApiService {
             @Query("language") String language,
             @Query("page") String page);
 
+
+    @GET("genre/movie/list")
+    Call<GenresMovieApiResponse> getGenresMovies(
+            @Query("api_key") String apiKey,
+            @Query("language") String language);
 
 }
 

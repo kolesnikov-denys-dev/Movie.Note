@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.best.movie.note.model.MoviesRepository;
+import com.best.movie.note.model.genres.GenreResult;
 import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.List;
@@ -39,6 +40,10 @@ public class MoviesViewModel extends AndroidViewModel {
 
     public LiveData<List<MovieResult>> getUpcomingMoviesData() {
         return moviesRepository.getUpcomingMoviesMutableLiveData();
+    }
+
+    public LiveData<List<GenreResult>> getGenresMoviesData() {
+        return moviesRepository.getGenresMoviesMutableLiveData();
     }
 
 }

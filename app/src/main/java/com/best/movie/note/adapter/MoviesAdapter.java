@@ -11,19 +11,51 @@ import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieHorizontalItemBinding;
 import com.best.movie.note.databinding.MovieHorizontalSmallItemBinding;
 import com.best.movie.note.databinding.MovieVerticalItemBinding;
+import com.best.movie.note.model.genres.GenreResult;
 import com.best.movie.note.model.movies.cards.MovieResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
     private ArrayList<MovieResult> moviesList;
     private int cardsType;
+    private ArrayList<GenreResult> genres;
+    private ArrayList<String> subtitleList;
 
-    public MoviesAdapter(ArrayList<MovieResult> moviesList, int cardsType) {
+    public MoviesAdapter(ArrayList<MovieResult> moviesList, int cardsType, ArrayList<GenreResult> genresResults) {
+
         this.moviesList = moviesList;
         this.cardsType = cardsType;
+        this.genres = genresResults;
+
+        subtitleList = new ArrayList<>();
+
+        for (int i = 0; i < moviesList.size(); i++) {
+            String genres = "";
+            List<Integer> listGenres = moviesList.get(i).getGenreIds();
+            for (int j = 0; j < listGenres.size(); j++) {
+                genres += getGenreById(listGenres.get(j)) + " ";
+            }
+            subtitleList.add(getYear(moviesList.get(i).getReleaseDate()) + " " + genres);
+        }
+    }
+
+
+    public String getYear(String year) {
+        return year.split("-")[0];
+    }
+
+    public String getGenreById(int genreId) {
+        String genreStr = "";
+        for (int i = 0; i < genres.size(); i++) {
+            if (genreId == genres.get(i).getId()) {
+                genreStr = genres.get(i).getName();
+            }
+        }
+        return genreStr;
     }
 
     @NonNull
@@ -57,10 +89,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
         if (holder.verticalCard != null) {
             holder.verticalCard.setMovieResult(moviesList.get(position));
+            holder.verticalCard.setSubtitle(subtitleList.get(position));
         } else if (holder.horizontalCard != null) {
             holder.horizontalCard.setMovieResult(moviesList.get(position));
+            holder.horizontalCard.setSubtitle(subtitleList.get(position));
         } else if (holder.horizontalSmallCard != null) {
             holder.horizontalSmallCard.setMovieResult(moviesList.get(position));
+            holder.horizontalSmallCard.setSubtitle(subtitleList.get(position));
         }
     }
 
