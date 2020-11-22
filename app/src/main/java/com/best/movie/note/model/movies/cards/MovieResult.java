@@ -52,6 +52,14 @@ public class MovieResult extends BaseObservable {
     @Expose
     private Double voteAverage;
 
+
+    @SerializedName("release_date")
+    @Expose
+    private String releaseDate;
+
+
+
+
 //    @BindingAdapter({"app:set_vote"})
 //    public static void setVote(RatingBar ratingBar, Double vote) {
 //        if (vote == null) {
@@ -61,6 +69,14 @@ public class MovieResult extends BaseObservable {
 //        }
 //    }
 
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
     public Double getPopularity() {
         return popularity;

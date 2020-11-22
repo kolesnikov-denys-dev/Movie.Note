@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/special_black"
         tools:context=".ui.movies.MoviesFragment">
 
         <ScrollView
@@ -31,27 +32,18 @@
 
                 <TextView
                     android:id="@+id/popularTextView"
+                    style="@style/left_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left"
                     android:text="@string/popular"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/popularSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/popularSeeAllButton" />
 
-                <Button
+                <ImageView
                     android:id="@+id/popularSeeAllButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_arrow_right_24"
-                    android:drawablePadding="3dp"
+                    style="@style/yellow_arrow"
                     android:onClick="@{buttonHandler::popularSeeAll}"
-                    android:text="@string/see_all"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,35 +52,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
+                    android:clipToPadding="false"
                     android:orientation="horizontal"
+                    android:padding="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/popularTextView"
                     tools:listitem="@layout/movie_vertical_item" />
 
                 <TextView
                     android:id="@+id/playingInTheatresTextView"
+                    style="@style/left_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left"
                     android:text="@string/playing_in_theathres"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/playingInTheatresSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/playingInTheatresSeeAllButton" />
 
-                <Button
+                <ImageView
                     android:id="@+id/playingInTheatresSeeAllButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_arrow_right_24"
-                    android:drawablePadding="3dp"
+                    style="@style/yellow_arrow"
                     android:onClick="@{buttonHandler.nowPlayingSeeAll}"
-                    android:text="@string/see_all"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/popularRecyclerView" />
 
@@ -97,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/playingInTheatresTextView"
@@ -106,27 +91,18 @@
 
                 <TextView
                     android:id="@+id/trendingTextView"
+                    style="@style/left_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left"
                     android:text="@string/trending"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/trendingSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/trendingSeeAllButton" />
 
-                <Button
+                <ImageView
                     android:id="@+id/trendingSeeAllButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_arrow_right_24"
-                    android:drawablePadding="3dp"
+                    style="@style/yellow_arrow"
                     android:onClick="@{buttonHandler.trendingSeeAll}"
-                    android:text="@string/see_all"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/playingInTheatresRecyclerView" />
 
@@ -135,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/trendingTextView"
@@ -143,27 +119,18 @@
 
                 <TextView
                     android:id="@+id/topRatedTextView"
+                    style="@style/left_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left"
                     android:text="@string/top_rated"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/topRatedSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/topRatedSeeAllButton" />
 
-                <Button
+                <ImageView
                     android:id="@+id/topRatedSeeAllButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_arrow_right_24"
-                    android:drawablePadding="3dp"
+                    style="@style/yellow_arrow"
                     android:onClick="@{buttonHandler.topRatedSeeAll}"
-                    android:text="@string/see_all"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/trendingRecyclerView" />
 
@@ -172,35 +139,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/topRatedSeeAllButton"
+                    app:layout_constraintTop_toBottomOf="@+id/topRatedTextView"
+                    tools:layout_editor_absoluteY="811dp"
                     tools:listitem="@layout/movie_horizontal_small_item" />
 
                 <TextView
                     android:id="@+id/upComingTextView"
+                    style="@style/left_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left"
                     android:text="@string/upcoming"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/upComingSeeAllButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/upComingSeeAllButton" />
 
-                <Button
+                <ImageView
                     android:id="@+id/upComingSeeAllButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_arrow_right_24"
-                    android:drawablePadding="3dp"
-                    android:text="@string/see_all"
-                    android:textAllCaps="false"
+                    style="@style/yellow_arrow"
                     android:onClick="@{buttonHandler.upComingSeeAll}"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/topRatedRecyclerView" />
 
@@ -209,11 +168,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:onClick="@{buttonHandler.upComingSeeAll}"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/upComingSeeAllButton"
+                    app:layout_constraintTop_toBottomOf="@+id/upComingTextView"
+                    tools:layout_editor_absoluteY="915dp"
                     tools:listitem="@layout/movie_vertical_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

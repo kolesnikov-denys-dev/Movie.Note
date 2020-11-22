@@ -10,4 +10,6 @@
     <color name="special_black">#121212</color>
     <color name="special_blue">#2EC7F3</color>
     <color name="special_gray_1">#1f1f1f</color>
+    <color name="special_yellow">#FFA931</color>
+    <color name="special_subtitle_gray">#464648</color>
 </resources>
