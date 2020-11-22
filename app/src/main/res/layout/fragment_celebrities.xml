@@ -93,7 +93,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/trendingCelebritiesTextView"
             tools:layout_editor_absoluteX="-16dp"
-            tools:listitem="@layout/celebrities_horizontal_small_item" />
+            tools:listitem="@layout/movie_horizontal_list_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_movies" >
         <action
             android:id="@+id/action_navigation_movies_to_navigation_movies_list"
-            app:destination="@id/navigation_movies_list" >
+            app:destination="@id/navigation_movies_list">
             <argument
                 android:name="movies_id"
                 android:defaultValue="0" />

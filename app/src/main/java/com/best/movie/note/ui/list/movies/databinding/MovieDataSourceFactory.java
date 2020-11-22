@@ -1,4 +1,4 @@
-package com.best.movie.note.databinding;
+package com.best.movie.note.ui.list.movies.databinding;
 
 import android.app.Application;
 

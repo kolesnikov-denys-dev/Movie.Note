@@ -1,10 +1,9 @@
-package com.best.movie.note.databinding;
+package com.best.movie.note.ui.list.movies.databinding;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
-
 
 import com.best.movie.note.R;
 import com.best.movie.note.model.movies.cards.MovieResult;
@@ -71,10 +70,13 @@ public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
-                MoviesApiResponse moviesApiResponse = response.body();
-                if (moviesApiResponse != null && moviesApiResponse.getPopularResults() != null) {
-                    callback.onResult((ArrayList<MovieResult>) moviesApiResponse.getPopularResults(), null, (long) 2);
+                MoviesApiResponse movieApiResponse = response.body();
+                ArrayList<MovieResult> results = new ArrayList<>();
+                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
+                    results = (ArrayList<MovieResult>) movieApiResponse.getResults();
+                    callback.onResult(results, null, (long)2);
                 }
+
             }
 
             @Override
@@ -99,9 +101,11 @@ public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
-                MoviesApiResponse moviesApiResponse = response.body();
-                if (moviesApiResponse != null && moviesApiResponse.getPopularResults() != null) {
-                    callback.onResult(null, params.key + 1);
+                MoviesApiResponse movieApiResponse = response.body();
+                ArrayList<MovieResult> results = new ArrayList<>();
+                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
+                    results = (ArrayList<MovieResult>) movieApiResponse.getResults();
+                    callback.onResult(results, params.key + 1);
                 }
             }
 

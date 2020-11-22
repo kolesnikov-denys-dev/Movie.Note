@@ -1,6 +1,7 @@
 package com.best.movie.note.model.movies.cards;
 
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -25,6 +26,7 @@ public class MovieResult extends BaseObservable {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
+
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView imageView, String imageUrl) {
         String imagePath = "https://image.tmdb.org/t/p/w500/" + imageUrl;
@@ -33,6 +35,7 @@ public class MovieResult extends BaseObservable {
                 .placeholder(R.drawable.ic_arrow_right_24)
                 .into(imageView);
     }
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -48,6 +51,16 @@ public class MovieResult extends BaseObservable {
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
+
+//    @BindingAdapter({"app:set_vote"})
+//    public static void setVote(RatingBar ratingBar, Double vote) {
+//        if (vote == null) {
+//            ratingBar.setRating(vote.floatValue());
+//        } else {
+//            ratingBar.setRating(0f);
+//        }
+//    }
+
 
     public Double getPopularity() {
         return popularity;

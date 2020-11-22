@@ -194,12 +194,12 @@ public class MoviesFragment extends Fragment {
 
         public void popularSeeAll(View view) {
             bundle.putString("what_open", getString(R.string.popular));
-            navController.navigate(R.id.navigation_movies_list, bundle);
+            navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }
 
         public void nowPlayingSeeAll(View view) {
             bundle.putString("what_open", getString(R.string.playing_in_theathres));
-            navController.navigate(R.id.navigation_movies_list, bundle);
+            navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }
 
         public void trendingSeeAll(View view) {

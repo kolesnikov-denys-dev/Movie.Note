@@ -12,6 +12,11 @@ public interface MovieApiService {
     @GET("movie/popular")
     Call<MoviesApiResponse> getPopularMovies(@Query("api_key") String apiKey);
 
+    @GET("movie/popular")
+    Call<MoviesApiResponse> getPopularMoviesWithPaging(
+            @Query("api_key") String apiKey, @Query("page") long page);
+
+
     @GET("movie/now_playing")
     Call<MoviesApiResponse> getNowPlayingMovies(@Query("api_key") String apiKey);
 
@@ -28,9 +33,6 @@ public interface MovieApiService {
             @Query("page") String page);
 
 
-    @GET("movie/popular")
-    Call<MoviesApiResponse> getPopularMoviesWithPaging(
-            @Query("api_key") String apiKey, @Query("page") long page);
 }
 
 

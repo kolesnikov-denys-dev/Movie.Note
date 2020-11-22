@@ -1,41 +1,46 @@
 package com.best.movie.note.ui.list.movies;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.best.movie.note.R;
+import com.best.movie.note.adapter.ResultAdapter;
+import com.best.movie.note.databinding.MoviesListFragmentBinding;
+import com.best.movie.note.model.movies.cards.MovieResult;
 
 public class MoviesListFragment extends Fragment {
 
-    private MoviesListViewModel mViewModel;
-
-    public static MoviesListFragment newInstance() {
-        return new MoviesListFragment();
-    }
+    // Paging Library
+    private MoviesListViewModel moviesListViewModel;
+    private PagedList<MovieResult> results;
+    private RecyclerView recyclerView;
+    private ResultAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private MoviesListFragmentBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.movies_list_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.movies_list_fragment, container, false);
+        return binding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MoviesListViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -43,14 +48,47 @@ public class MoviesListFragment extends Fragment {
 
         if (getArguments() != null) {
             String whatOpen = getArguments().getString("what_open");
-            Toast.makeText(getContext(),whatOpen, Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getContext(), whatOpen, Toast.LENGTH_SHORT).show();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(whatOpen);
-//            Util.log(" arg3:" + getArguments().getString("arg3")
-//                    + " atr4:" + getArguments().getString("arg4")
-//                    + " arg5:" + getArguments().getString("arg5")
-//            );
         }
 
+        moviesListViewModel = new ViewModelProvider
+                .AndroidViewModelFactory(getActivity().getApplication())
+                .create(MoviesListViewModel.class);
+
+        getPopularMovies();
+
+        swipeRefreshLayout = binding.swipeRefresh;
+        swipeRefreshLayout.setColorSchemeResources(R.color.design_default_color_primary);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getPopularMovies();
+                    }
+                });
     }
+
+    public void getPopularMovies() {
+        moviesListViewModel.getPagedListLiveData().observe(getActivity(),
+                new Observer<PagedList<MovieResult>>() {
+                    @Override
+                    public void onChanged(PagedList<MovieResult> resultList) {
+                        results = resultList;
+                        fillRecyclerView();
+                    }
+                });
+    }
+
+    private void fillRecyclerView() {
+        recyclerView = binding.moviesListRecyclerView;
+        adapter = new ResultAdapter();
+        adapter.submitList(results);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
 }

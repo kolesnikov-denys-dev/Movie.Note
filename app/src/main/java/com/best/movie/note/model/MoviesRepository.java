@@ -39,6 +39,34 @@ public class MoviesRepository {
     private ArrayList<MovieResult> upcomingResults = new ArrayList<>();
     private final MutableLiveData<List<MovieResult>> upcomingMutableLiveData = new MutableLiveData<>();
 
+
+    // Paging Library
+    private ArrayList<MovieResult> results = new ArrayList<>();
+    private MutableLiveData<List<MovieResult>> mutablePagingLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<List<MovieResult>> getMutableLiveData() {
+        Call<MoviesApiResponse> call = movieApiService.getPopularMovies(application.getApplicationContext()
+                .getString(R.string.api_key));
+        call.enqueue(new Callback<MoviesApiResponse>() {
+            @Override
+            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
+                MoviesApiResponse movieApiResponse = response.body();
+                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
+                    results = (ArrayList<MovieResult>) movieApiResponse.getResults();
+                    mutablePagingLiveData.setValue(results);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
+
+            }
+        });
+        return mutablePagingLiveData;
+    }
+    // Paging Library
+
+
     public MoviesRepository(Application application) {
         this.application = application;
         this.movieApiService = RetrofitInstance.getService();
@@ -130,9 +158,9 @@ public class MoviesRepository {
     public MutableLiveData<List<MovieResult>> getUpcomingMoviesMutableLiveData() {
         Call<MoviesApiResponse> call = movieApiService
                 .getUpcomingMovies(application.getApplicationContext()
-                .getString(R.string.api_key),
-                "en-US",
-                "1");
+                                .getString(R.string.api_key),
+                        "en-US",
+                        "1");
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
