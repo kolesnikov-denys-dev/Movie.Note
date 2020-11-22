@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.list.movies;
+package com.best.movie.note.ui.common.list.movies;
 
 import android.app.Application;
 
@@ -12,8 +12,8 @@ import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.movies.cards.MovieResult;
 import com.best.movie.note.network.MovieApiService;
 import com.best.movie.note.network.RetrofitInstance;
-import com.best.movie.note.ui.list.movies.databinding.MovieDataSource;
-import com.best.movie.note.ui.list.movies.databinding.MovieDataSourceFactory;
+import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSource;
+import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSourceFactory;
 
 import java.util.List;
 import java.util.concurrent.Executor;

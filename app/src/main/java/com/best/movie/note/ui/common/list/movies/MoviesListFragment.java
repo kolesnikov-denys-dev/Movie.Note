@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.list.movies;
+package com.best.movie.note.ui.common.list.movies;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,19 +20,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.best.movie.note.R;
-import com.best.movie.note.adapter.ResultAdapter;
+import com.best.movie.note.adapter.MoviesListAdapter;
 import com.best.movie.note.databinding.MoviesListFragmentBinding;
 import com.best.movie.note.model.movies.cards.MovieResult;
 
 public class MoviesListFragment extends Fragment {
 
-    // Paging Library
     private MoviesListViewModel moviesListViewModel;
     private PagedList<MovieResult> results;
     private RecyclerView recyclerView;
-    private ResultAdapter adapter;
+    private MoviesListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private MoviesListFragmentBinding binding;
+
+    private int whatLoad;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -41,12 +42,12 @@ public class MoviesListFragment extends Fragment {
         return binding.getRoot();
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         if (getArguments() != null) {
+            whatLoad = 0;
             String whatOpen = getArguments().getString("what_open");
             Toast.makeText(getContext(), whatOpen, Toast.LENGTH_SHORT).show();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(whatOpen);
@@ -56,7 +57,9 @@ public class MoviesListFragment extends Fragment {
                 .AndroidViewModelFactory(getActivity().getApplication())
                 .create(MoviesListViewModel.class);
 
-        getPopularMovies();
+
+
+        getPopularMovies(whatLoad);
 
         swipeRefreshLayout = binding.swipeRefresh;
         swipeRefreshLayout.setColorSchemeResources(R.color.design_default_color_primary);
@@ -64,12 +67,12 @@ public class MoviesListFragment extends Fragment {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        getPopularMovies();
+                        getPopularMovies(whatLoad);
                     }
                 });
     }
 
-    public void getPopularMovies() {
+    public void getPopularMovies(int whatLoad) {
         moviesListViewModel.getPagedListLiveData().observe(getActivity(),
                 new Observer<PagedList<MovieResult>>() {
                     @Override
@@ -82,7 +85,7 @@ public class MoviesListFragment extends Fragment {
 
     private void fillRecyclerView() {
         recyclerView = binding.moviesListRecyclerView;
-        adapter = new ResultAdapter();
+        adapter = new MoviesListAdapter();
         adapter.submitList(results);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());

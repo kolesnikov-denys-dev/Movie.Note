@@ -53,13 +53,20 @@ public class MoviesFragment extends Fragment {
     private RecyclerView upcomingRecyclerView;
     private MoviesAdapter upcomingMoviesAdapter;
 
+    private boolean firstOpen = false;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//         binding = FragmentMoviesBinding.inflate(inflater, container, false);
+//        binding = FragmentMoviesBinding.inflate(inflater, container, false);
 //        return binding.getRoot();
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
-//        binding.setMarsdata(data);
-        return binding.getRoot();
+
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
+            return binding.getRoot();
+        } else {
+            firstOpen = true;
+            return binding.getRoot();
+        }
     }
 
     @Override
@@ -72,11 +79,13 @@ public class MoviesFragment extends Fragment {
         navController = Navigation.findNavController(view);
         binding.setButtonHandler(new MoviesFragment.MoviesFragmentButtonsHandler());
 
-        getPopularMovies();
-        getNowPlayingMovies();
-        getTrendingMovies();
-        getTopRatedMovies();
-        getUpcomingMovies();
+        if (!firstOpen){
+            getPopularMovies();
+            getNowPlayingMovies();
+            getTrendingMovies();
+            getTopRatedMovies();
+            getUpcomingMovies();
+        }
 
 //        binding.popularSeeAllButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -114,13 +123,6 @@ public class MoviesFragment extends Fragment {
                     @Override
                     public void onChanged(List<MovieResult> data) {
                         trendingResults = (ArrayList<MovieResult>) data;
-
-//                        Log.i("check", "trendingResults size:" + trendingResults.size());
-//
-//                        for (TrendingResult res : trendingResults) {
-//                            Log.i("check", "Original title: " + res.getOriginalTitle());
-//                        }
-
                         fillTrendingRecyclerView();
                     }
                 });

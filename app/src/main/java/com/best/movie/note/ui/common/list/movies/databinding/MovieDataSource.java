@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.list.movies.databinding;
+package com.best.movie.note.ui.common.list.movies.databinding;
 
 import android.app.Application;
 
@@ -63,9 +63,6 @@ public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
         Call<MoviesApiResponse> call = movieApiService.getPopularMoviesWithPaging(
                 application.getApplicationContext().getString(R.string.api_key),
                 1);
-
-//        params  --- int requestedLoadSize - сколько данных грузить
-//        boolean --- placeholdersEnabled - включены ли placeholders
 
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override

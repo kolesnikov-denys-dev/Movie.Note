@@ -16,7 +16,6 @@ public interface MovieApiService {
     Call<MoviesApiResponse> getPopularMoviesWithPaging(
             @Query("api_key") String apiKey, @Query("page") long page);
 
-
     @GET("movie/now_playing")
     Call<MoviesApiResponse> getNowPlayingMovies(@Query("api_key") String apiKey);
 

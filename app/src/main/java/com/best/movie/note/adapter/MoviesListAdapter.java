@@ -12,9 +12,9 @@ import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieHorizontalListItemBinding;
 import com.best.movie.note.model.movies.cards.MovieResult;
 
-public class ResultAdapter extends PagedListAdapter<MovieResult, ResultAdapter.ResultViewHolder> {
+public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListAdapter.ResultViewHolder> {
 
-    public ResultAdapter() {
+    public MoviesListAdapter() {
         super(MovieResult.CALLBACK);
     }
 

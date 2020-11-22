@@ -50,7 +50,7 @@
                     android:onClick="@{buttonHandler::popularSeeAll}"
                     android:text="@string/see_all"
                     android:textAllCaps="false"
-                    android:textColor="#000"
+                    android:textColor="@android:color/white"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -87,7 +87,7 @@
                     android:onClick="@{buttonHandler.nowPlayingSeeAll}"
                     android:text="@string/see_all"
                     android:textAllCaps="false"
-                    android:textColor="#000"
+                    android:textColor="@android:color/white"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/popularRecyclerView" />
@@ -125,7 +125,7 @@
                     android:onClick="@{buttonHandler.trendingSeeAll}"
                     android:text="@string/see_all"
                     android:textAllCaps="false"
-                    android:textColor="#000"
+                    android:textColor="@android:color/white"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/playingInTheatresRecyclerView" />
@@ -162,7 +162,7 @@
                     android:onClick="@{buttonHandler.topRatedSeeAll}"
                     android:text="@string/see_all"
                     android:textAllCaps="false"
-                    android:textColor="#000"
+                    android:textColor="@android:color/white"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/trendingRecyclerView" />
@@ -199,7 +199,7 @@
                     android:text="@string/see_all"
                     android:textAllCaps="false"
                     android:onClick="@{buttonHandler.upComingSeeAll}"
-                    android:textColor="#000"
+                    android:textColor="@android:color/white"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/topRatedRecyclerView" />

@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_tmdb" />
     <fragment
         android:id="@+id/navigation_movies_list"
-        android:name="com.best.movie.note.ui.list.movies.MoviesListFragment"
+        android:name="com.best.movie.note.ui.common.list.movies.MoviesListFragment"
         android:label="@string/title_movies_list"
         tools:layout="@layout/movies_list_fragment" >
         <argument
