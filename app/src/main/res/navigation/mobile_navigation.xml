@@ -17,6 +17,9 @@
                 android:name="movies_id"
                 android:defaultValue="0" />
         </action>
+        <action
+            android:id="@+id/action_navigation_movies_to_mainMovieFragment"
+            app:destination="@id/mainMovieFragment" />
     </fragment>
 
     <fragment
@@ -50,4 +53,9 @@
             app:argType="string"
             android:defaultValue="popular" />
     </fragment>
+    <fragment
+        android:id="@+id/mainMovieFragment"
+        android:name="com.best.movie.note.ui.common.main.MainMovieFragment"
+        android:label="main_movie_fragment"
+        tools:layout="@layout/main_movie_fragment" />
 </navigation>
