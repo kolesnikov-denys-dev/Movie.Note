@@ -126,7 +126,16 @@ public class MovieDetailsFragment extends Fragment {
         }
 
         public void share(View view) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
 
+            String message = "Create notes your movies with the application \"Movie Note\":";
+            message += "\n\n" + movieDetailsResult.getOriginalTitle();
+            message += "\n\n " + movieDetailsResult.getOverview();
+
+            sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         }
     }
 
