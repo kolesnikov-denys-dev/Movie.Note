@@ -53,8 +53,6 @@ public class MoviesFragment extends Fragment {
     private ArrayList<MovieResult> upcomingResults;
     private RecyclerView upcomingRecyclerView;
     private MoviesAdapter upcomingMoviesAdapter;
-
-
     // Genres Movies
     private ArrayList<GenreResult> genresResults;
 

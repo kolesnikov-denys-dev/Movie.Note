@@ -8,7 +8,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/special_subtitle_gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -16,23 +16,37 @@
 
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="android:progressTint">@color/design_default_color_primary</item>
-<!--        <item name="android:progressBackgroundTint">>@color/teal_200</item>-->
+        <!--        <item name="android:progressBackgroundTint">>@color/teal_200</item>-->
     </style>
 
-    <style name="left_title" >
+    <style name="left_title">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:layout_marginLeft">18dp</item>
         <item name="android:fontFamily">@font/hind_colombo_medium</item>
     </style>
 
-
-    <style name="yellow_arrow" >
-        <item name="android:layout_width">18dp</item>
-        <item name="android:layout_height">18dp</item>
+    <style name="yellow_arrow">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">16dp</item>
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:background">@drawable/ic_arrow_yellow_24px</item>
+    </style>
+
+    <style name="card_title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/hind_colombo_medium</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="card_subtitle">
+        <item name="android:textColor">@color/special_subtitle_gray</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/hind_colombo_medium</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>

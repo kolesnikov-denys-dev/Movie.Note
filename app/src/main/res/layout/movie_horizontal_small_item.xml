@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                android:background="@color/special_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -45,6 +46,7 @@
 
         <TextView
             android:id="@+id/movieNameTextView"
+            style="@style/card_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -53,8 +55,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{movieResult.originalTitle}"
-            android:textColor="@color/white"
-            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/grayArrowImageView"
             app:layout_constraintStart_toEndOf="@+id/movieCardView"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,15 +62,13 @@
 
         <TextView
             android:id="@+id/genreTextView"
+            style="@style/card_subtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="12dp"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:text="@{subtitle}"
-            android:textSize="10sp"
             app:layout_constraintEnd_toStartOf="@+id/grayArrowImageView"
             app:layout_constraintStart_toEndOf="@+id/movieCardView"
             app:layout_constraintTop_toBottomOf="@+id/movieNameTextView"

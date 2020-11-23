@@ -34,10 +34,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         subtitleList = new ArrayList<>();
 
         for (int i = 0; i < moviesList.size(); i++) {
-            String genres = "";
+            StringBuilder genres = new StringBuilder();
             List<Integer> listGenres = moviesList.get(i).getGenreIds();
             for (int j = 0; j < listGenres.size(); j++) {
-                genres += getGenreById(listGenres.get(j)) + " ";
+                if (j < listGenres.size() - 1) {
+                    genres.append(getGenreById(listGenres.get(j))).append(", ");
+                } else {
+                    genres.append(getGenreById(listGenres.get(j))).append(" ");
+                }
             }
             subtitleList.add(getYear(moviesList.get(i).getReleaseDate()) + " " + genres);
         }
