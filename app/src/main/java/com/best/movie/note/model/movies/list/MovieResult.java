@@ -1,15 +1,11 @@
-package com.best.movie.note.model.movies.cards;
+package com.best.movie.note.model.movies.list;
 
 import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BaseObservable;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.best.movie.note.R;
 import com.bumptech.glide.Glide;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -9,8 +9,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.best.movie.note.R;
 import com.best.movie.note.model.genres.GenreResult;
 import com.best.movie.note.model.genres.GenresMovieApiResponse;
-import com.best.movie.note.model.movies.cards.MovieResult;
-import com.best.movie.note.model.movies.cards.MoviesApiResponse;
+import com.best.movie.note.model.movies.list.MovieResult;
+import com.best.movie.note.model.movies.list.MoviesApiResponse;
+import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 import com.best.movie.note.network.MovieApiService;
 import com.best.movie.note.network.RetrofitInstance;
 
@@ -42,14 +44,19 @@ public class MoviesRepository {
     private final MutableLiveData<List<MovieResult>> upcomingMutableLiveData = new MutableLiveData<>();
 
 
-
-
     // Genres Movies
     private ArrayList<GenreResult> genreResults = new ArrayList<>();
     private final MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
 
 
+    // Details Movie
+    private MovieDetailsApiResponse movieDetailsResult;
+    private final MutableLiveData<MovieDetailsApiResponse> movieDetailsApiResponseMutableLiveData = new MutableLiveData<>();
 
+
+    // Videos Movie
+    private VideosApiResponse videosResult;
+    private final MutableLiveData<VideosApiResponse> movieVideosApiResponseMutableLiveData = new MutableLiveData<>();
 
 
     // Paging Library
@@ -192,16 +199,10 @@ public class MoviesRepository {
         return upcomingMutableLiveData;
     }
 
-
-
-
-
-
     public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
-        Call<GenresMovieApiResponse> call = movieApiService
-                .getGenresMovies(application.getApplicationContext()
-                                .getString(R.string.api_key),
-                        "en-US");
+        Call<GenresMovieApiResponse> call = movieApiService.getGenresMovies(application.getApplicationContext()
+                        .getString(R.string.api_key),
+                "en-US");
         call.enqueue(new Callback<GenresMovieApiResponse>() {
             @Override
             public void onResponse(Call<GenresMovieApiResponse> call, Response<GenresMovieApiResponse> response) {
@@ -221,18 +222,50 @@ public class MoviesRepository {
         return genresMutableLiveData;
     }
 
+    public MutableLiveData<MovieDetailsApiResponse> getMovieDetailLiveData(int movieId, String language) {
+        Call<MovieDetailsApiResponse> call = movieApiService.getMovieDetailsById(movieId, application.getApplicationContext()
+                .getString(R.string.api_key), language);
+        call.enqueue(new Callback<MovieDetailsApiResponse>() {
+            @Override
+            public void onResponse(Call<MovieDetailsApiResponse> call, Response<MovieDetailsApiResponse> response) {
+                MovieDetailsApiResponse moviesApiResponse = response.body();
+                if (moviesApiResponse != null && moviesApiResponse != null) {
+                    movieDetailsResult = moviesApiResponse;
+                    movieDetailsApiResponseMutableLiveData.setValue(movieDetailsResult);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<MovieDetailsApiResponse> call, Throwable t) {
+                Log.e("check", t.getLocalizedMessage());
+            }
+        });
+        return movieDetailsApiResponseMutableLiveData;
+    }
 
+    public MutableLiveData<VideosApiResponse> getMovieVideosLiveData(int movieId, String language) {
+        Call<VideosApiResponse> call = movieApiService.getMovieVideosById(movieId, application.getApplicationContext()
+                .getString(R.string.api_key), language);
+        call.enqueue(new Callback<VideosApiResponse>() {
+            @Override
+            public void onResponse(Call<VideosApiResponse> call, Response<VideosApiResponse> response) {
+                VideosApiResponse moviesApiResponse = response.body();
 
+                Log.i("check", "----------WORK!!!" + moviesApiResponse.toString());
 
+                if (moviesApiResponse != null && moviesApiResponse != null) {
+                    videosResult = moviesApiResponse;
+                    movieVideosApiResponseMutableLiveData.setValue(videosResult);
+                }
+            }
 
-
-
-
-
-
-
-
+            @Override
+            public void onFailure(Call<VideosApiResponse> call, Throwable t) {
+                Log.e("check", t.getLocalizedMessage());
+            }
+        });
+        return movieVideosApiResponseMutableLiveData;
+    }
 
 
 }

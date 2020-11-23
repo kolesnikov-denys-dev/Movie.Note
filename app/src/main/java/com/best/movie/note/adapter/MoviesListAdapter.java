@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieHorizontalListItemBinding;
-import com.best.movie.note.model.movies.cards.MovieResult;
+import com.best.movie.note.model.movies.list.MovieResult;
 
 public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListAdapter.ResultViewHolder> {
 

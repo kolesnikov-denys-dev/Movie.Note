@@ -9,7 +9,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.best.movie.note.model.MoviesRepository;
-import com.best.movie.note.model.movies.cards.MovieResult;
+import com.best.movie.note.model.movies.list.MovieResult;
 import com.best.movie.note.network.MovieApiService;
 import com.best.movie.note.network.RetrofitInstance;
 import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSource;

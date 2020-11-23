@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.genres.GenreResult;
-import com.best.movie.note.model.movies.cards.MovieResult;
+import com.best.movie.note.model.movies.list.MovieResult;
 
 import java.util.List;
 

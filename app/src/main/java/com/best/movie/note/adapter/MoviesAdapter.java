@@ -1,6 +1,7 @@
 package com.best.movie.note.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,7 @@ import com.best.movie.note.databinding.MovieHorizontalItemBinding;
 import com.best.movie.note.databinding.MovieHorizontalSmallItemBinding;
 import com.best.movie.note.databinding.MovieVerticalItemBinding;
 import com.best.movie.note.model.genres.GenreResult;
-import com.best.movie.note.model.movies.cards.MovieResult;
+import com.best.movie.note.model.movies.list.MovieResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     private int cardsType;
     private ArrayList<GenreResult> genres;
     private ArrayList<String> subtitleList;
+
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int movieId, String originalName);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
 
     public MoviesAdapter(ArrayList<MovieResult> moviesList, int cardsType, ArrayList<GenreResult> genresResults) {
 
@@ -108,7 +120,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         return moviesList.size();
     }
 
-    public static class MoviesViewHolder extends RecyclerView.ViewHolder {
+    public class MoviesViewHolder extends RecyclerView.ViewHolder {
 
         private MovieVerticalItemBinding verticalCard;
         private MovieHorizontalItemBinding horizontalCard;
@@ -117,16 +129,46 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         public MoviesViewHolder(@NonNull MovieVerticalItemBinding view) {
             super(view.getRoot());
             this.verticalCard = view;
+            if (view != null) {
+                verticalCard.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                            onItemClickListener.onItemClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
+                        }
+                    }
+                });
+            }
         }
 
         public MoviesViewHolder(@NonNull MovieHorizontalItemBinding view) {
             super(view.getRoot());
             this.horizontalCard = view;
+            if (view != null) {
+                horizontalCard.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                            onItemClickListener.onItemClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
+                        }
+                    }
+                });
+            }
         }
 
         public MoviesViewHolder(@NonNull MovieHorizontalSmallItemBinding view) {
             super(view.getRoot());
             this.horizontalSmallCard = view;
+            if (view != null) {
+                horizontalSmallCard.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                            onItemClickListener.onItemClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
+                        }
+                    }
+                });
+            }
         }
     }
 

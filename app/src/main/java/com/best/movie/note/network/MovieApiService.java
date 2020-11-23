@@ -2,10 +2,13 @@ package com.best.movie.note.network;
 
 
 import com.best.movie.note.model.genres.GenresMovieApiResponse;
-import com.best.movie.note.model.movies.cards.MoviesApiResponse;
+import com.best.movie.note.model.movies.list.MoviesApiResponse;
+import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MovieApiService {
@@ -35,6 +38,18 @@ public interface MovieApiService {
 
     @GET("genre/movie/list")
     Call<GenresMovieApiResponse> getGenresMovies(
+            @Query("api_key") String apiKey,
+            @Query("language") String language);
+
+    @GET("movie/{movie_id}")
+    Call<MovieDetailsApiResponse> getMovieDetailsById(
+            @Path("movie_id") int movieId,
+            @Query("api_key") String apiKey,
+            @Query("language") String language);
+
+    @GET("movie/{movie_id}/videos")
+    Call<VideosApiResponse> getMovieVideosById(
+            @Path("movie_id") int movieId,
             @Query("api_key") String apiKey,
             @Query("language") String language);
 
