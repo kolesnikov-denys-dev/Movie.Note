@@ -19,27 +19,46 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.adapter.MoviesAdapter;
 import com.best.movie.note.databinding.MovieDetailsFragmentBinding;
+import com.best.movie.note.model.genres.GenreResult;
+import com.best.movie.note.model.movies.list.MovieResult;
 import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 
-public class MovieDetailsFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnItemClickListener {
 
     private MovieDetailsViewModel movieDetailsViewModel;
     private MovieDetailsFragmentBinding binding;
     private NavController navController;
 
-    private VideosApiResponse videosResult;
-
-    // Popular Movies
+    // Movie Details
     private MovieDetailsApiResponse movieDetailsResult;
-    private RecyclerView popularMoviesRecyclerView;
-    private MoviesAdapter moviesAdapter;
 
+    // Trailers video
+    private VideosApiResponse trailersResult;
+
+    // Recommendation Movies
+    private ArrayList<MovieResult> recommendationsResult;
+    private RecyclerView recommendationRecyclerView;
+    private MoviesAdapter recommendationAdapter;
+
+    // Similar Movies
+    private ArrayList<MovieResult> similarResult;
+    private RecyclerView similarRecyclerView;
+    private MoviesAdapter similarAdapter;
+
+    int movieId;
+
+    // Genres Movies
+    private ArrayList<GenreResult> genresResults;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -61,16 +80,28 @@ public class MovieDetailsFragment extends Fragment {
 //        binding.setButtonHandler(new MoviesFragment.MoviesFragmentButtonsHandler());
 
         if (getArguments() != null) {
-            int movieId = getArguments().getInt("movie_id");
+            movieId = getArguments().getInt("movie_id");
             String originalName = getArguments().getString("original_name");
             Toast.makeText(getContext(), "Movie Id: " + movieId, Toast.LENGTH_SHORT).show();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(originalName);
+
+            getGenres();
             getMovieDetail(movieId, "en-US");
             getMovieVideos(movieId, "en-US");
+            getRecommendations(movieId, "en-US");
+            getSimilar(movieId, "en-US");
         }
-
     }
 
+    private void getGenres() {
+        movieDetailsViewModel.getGenresMoviesData().observe(getActivity(),
+                new Observer<List<GenreResult>>() {
+                    @Override
+                    public void onChanged(List<GenreResult> data) {
+                        genresResults = (ArrayList<GenreResult>) data;
+                    }
+                });
+    }
 
     public void getMovieDetail(int movieId, String language) {
         movieDetailsViewModel.getMovieDetails(movieId, language).observe(getActivity(),
@@ -79,39 +110,51 @@ public class MovieDetailsFragment extends Fragment {
                     public void onChanged(MovieDetailsApiResponse data) {
                         binding.setMovieDetailsResult(data);
                         movieDetailsResult = data;
-                        fillView();
                     }
                 });
     }
-
 
     public void getMovieVideos(int movieId, String language) {
         movieDetailsViewModel.getMovieVideos(movieId, language).observe(getActivity(),
                 new Observer<VideosApiResponse>() {
                     @Override
                     public void onChanged(VideosApiResponse data) {
-                        videosResult = data;
+                        trailersResult = data;
                     }
                 });
     }
 
-    private void fillView() {
-//        popularMoviesRecyclerView = binding.popularRecyclerView;
-//        moviesAdapter = new MoviesAdapter(movieResults, 99, genresResults);
-//        popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        popularMoviesRecyclerView.setAdapter(moviesAdapter);
-//        moviesAdapter.setOnItemClickListener(this);
-//        moviesAdapter.notifyDataSetChanged();
+    public void getRecommendations(int movieId, String language) {
+        movieDetailsViewModel.getRecommendations(movieId, language).observe(getActivity(),
+                new Observer<List<MovieResult>>() {
+                    @Override
+                    public void onChanged(List<MovieResult> data) {
+                        recommendationsResult = (ArrayList<MovieResult>) data;
+                        fillRecommendationRecyclerView();
+                    }
+                });
     }
+
+    public void getSimilar(int movieId, String language) {
+        movieDetailsViewModel.getSimilar(movieId, language).observe(getActivity(),
+                new Observer<List<MovieResult>>() {
+                    @Override
+                    public void onChanged(List<MovieResult> data) {
+                        similarResult = (ArrayList<MovieResult>) data;
+                        fillSimilarRecyclerView();
+                    }
+                });
+    }
+
 
     public class MovieDetailsFragmentButtonsHandler {
         //TODO if not trailer
         public void showTrailer(View view) {
-            if (videosResult != null &&
-                    videosResult.getVideosResults() != null &&
-                    videosResult.getVideosResults().get(0) != null &&
-                    videosResult.getVideosResults().get(0).getKey() != null) {
-                String id = videosResult.getVideosResults().get(0).getKey();
+            if (trailersResult != null &&
+                    trailersResult.getVideosResults() != null &&
+                    trailersResult.getVideosResults().get(0) != null &&
+                    trailersResult.getVideosResults().get(0).getKey() != null) {
+                String id = trailersResult.getVideosResults().get(0).getKey();
                 Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
                 Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + id));
                 try {
@@ -137,5 +180,34 @@ public class MovieDetailsFragment extends Fragment {
             startActivity(sendIntent);
         }
     }
+
+
+    private void fillRecommendationRecyclerView() {
+        recommendationRecyclerView = binding.recommendedRecyclerView;
+        recommendationAdapter = new MoviesAdapter(recommendationsResult, 99, genresResults);
+        recommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recommendationRecyclerView.setAdapter(recommendationAdapter);
+        recommendationAdapter.setOnItemClickListener(this);
+        recommendationAdapter.notifyDataSetChanged();
+    }
+
+    private void fillSimilarRecyclerView() {
+        similarRecyclerView = binding.similarRecyclerView;
+        similarAdapter = new MoviesAdapter(similarResult, 99, genresResults);
+        similarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        similarRecyclerView.setAdapter(similarAdapter);
+        similarAdapter.setOnItemClickListener(this);
+        similarAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(int movieId, String originalName) {
+        Log.i("check", "was Clicked on :" + movieId);
+        Bundle bundle = new Bundle();
+        bundle.putInt("movie_id", movieId);
+        bundle.putString("original_name", originalName);
+        navController.navigate(R.id.action_mainMovieFragment_self, bundle);
+    }
+
 
 }

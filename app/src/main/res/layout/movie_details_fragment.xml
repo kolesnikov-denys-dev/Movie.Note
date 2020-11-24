@@ -10,7 +10,7 @@
             name="movieDetailsResult"
             type="com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse" />
 
-     <variable
+        <variable
             name="buttonHandler"
             type="com.best.movie.note.ui.common.details.MovieDetailsFragment.MovieDetailsFragmentButtonsHandler" />
     </data>
@@ -241,8 +241,8 @@
                 android:layout_width="22dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:onClick="@{buttonHandler.showTrailer}"
                 android:background="@drawable/ic_trailer_24px"
+                android:onClick="@{buttonHandler.showTrailer}"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -264,8 +264,8 @@
                 android:layout_width="22dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:onClick="@{buttonHandler.share}"
                 android:background="@drawable/ic_share_24px"
+                android:onClick="@{buttonHandler.share}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -488,6 +488,36 @@
                 android:padding="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/recommendedTitleTextView"
+                tools:listitem="@layout/movie_vertical_item" />
+
+            <TextView
+                android:id="@+id/similarTitleTextView"
+                style="@style/left_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Similar"
+                app:layout_constraintBottom_toBottomOf="@+id/playingInTheatresSeeAllButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/similarSeeAllButton" />
+
+            <ImageView
+                android:id="@+id/similarSeeAllButton"
+                style="@style/yellow_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recommendedRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/similarRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:layout_marginBottom="20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/similarTitleTextView"
                 tools:listitem="@layout/movie_vertical_item" />
 
             <androidx.constraintlayout.widget.Guideline

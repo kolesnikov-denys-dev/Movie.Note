@@ -4,6 +4,7 @@ package com.best.movie.note.service;
 import com.best.movie.note.model.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.movies.list.MoviesApiResponse;
 import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.movies.main.recommended.RecommendationsApiResponse;
 import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 
 import retrofit2.Call;
@@ -12,6 +13,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
+
+    // Movies Region
 
     @GET("movie/popular")
     Call<MoviesApiResponse> getPopularMovies(@Query("api_key") String apiKey);
@@ -40,6 +43,11 @@ public interface ApiService {
             @Query("api_key") String apiKey,
             @Query("language") String language);
 
+    // End Region
+
+
+    // Movie Details Region
+
     @GET("movie/{movie_id}")
     Call<MovieDetailsApiResponse> getMovieDetailsById(
             @Path("movie_id") int movieId,
@@ -51,6 +59,21 @@ public interface ApiService {
             @Path("movie_id") int movieId,
             @Query("api_key") String apiKey,
             @Query("language") String language);
+
+    @GET("movie/{movie_id}/recommendations")
+    Call<MoviesApiResponse> getRecommendationsById(
+            @Path("movie_id") int movieId,
+            @Query("api_key") String apiKey,
+            @Query("language") String language);
+
+    @GET("movie/{movie_id}/similar")
+    Call<MoviesApiResponse> getSimilarById(
+            @Path("movie_id") int movieId,
+            @Query("api_key") String apiKey,
+            @Query("language") String language);
+
+    // End Region
+
 
 }
 
