@@ -33,7 +33,6 @@ public class MovieDetailsFragment extends Fragment {
     private MovieDetailsFragmentBinding binding;
     private NavController navController;
 
-
     private VideosApiResponse videosResult;
 
     // Popular Movies

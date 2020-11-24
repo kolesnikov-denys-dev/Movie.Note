@@ -10,8 +10,8 @@ import androidx.paging.PagedList;
 
 import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.movies.list.MovieResult;
-import com.best.movie.note.network.MovieApiService;
-import com.best.movie.note.network.RetrofitInstance;
+import com.best.movie.note.service.ApiService;
+import com.best.movie.note.service.ApiFactory;
 import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSource;
 import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSourceFactory;
 
@@ -25,15 +25,18 @@ public class MoviesListViewModel extends AndroidViewModel {
     private Executor executor;
     private LiveData<MovieDataSource> movieDataSourceLiveData;
     private LiveData<PagedList<MovieResult>> pagedListLiveData;
+    private ApiService apiService;
+    private ApiFactory apiFactory;
 
     public MoviesListViewModel(@NonNull Application application) {
         super(application);
 
-        // Где call.
+        this.apiFactory = ApiFactory.getInstance();
+        this.apiService = apiFactory.getApiService();
+
         movieRepository = new MoviesRepository(application);
-        MovieApiService movieApiService = RetrofitInstance.getService();
         // DataSource
-        MovieDataSourceFactory movieDataSourceFactory = new MovieDataSourceFactory(application, movieApiService);
+        MovieDataSourceFactory movieDataSourceFactory = new MovieDataSourceFactory(application, apiService);
         movieDataSourceLiveData = movieDataSourceFactory.getMutableLiveData();
         // PagedList
         PagedList.Config config = new PagedList.Config.Builder()
@@ -45,8 +48,6 @@ public class MoviesListViewModel extends AndroidViewModel {
 
         executor = Executors.newCachedThreadPool();
 
-//        LivePagedListBuilder. Он будет создавать PagedList в отдельном потоке
-//        Только вместо DataSource надо будет передавать DataSource.Factory
         pagedListLiveData = new LivePagedListBuilder<Long, MovieResult>(movieDataSourceFactory, config)
                 .setFetchExecutor(executor)
                 .build();
@@ -59,4 +60,5 @@ public class MoviesListViewModel extends AndroidViewModel {
     public LiveData<PagedList<MovieResult>> getPagedListLiveData() {
         return pagedListLiveData;
     }
+
 }

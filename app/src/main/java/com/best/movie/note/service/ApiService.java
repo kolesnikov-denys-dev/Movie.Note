@@ -1,4 +1,4 @@
-package com.best.movie.note.network;
+package com.best.movie.note.service;
 
 
 import com.best.movie.note.model.genres.GenresMovieApiResponse;
@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface MovieApiService {
+public interface ApiService {
 
     @GET("movie/popular")
     Call<MoviesApiResponse> getPopularMovies(@Query("api_key") String apiKey);
@@ -34,7 +34,6 @@ public interface MovieApiService {
             @Query("api_key") String apiKey,
             @Query("language") String language,
             @Query("page") String page);
-
 
     @GET("genre/movie/list")
     Call<GenresMovieApiResponse> getGenresMovies(

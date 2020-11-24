@@ -13,8 +13,8 @@ import com.best.movie.note.model.movies.list.MovieResult;
 import com.best.movie.note.model.movies.list.MoviesApiResponse;
 import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
-import com.best.movie.note.network.MovieApiService;
-import com.best.movie.note.network.RetrofitInstance;
+import com.best.movie.note.service.ApiService;
+import com.best.movie.note.service.ApiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MoviesRepository {
-    private final Application application;
-    private final MovieApiService movieApiService;
+    private Application application;
+    private ApiFactory apiFactory;
+    private ApiService apiService;
+
+    //
+    public MoviesRepository() {
+
+    }
+
+    public MoviesRepository(Application application) {
+        this.application = application;
+        this.apiFactory = ApiFactory.getInstance();
+        this.apiService = apiFactory.getApiService();
+    }
+
 
     // Popular Movies
     private ArrayList<MovieResult> movieResults = new ArrayList<>();
@@ -64,7 +77,9 @@ public class MoviesRepository {
     private MutableLiveData<List<MovieResult>> mutablePagingLiveData = new MutableLiveData<>();
 
     public MutableLiveData<List<MovieResult>> getMutableLiveData() {
-        Call<MoviesApiResponse> call = movieApiService.getPopularMovies(application.getApplicationContext()
+
+
+        Call<MoviesApiResponse> call = apiService.getPopularMovies(application.getApplicationContext()
                 .getString(R.string.api_key));
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
@@ -86,13 +101,8 @@ public class MoviesRepository {
     // Paging Library
 
 
-    public MoviesRepository(Application application) {
-        this.application = application;
-        this.movieApiService = RetrofitInstance.getService();
-    }
-
     public MutableLiveData<List<MovieResult>> getPopularMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = movieApiService.getPopularMovies(application.getApplicationContext()
+        Call<MoviesApiResponse> call = apiService.getPopularMovies(application.getApplicationContext()
                 .getString(R.string.api_key));
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
@@ -113,7 +123,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<List<MovieResult>> getNowPlayingMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = movieApiService.getNowPlayingMovies(application.getApplicationContext()
+        Call<MoviesApiResponse> call = apiService.getNowPlayingMovies(application.getApplicationContext()
                 .getString(R.string.api_key));
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
@@ -134,7 +144,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<List<MovieResult>> getTrendingMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = movieApiService.getTrendingMovies(application.getApplicationContext()
+        Call<MoviesApiResponse> call = apiService.getTrendingMovies(application.getApplicationContext()
                 .getString(R.string.api_key));
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
@@ -155,7 +165,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<List<MovieResult>> getTopRatedMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = movieApiService.getTopRatedMovies(application.getApplicationContext()
+        Call<MoviesApiResponse> call = apiService.getTopRatedMovies(application.getApplicationContext()
                 .getString(R.string.api_key));
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
@@ -175,7 +185,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<List<MovieResult>> getUpcomingMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = movieApiService
+        Call<MoviesApiResponse> call = apiService
                 .getUpcomingMovies(application.getApplicationContext()
                                 .getString(R.string.api_key),
                         "en-US",
@@ -200,7 +210,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
-        Call<GenresMovieApiResponse> call = movieApiService.getGenresMovies(application.getApplicationContext()
+        Call<GenresMovieApiResponse> call = apiService.getGenresMovies(application.getApplicationContext()
                         .getString(R.string.api_key),
                 "en-US");
         call.enqueue(new Callback<GenresMovieApiResponse>() {
@@ -223,7 +233,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<MovieDetailsApiResponse> getMovieDetailLiveData(int movieId, String language) {
-        Call<MovieDetailsApiResponse> call = movieApiService.getMovieDetailsById(movieId, application.getApplicationContext()
+        Call<MovieDetailsApiResponse> call = apiService.getMovieDetailsById(movieId, application.getApplicationContext()
                 .getString(R.string.api_key), language);
         call.enqueue(new Callback<MovieDetailsApiResponse>() {
             @Override
@@ -244,7 +254,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<VideosApiResponse> getMovieVideosLiveData(int movieId, String language) {
-        Call<VideosApiResponse> call = movieApiService.getMovieVideosById(movieId, application.getApplicationContext()
+        Call<VideosApiResponse> call = apiService.getMovieVideosById(movieId, application.getApplicationContext()
                 .getString(R.string.api_key), language);
         call.enqueue(new Callback<VideosApiResponse>() {
             @Override

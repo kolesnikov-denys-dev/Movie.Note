@@ -8,8 +8,8 @@ import androidx.paging.PageKeyedDataSource;
 import com.best.movie.note.R;
 import com.best.movie.note.model.movies.list.MovieResult;
 import com.best.movie.note.model.movies.list.MoviesApiResponse;
-import com.best.movie.note.network.MovieApiService;
-import com.best.movie.note.network.RetrofitInstance;
+import com.best.movie.note.service.ApiService;
+import com.best.movie.note.service.ApiFactory;
 
 import java.util.ArrayList;
 
@@ -50,17 +50,18 @@ import retrofit2.Response;
 public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
 
     private Application application;
-    private MovieApiService movieApiService;
+    private ApiService apiService;
+    private ApiFactory apiFactory;
 
-    public MovieDataSource(MovieApiService movieApiService, Application application) {
+    public MovieDataSource(ApiService apiService, Application application) {
         this.application = application;
-        this.movieApiService = movieApiService;
+        this.apiFactory = ApiFactory.getInstance();
+        this.apiService = apiFactory.getApiService();
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long, MovieResult> callback) {
-        movieApiService = RetrofitInstance.getService();
-        Call<MoviesApiResponse> call = movieApiService.getPopularMoviesWithPaging(
+        Call<MoviesApiResponse> call = apiService.getPopularMoviesWithPaging(
                 application.getApplicationContext().getString(R.string.api_key),
                 1);
 
@@ -90,8 +91,7 @@ public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Long> params, @NonNull final LoadCallback<Long, MovieResult> callback) {
-        movieApiService = RetrofitInstance.getService();
-        Call<MoviesApiResponse> call = movieApiService.getPopularMoviesWithPaging(
+        Call<MoviesApiResponse> call = apiService.getPopularMoviesWithPaging(
                 application.getApplicationContext().getString(R.string.api_key),
                 params.key);
 
