@@ -1,4 +1,4 @@
-package com.best.movie.note.adapter;
+package com.best.movie.note.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

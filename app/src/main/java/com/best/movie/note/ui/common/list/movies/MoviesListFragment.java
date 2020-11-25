@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.best.movie.note.R;
-import com.best.movie.note.adapter.MoviesListAdapter;
+import com.best.movie.note.adapters.MoviesListAdapter;
 import com.best.movie.note.databinding.MoviesListFragmentBinding;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 
