@@ -24,6 +24,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.best.movie.note.utils.Constants.API_KEY;
+import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
+import static com.best.movie.note.utils.Constants.TAG_ERROR;
+
 public class MoviesRepository {
     private Application application;
     private ApiFactory apiFactory;
@@ -68,14 +72,12 @@ public class MoviesRepository {
     // Cast & Crew
     private CastCrewApiResponse castCrewResult;
     private final MutableLiveData<CastCrewApiResponse> castCrewApiResponseMutableLiveData = new MutableLiveData<>();
-
     // Paging Library
     private ArrayList<MovieResult> results = new ArrayList<>();
     private MutableLiveData<List<MovieResult>> mutablePagingLiveData = new MutableLiveData<>();
 
     public MutableLiveData<List<MovieResult>> getMutableLiveData() {
-        Call<MoviesApiResponse> call = apiService.getPopularMovies(application.getApplicationContext()
-                .getString(R.string.api_key));
+        Call<MoviesApiResponse> call = apiService.getPopularMovies(API_KEY);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
@@ -95,8 +97,7 @@ public class MoviesRepository {
     }
 
     public MutableLiveData<List<MovieResult>> getPopularMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = apiService.getPopularMovies(application.getApplicationContext()
-                .getString(R.string.api_key));
+        Call<MoviesApiResponse> call = apiService.getPopularMovies(API_KEY);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
@@ -109,15 +110,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-
+                Log.e(TAG_ERROR, "onFailure: getPopularMoviesMutableLiveData" + t.getLocalizedMessage());
             }
         });
         return mutableLiveData;
     }
 
     public MutableLiveData<List<MovieResult>> getNowPlayingMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = apiService.getNowPlayingMovies(application.getApplicationContext()
-                .getString(R.string.api_key));
+        Call<MoviesApiResponse> call = apiService.getNowPlayingMovies(API_KEY);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
@@ -130,15 +130,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-
+                Log.e(TAG_ERROR, "onFailure: getNowPlayingMoviesMutableLiveData" + t.getLocalizedMessage());
             }
         });
         return playingNowMutableLiveData;
     }
 
     public MutableLiveData<List<MovieResult>> getTrendingMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = apiService.getTrendingMovies(application.getApplicationContext()
-                .getString(R.string.api_key));
+        Call<MoviesApiResponse> call = apiService.getTrendingMovies(API_KEY);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
@@ -151,15 +150,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-                Log.i("check", "ERROR: ");
+                Log.e(TAG_ERROR, "onFailure: getTrendingMoviesMutableLiveData" + t.getLocalizedMessage());
             }
         });
         return trendingMutableLiveData;
     }
 
     public MutableLiveData<List<MovieResult>> getTopRatedMoviesMutableLiveData() {
-        Call<MoviesApiResponse> call = apiService.getTopRatedMovies(application.getApplicationContext()
-                .getString(R.string.api_key));
+        Call<MoviesApiResponse> call = apiService.getTopRatedMovies(API_KEY);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
@@ -172,6 +170,7 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
+                Log.e(TAG_ERROR, "onFailure: getTopRatedMoviesMutableLiveData" + t.getLocalizedMessage());
             }
         });
         return topRatedMutableLiveData;
@@ -179,15 +178,13 @@ public class MoviesRepository {
 
     public MutableLiveData<List<MovieResult>> getUpcomingMoviesMutableLiveData() {
         Call<MoviesApiResponse> call = apiService
-                .getUpcomingMovies(application.getApplicationContext()
-                                .getString(R.string.api_key),
-                        "en-US",
+                .getUpcomingMovies(API_KEY,
+                        QUERY_LANGUAGE,
                         "1");
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse trendingMoviesApiResponse = response.body();
-                Log.d("check", "getUpcomingMoviesMutableLiveData : " + response.toString());
                 if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getResults() != null) {
                     upcomingResults = (ArrayList<MovieResult>) trendingMoviesApiResponse.getResults();
                     upcomingMutableLiveData.setValue(upcomingResults);
@@ -196,21 +193,19 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-                Log.d("check", "onFailure : " + t.getLocalizedMessage());
+                Log.e(TAG_ERROR, "onFailure: getUpcomingMoviesMutableLiveData" + t.getLocalizedMessage());
             }
         });
         return upcomingMutableLiveData;
     }
 
     public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
-        Call<GenresMovieApiResponse> call = apiService.getGenresMovies(application.getApplicationContext()
-                        .getString(R.string.api_key),
-                "en-US");
+        Call<GenresMovieApiResponse> call = apiService.getGenresMovies(API_KEY,
+                QUERY_LANGUAGE);
         call.enqueue(new Callback<GenresMovieApiResponse>() {
             @Override
             public void onResponse(Call<GenresMovieApiResponse> call, Response<GenresMovieApiResponse> response) {
                 GenresMovieApiResponse trendingMoviesApiResponse = response.body();
-                Log.d("check", "getUpcomingMoviesMutableLiveData : " + response.toString());
                 if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getGenres() != null) {
                     genreResults = (ArrayList<GenreResult>) trendingMoviesApiResponse.getGenres();
                     genresMutableLiveData.setValue(genreResults);
@@ -219,15 +214,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<GenresMovieApiResponse> call, Throwable t) {
-                Log.d("check", "onFailure : " + t.getLocalizedMessage());
+                Log.e(TAG_ERROR, "onFailure: getGenresMoviesMutableLiveData" + t.getLocalizedMessage());
             }
         });
         return genresMutableLiveData;
     }
 
     public MutableLiveData<MovieDetailsApiResponse> getMovieDetailLiveData(int movieId, String language) {
-        Call<MovieDetailsApiResponse> call = apiService.getMovieDetailsById(movieId, application.getApplicationContext()
-                .getString(R.string.api_key), language);
+        Call<MovieDetailsApiResponse> call = apiService.getMovieDetailsById(movieId, API_KEY, language);
         call.enqueue(new Callback<MovieDetailsApiResponse>() {
             @Override
             public void onResponse(Call<MovieDetailsApiResponse> call, Response<MovieDetailsApiResponse> response) {
@@ -240,15 +234,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MovieDetailsApiResponse> call, Throwable t) {
-                Log.e("check", t.getLocalizedMessage());
+                Log.e(TAG_ERROR, "onFailure: getMovieDetailLiveData" + t.getLocalizedMessage());
             }
         });
         return movieDetailsApiResponseMutableLiveData;
     }
 
     public MutableLiveData<VideosApiResponse> getMovieVideosLiveData(int movieId, String language) {
-        Call<VideosApiResponse> call = apiService.getMovieVideosById(movieId, application.getApplicationContext()
-                .getString(R.string.api_key), language);
+        Call<VideosApiResponse> call = apiService.getMovieVideosById(movieId, API_KEY, language);
         call.enqueue(new Callback<VideosApiResponse>() {
             @Override
             public void onResponse(Call<VideosApiResponse> call, Response<VideosApiResponse> response) {
@@ -261,15 +254,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<VideosApiResponse> call, Throwable t) {
-                Log.e("check", t.getLocalizedMessage());
+                Log.e(TAG_ERROR, "onFailure: getMovieVideosLiveData" + t.getLocalizedMessage());
             }
         });
         return movieVideosApiResponseMutableLiveData;
     }
 
     public MutableLiveData<List<MovieResult>> getRecommendationsLiveData(int movieId, String language) {
-        Call<MoviesApiResponse> call = apiService.getRecommendationsById(movieId, application.getApplicationContext()
-                .getString(R.string.api_key), language);
+        Call<MoviesApiResponse> call = apiService.getRecommendationsById(movieId, API_KEY, language);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
@@ -282,15 +274,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-
+                Log.e(TAG_ERROR, "onFailure: getRecommendationsLiveData" + t.getLocalizedMessage());
             }
         });
         return recommendationsApiResponseMutableLiveData;
     }
 
     public MutableLiveData<List<MovieResult>> getSimilarLiveData(int movieId, String language) {
-        Call<MoviesApiResponse> call = apiService.getSimilarById(movieId, application.getApplicationContext()
-                .getString(R.string.api_key), language);
+        Call<MoviesApiResponse> call = apiService.getSimilarById(movieId, API_KEY, language);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
@@ -303,15 +294,14 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-
+                Log.e(TAG_ERROR, "onFailure: getSimilarLiveData" + t.getLocalizedMessage());
             }
         });
         return similarApiResponseMutableLiveData;
     }
 
     public MutableLiveData<CastCrewApiResponse> getCreditsLiveData(int movieId, String language) {
-        Call<CastCrewApiResponse> call = apiService.getCreditsById(movieId, application.getApplicationContext()
-                .getString(R.string.api_key), language);
+        Call<CastCrewApiResponse> call = apiService.getCreditsById(movieId, API_KEY, language);
         call.enqueue(new Callback<CastCrewApiResponse>() {
             @Override
             public void onResponse(Call<CastCrewApiResponse> call, Response<CastCrewApiResponse> response) {
@@ -324,7 +314,7 @@ public class MoviesRepository {
 
             @Override
             public void onFailure(Call<CastCrewApiResponse> call, Throwable t) {
-
+                Log.e(TAG_ERROR, "onFailure: getCreditsLiveData" + t.getLocalizedMessage());
             }
         });
         return castCrewApiResponseMutableLiveData;

@@ -17,52 +17,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// 0 DiffUtil ItemCallBack Проверяет где новый обьект и какие поля обновились
-// 1 RecyclerView.Adapter мы меняем на PagedListAdapter
+import static com.best.movie.note.utils.Constants.API_KEY;
 
-// Вместо List у нас будет связка PagedList + DataSource,
-// которая умеет по мере необходимости подтягивать данные из Storage.
-
-// 2 PagingList обращается к DataSource за новой порцией данных, например, от 41 до 50.
-
-// DataSource один из 3 типов: это посредник между PagedList и Storage.
-//  Paging Library предоставляет три разных DataSource, которые должны нам помочь связать
-//  между собой PagedList и Storage.
-//  PositionalDataSource
-//  PageKeyedDataSource +
-//  ItemKeyedDataSource
-
-//-------------------------------------------------------------------------------------------------
-
-//    PageKeyedDataSource, Этот DataSource подходит для общения со Storage, который вместе с
-//    очередной порцией данных передает нам какой-то ключ для получения следующей порции данных.
-//
-//    ItemKeyedDataSource, Но в качестве ключей он использует не отдельные значения типа page
-//    или токена, а непосредственно данные.
-//    --- Например, если вы выбираете цепочки комментариев для приложения
-//    для обсуждения, вам может потребоваться передать идентификатор последнего комментария,
-//    чтобы получить содержимое следующего комментария.
-
-//    PositionalDataSource, Этот DataSource позволяет запрашивать данные по позиции. Т.е. если
-//    тянем данные, например, из БД, то можем указать, с какой позиции и сколько данных грузить.
-//    Если данные из файла, то указываем с какой строки и сколько строк грузить.
 
 public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
 
     private Application application;
     private ApiService apiService;
-    private ApiFactory apiFactory;
 
     public MovieDataSource(ApiService apiService, Application application) {
         this.application = application;
-        this.apiFactory = ApiFactory.getInstance();
-        this.apiService = apiFactory.getApiService();
+        this.apiService = apiService;
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long, MovieResult> callback) {
         Call<MoviesApiResponse> call = apiService.getPopularMoviesWithPaging(
-                application.getApplicationContext().getString(R.string.api_key),
+                API_KEY,
                 1);
 
         call.enqueue(new Callback<MoviesApiResponse>() {
@@ -72,7 +43,7 @@ public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
                 ArrayList<MovieResult> results = new ArrayList<>();
                 if (movieApiResponse != null && movieApiResponse.getResults() != null) {
                     results = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    callback.onResult(results, null, (long)2);
+                    callback.onResult(results, null, (long) 2);
                 }
 
             }
@@ -92,7 +63,7 @@ public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
     @Override
     public void loadAfter(@NonNull LoadParams<Long> params, @NonNull final LoadCallback<Long, MovieResult> callback) {
         Call<MoviesApiResponse> call = apiService.getPopularMoviesWithPaging(
-                application.getApplicationContext().getString(R.string.api_key),
+                API_KEY,
                 params.key);
 
         call.enqueue(new Callback<MoviesApiResponse>() {

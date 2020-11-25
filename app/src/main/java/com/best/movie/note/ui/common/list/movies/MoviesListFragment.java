@@ -57,8 +57,6 @@ public class MoviesListFragment extends Fragment {
                 .AndroidViewModelFactory(getActivity().getApplication())
                 .create(MoviesListViewModel.class);
 
-
-
         getPopularMovies(whatLoad);
 
         swipeRefreshLayout = binding.swipeRefresh;

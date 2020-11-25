@@ -12,6 +12,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import static com.best.movie.note.utils.Utils.setImage;
+
 public class MovieResult {
 
     @SerializedName("popularity")
@@ -44,24 +46,14 @@ public class MovieResult {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
-
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView imageView, String imageUrl) {
         setImage(imageView, imageUrl);
     }
-
     @BindingAdapter({"backdropPath"})
     public static void loadIBackdropImage(ImageView imageView, String imageUrl) {
         setImage(imageView, imageUrl);
     }
-
-    public static void setImage(ImageView imageView, String imageUrl) {
-        String imagePath = "https://image.tmdb.org/t/p/w500/" + imageUrl;
-        Glide.with(imageView.getContext())
-                .load(imagePath)
-                .into(imageView);
-    }
-
     public String getBackdropPath() {
         return backdropPath;
     }

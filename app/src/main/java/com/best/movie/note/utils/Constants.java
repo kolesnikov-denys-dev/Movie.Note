@@ -12,10 +12,9 @@ public class Constants {
     public static final String PARAMS_LANGUAGE = "language";
     public static final String PARAMS_MOVIE_ID = "movie_id";
 
-    public static final String API_KEY = "f3398ff250b7533decbfd407e06e07b8";
+    public static final String QUERY_LANGUAGE = "en-US";
 
-    public static final String MOVIE_POPULAR = "movie/popular";
-    public static final String NOW_PLAYING_MOVIE = "movie/now_playing";
+    public static final String API_KEY = "f3398ff250b7533decbfd407e06e07b8";
 
     // End Region
 
@@ -28,8 +27,9 @@ public class Constants {
 
     public static final int SPAN_COUNT_HORIZONTAL_SMALL = 4;
 
-
-
     // End Region
+
+    public static final String TAG_ERROR = "ERROR";
+    public static final String TAG_INFO = "INFO";
 
 }
