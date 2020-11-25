@@ -7,12 +7,9 @@
     <data>
 
         <variable
-            name="movieResult"
-            type="com.best.movie.note.model.movies.list.MovieResult" />
+            name="castResult"
+            type="com.best.movie.note.model.movies.main.castcrew.Cast" />
 
-        <variable
-            name="subtitle"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,11 +32,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/special_placeholder"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:posterPath="@{movieResult.posterPath}"
+                bind:profilePath="@{castResult.profilePath}"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         </androidx.cardview.widget.CardView>
@@ -52,7 +49,7 @@
             android:layout_marginTop="6dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{movieResult.originalTitle}"
+            android:text="@{castResult.originalName}"
             android:textAlignment="center"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +65,7 @@
             android:layout_marginTop="6dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{subtitle}"
+            android:text="@{castResult.character}"
             android:textAlignment="center"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"

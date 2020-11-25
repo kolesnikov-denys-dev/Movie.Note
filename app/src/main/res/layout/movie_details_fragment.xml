@@ -13,6 +13,17 @@
         <variable
             name="buttonHandler"
             type="com.best.movie.note.ui.common.details.MovieDetailsFragment.MovieDetailsFragmentButtonsHandler" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="showRecommendationList"
+            type="Boolean" />
+
+        <variable
+            name="showSimilarList"
+            type="Boolean" />
+
     </data>
 
     <ScrollView
@@ -326,7 +337,7 @@
                 style="@style/left_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cast&amp;Crew"
+                android:text="Cast"
                 app:layout_constraintBottom_toBottomOf="@+id/popularSeeAllButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/castCrewSeeAllButton" />
@@ -466,7 +477,9 @@
                 style="@style/left_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:text="Recommended"
+                android:visibility="@{showRecommendationList ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/playingInTheatresSeeAllButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/recommendedSeeAllButton" />
@@ -474,6 +487,7 @@
             <ImageView
                 android:id="@+id/recommendedSeeAllButton"
                 style="@style/yellow_arrow"
+                android:visibility="@{showRecommendationList ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spokenLanguageTextView" />
 
@@ -482,10 +496,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="12dp"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:padding="8dp"
+                android:visibility="@{showRecommendationList ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/recommendedTitleTextView"
                 tools:listitem="@layout/movie_vertical_item" />
@@ -496,6 +510,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Similar"
+                android:visibility="@{showSimilarList ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/playingInTheatresSeeAllButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/similarSeeAllButton" />
@@ -503,6 +518,7 @@
             <ImageView
                 android:id="@+id/similarSeeAllButton"
                 style="@style/yellow_arrow"
+                android:visibility="@{showSimilarList ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recommendedRecyclerView" />
 
@@ -512,10 +528,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:padding="8dp"
-                android:layout_marginBottom="20dp"
+                android:visibility="@{showSimilarList ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/similarTitleTextView"
                 tools:listitem="@layout/movie_vertical_item" />

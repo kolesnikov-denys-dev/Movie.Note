@@ -9,9 +9,8 @@ import androidx.lifecycle.LiveData;
 import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.genres.GenreResult;
 import com.best.movie.note.model.movies.list.MovieResult;
-import com.best.movie.note.model.movies.list.MoviesApiResponse;
+import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
 import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
-import com.best.movie.note.model.movies.main.recommended.RecommendationsApiResponse;
 import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 
 import java.util.List;
@@ -45,6 +44,10 @@ public class MovieDetailsViewModel extends AndroidViewModel {
 
     public LiveData<List<MovieResult>> getSimilar(int movieId, String language) {
         return moviesRepository.getSimilarLiveData(movieId, language);
+    }
+
+    public LiveData<CastCrewApiResponse> getCredits(int movieId, String language) {
+        return moviesRepository.getCreditsLiveData(movieId, language);
     }
 
 

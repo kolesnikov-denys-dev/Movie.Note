@@ -23,10 +23,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
+import com.best.movie.note.adapter.CreditsAdapter;
 import com.best.movie.note.adapter.MoviesAdapter;
 import com.best.movie.note.databinding.MovieDetailsFragmentBinding;
 import com.best.movie.note.model.genres.GenreResult;
 import com.best.movie.note.model.movies.list.MovieResult;
+import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
 import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 
@@ -44,6 +46,11 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
 
     // Trailers video
     private VideosApiResponse trailersResult;
+
+    // Cast & Crew Movies
+    private CastCrewApiResponse castCrewResult;
+    private RecyclerView castCrewRecyclerView;
+    private CreditsAdapter castCrewAdapter;
 
     // Recommendation Movies
     private ArrayList<MovieResult> recommendationsResult;
@@ -65,6 +72,8 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_fragment, container, false);
         binding.setButtonHandler(new MovieDetailsFragmentButtonsHandler());
+        binding.setShowRecommendationList(true);
+        binding.setShowSimilarList(true);
         return binding.getRoot();
     }
 
@@ -90,6 +99,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
             getMovieVideos(movieId, "en-US");
             getRecommendations(movieId, "en-US");
             getSimilar(movieId, "en-US");
+            getCredits(movieId, "en-US");
         }
     }
 
@@ -124,13 +134,29 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                 });
     }
 
+    public void getCredits(int movieId, String language) {
+        movieDetailsViewModel.getCredits(movieId, language).observe(getActivity(),
+                new Observer<CastCrewApiResponse>() {
+                    @Override
+                    public void onChanged(CastCrewApiResponse data) {
+                        castCrewResult = data;
+                        fillCastCrewRecyclerView();
+
+                    }
+                });
+    }
+
     public void getRecommendations(int movieId, String language) {
         movieDetailsViewModel.getRecommendations(movieId, language).observe(getActivity(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
                         recommendationsResult = (ArrayList<MovieResult>) data;
-                        fillRecommendationRecyclerView();
+                        if (recommendationsResult.size() == 0) {
+                            binding.setShowRecommendationList(false);
+                        } else {
+                            fillRecommendationRecyclerView();
+                        }
                     }
                 });
     }
@@ -141,7 +167,11 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                     @Override
                     public void onChanged(List<MovieResult> data) {
                         similarResult = (ArrayList<MovieResult>) data;
-                        fillSimilarRecyclerView();
+                        if (similarResult.size() == 0) {
+                            binding.setShowSimilarList(false);
+                        } else {
+                            fillSimilarRecyclerView();
+                        }
                     }
                 });
     }
@@ -181,6 +211,14 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
         }
     }
 
+    private void fillCastCrewRecyclerView() {
+        castCrewRecyclerView = binding.castCrewRecyclerView;
+        castCrewAdapter = new CreditsAdapter(castCrewResult.getCast());
+        castCrewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        castCrewRecyclerView.setAdapter(castCrewAdapter);
+//        castCrewAdapter.setOnItemClickListener(this);
+        castCrewAdapter.notifyDataSetChanged();
+    }
 
     private void fillRecommendationRecyclerView() {
         recommendationRecyclerView = binding.recommendedRecyclerView;
@@ -208,6 +246,5 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
         bundle.putString("original_name", originalName);
         navController.navigate(R.id.action_mainMovieFragment_self, bundle);
     }
-
 
 }

@@ -11,8 +11,8 @@ import com.best.movie.note.model.genres.GenreResult;
 import com.best.movie.note.model.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.movies.list.MovieResult;
 import com.best.movie.note.model.movies.list.MoviesApiResponse;
+import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
 import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
-import com.best.movie.note.model.movies.main.recommended.RecommendationsApiResponse;
 import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 import com.best.movie.note.service.ApiService;
 import com.best.movie.note.service.ApiFactory;
@@ -65,7 +65,9 @@ public class MoviesRepository {
     // Similar Movies
     private ArrayList<MovieResult> similarResult;
     private final MutableLiveData<List<MovieResult>> similarApiResponseMutableLiveData = new MutableLiveData<>();
-
+    // Cast & Crew
+    private CastCrewApiResponse castCrewResult;
+    private final MutableLiveData<CastCrewApiResponse> castCrewApiResponseMutableLiveData = new MutableLiveData<>();
 
     // Paging Library
     private ArrayList<MovieResult> results = new ArrayList<>();
@@ -307,5 +309,27 @@ public class MoviesRepository {
         });
         return similarApiResponseMutableLiveData;
     }
+
+    public MutableLiveData<CastCrewApiResponse> getCreditsLiveData(int movieId, String language) {
+        Call<CastCrewApiResponse> call = apiService.getCreditsById(movieId, application.getApplicationContext()
+                .getString(R.string.api_key), language);
+        call.enqueue(new Callback<CastCrewApiResponse>() {
+            @Override
+            public void onResponse(Call<CastCrewApiResponse> call, Response<CastCrewApiResponse> response) {
+                CastCrewApiResponse movieApiResponse = response.body();
+                if (movieApiResponse != null && movieApiResponse != null) {
+                    castCrewResult = movieApiResponse;
+                    castCrewApiResponseMutableLiveData.setValue(castCrewResult);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CastCrewApiResponse> call, Throwable t) {
+
+            }
+        });
+        return castCrewApiResponseMutableLiveData;
+    }
+
 
 }

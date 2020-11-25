@@ -37,14 +37,14 @@
     <style name="card_title">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/hind_colombo_medium</item>
+        <item name="android:fontFamily">@font/hind_colombo</item>
         <item name="android:ellipsize">end</item>
     </style>
 
     <style name="card_subtitle">
         <item name="android:textColor">@color/special_subtitle_gray</item>
         <item name="android:textSize">10sp</item>
-        <item name="android:fontFamily">@font/hind_colombo_medium</item>
+        <item name="android:fontFamily">@font/hind_colombo</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>

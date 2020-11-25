@@ -36,7 +36,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         this.onItemClickListener = onItemClickListener;
     }
 
-
     public MoviesAdapter(ArrayList<MovieResult> moviesList, int cardsType, ArrayList<GenreResult> genresResults) {
 
         this.moviesList = moviesList;
@@ -55,13 +54,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                     genres.append(getGenreById(listGenres.get(j))).append(" ");
                 }
             }
-            subtitleList.add(getYear(moviesList.get(i).getReleaseDate()) + " " + genres);
+            if (getYear(moviesList.get(i).getReleaseDate()).length() < 3) {
+                subtitleList.add(genres.toString());
+            } else {
+                subtitleList.add(getYear(moviesList.get(i).getReleaseDate()) + " " + genres);
+            }
         }
     }
 
 
     public String getYear(String year) {
-        return year.split("-")[0];
+        if (year != null && year.length() > 3) {
+            return year.split("-")[0];
+        }
+        return "";
     }
 
     public String getGenreById(int genreId) {
