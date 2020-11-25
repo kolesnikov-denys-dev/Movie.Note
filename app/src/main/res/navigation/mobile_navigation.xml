@@ -9,7 +9,7 @@
         android:id="@+id/navigation_movies"
         android:name="com.best.movie.note.ui.movies.MoviesFragment"
         android:label="@string/title_movies"
-        tools:layout="@layout/fragment_movies" >
+        tools:layout="@layout/fragment_movies">
         <action
             android:id="@+id/action_navigation_movies_to_navigation_movies_list"
             app:destination="@id/navigation_movies_list">
@@ -38,21 +38,23 @@
         android:id="@+id/navigation_notes"
         android:name="com.best.movie.note.ui.notes.NotesFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_notes"
+
+        />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.best.movie.note.ui.tmdb.TmdbFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_tmdb" />
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/navigation_movies_list"
         android:name="com.best.movie.note.ui.common.list.movies.MoviesListFragment"
         android:label="@string/title_movies_list"
-        tools:layout="@layout/movies_list_fragment" >
+        tools:layout="@layout/movies_list_fragment">
         <argument
             android:name="what_open"
-            app:argType="string"
-            android:defaultValue="popular" />
+            android:defaultValue="popular"
+            app:argType="string" />
         <action
             android:id="@+id/action_navigation_movies_list_to_mainMovieFragment"
             app:destination="@id/mainMovieFragment" />
@@ -61,13 +63,9 @@
         android:id="@+id/mainMovieFragment"
         android:name="com.best.movie.note.ui.common.details.MovieDetailsFragment"
         android:label="main_movie_fragment"
-        tools:layout="@layout/movie_details_fragment" >
+        tools:layout="@layout/movie_details_fragment">
         <action
             android:id="@+id/action_mainMovieFragment_self"
             app:destination="@id/mainMovieFragment" />
     </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.best.movie.note.MainActivity"
-        android:label="MainActivity" />
 </navigation>
