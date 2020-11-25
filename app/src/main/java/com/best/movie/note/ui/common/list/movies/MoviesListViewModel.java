@@ -55,9 +55,6 @@ public class MoviesListViewModel extends AndroidViewModel {
                 .build();
     }
 
-    public LiveData<List<MovieResult>> getAllMovieData() {
-        return repository.getMutableLiveData();
-    }
 
     public LiveData<PagedList<MovieResult>> getPagedListLiveData() {
         return pagedListLiveData;

@@ -1,58 +1,65 @@
 package com.best.movie.note.ui.common.list.movies.databinding;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
 import com.best.movie.note.R;
+import com.best.movie.note.model.MoviesListRepository;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.service.ApiService;
 import com.best.movie.note.service.ApiFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.best.movie.note.utils.Constants.API_KEY;
+import static com.best.movie.note.utils.Constants.TAG_ERROR;
 
 
 public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
 
     private Application application;
     private ApiService apiService;
+    private List<MovieResult> result;
 
     public MovieDataSource(ApiService apiService, Application application) {
         this.application = application;
         this.apiService = apiService;
+        result = new ArrayList<>();
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long, MovieResult> callback) {
-        Call<MoviesApiResponse> call = apiService.getPopularMoviesWithPaging(
-                API_KEY,
-                1);
-
-        call.enqueue(new Callback<MoviesApiResponse>() {
-            @Override
-            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
-                MoviesApiResponse movieApiResponse = response.body();
-                ArrayList<MovieResult> results = new ArrayList<>();
-                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    results = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    callback.onResult(results, null, (long) 2);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-
-            }
-        });
+        Disposable disposableSimpleData = apiService.getPopularMoviesWithPaging(API_KEY, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<MoviesApiResponse>() {
+                    @Override
+                    public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
+                        if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
+                            result = moviesApiResponse.getResults();
+                            callback.onResult(result, null, (long) 2);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e(TAG_ERROR, "onFailure: loadInitial" + throwable.getLocalizedMessage());
+                    }
+                });
+//        compositeDisposable.add(disposableSimpleData);
     }
 
     @Override
@@ -62,26 +69,24 @@ public class MovieDataSource extends PageKeyedDataSource<Long, MovieResult> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Long> params, @NonNull final LoadCallback<Long, MovieResult> callback) {
-        Call<MoviesApiResponse> call = apiService.getPopularMoviesWithPaging(
-                API_KEY,
-                params.key);
-
-        call.enqueue(new Callback<MoviesApiResponse>() {
-            @Override
-            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
-                MoviesApiResponse movieApiResponse = response.body();
-                ArrayList<MovieResult> results = new ArrayList<>();
-                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    results = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    callback.onResult(results, params.key + 1);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-
-            }
-        });
+        Disposable disposableSimpleData = apiService.getPopularMoviesWithPaging(API_KEY, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<MoviesApiResponse>() {
+                    @Override
+                    public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
+                        if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
+                            result = moviesApiResponse.getResults();
+                            callback.onResult(result, params.key + 1);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e(TAG_ERROR, "onFailure: loadAfter" + throwable.getLocalizedMessage());
+                    }
+                });
+        //        compositeDisposable.add(disposableSimpleData);
     }
 
 }

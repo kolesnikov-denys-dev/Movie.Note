@@ -60,6 +60,13 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     // Genres Movies
     private ArrayList<GenreResult> genresResults;
 
+
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setRetainInstance(true);
+//    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
@@ -242,4 +249,9 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
         }
     }
 
+    @Override
+    public void onDestroy() {
+        moviesViewModel.disposeDisposable();
+        super.onDestroy();
+    }
 }

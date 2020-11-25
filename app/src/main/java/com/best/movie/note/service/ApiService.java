@@ -7,6 +7,7 @@ import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -19,29 +20,29 @@ public interface ApiService {
     // Movies Region
 
     @GET("movie/popular")
-    Call<MoviesApiResponse> getPopularMovies(@Query(PARAMS_API_KEY) String apiKey);
+    Observable<MoviesApiResponse> getPopularMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("movie/popular")
-    Call<MoviesApiResponse> getPopularMoviesWithPaging(
+    Observable<MoviesApiResponse> getPopularMoviesWithPaging(
             @Query(PARAMS_API_KEY) String apiKey, @Query(PARAMS_PAGE) long page);
 
     @GET("movie/now_playing")
-    Call<MoviesApiResponse> getNowPlayingMovies(@Query(PARAMS_API_KEY) String apiKey);
+    Observable<MoviesApiResponse> getNowPlayingMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("trending/movie/day")
-    Call<MoviesApiResponse> getTrendingMovies(@Query(PARAMS_API_KEY) String apiKey);
+    Observable<MoviesApiResponse> getTrendingMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("movie/top_rated")
-    Call<MoviesApiResponse> getTopRatedMovies(@Query(PARAMS_API_KEY) String apiKey);
+    Observable<MoviesApiResponse> getTopRatedMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("movie/upcoming")
-    Call<MoviesApiResponse> getUpcomingMovies(
+    Observable<MoviesApiResponse> getUpcomingMovies(
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language,
             @Query(PARAMS_PAGE) String page);
 
     @GET("genre/movie/list")
-    Call<GenresMovieApiResponse> getGenresMovies(
+    Observable<GenresMovieApiResponse> getGenresMovies(
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);
 

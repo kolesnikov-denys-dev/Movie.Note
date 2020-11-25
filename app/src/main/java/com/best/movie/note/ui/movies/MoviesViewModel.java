@@ -46,4 +46,8 @@ public class MoviesViewModel extends AndroidViewModel {
         return moviesRepository.getGenresMoviesMutableLiveData();
     }
 
+    public void disposeDisposable (){
+        moviesRepository.disposeDisposable();
+    }
+
 }
