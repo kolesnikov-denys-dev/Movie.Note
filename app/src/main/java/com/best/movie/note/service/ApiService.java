@@ -5,7 +5,6 @@ import com.best.movie.note.model.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.movies.list.MoviesApiResponse;
 import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
 import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
-import com.best.movie.note.model.movies.main.recommended.RecommendationsApiResponse;
 import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 
 import retrofit2.Call;

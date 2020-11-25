@@ -1,6 +1,7 @@
 package com.best.movie.note.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,15 +18,14 @@ import java.util.List;
 public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.MoviesViewHolder> {
 
     private List<Cast> castList;
+    private OnCastClickListener onCastClickListener;
 
-    private OnItemClickListener onItemClickListener;
-
-    public interface OnItemClickListener {
-        void onItemClick(int movieId, String originalName);
+    public void setOnCastClickListener(OnCastClickListener onCastClickListener) {
+        this.onCastClickListener = onCastClickListener;
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public interface OnCastClickListener {
+        void onCastClick(int castId, String originalName);
     }
 
     public CreditsAdapter(List<Cast> castList) {
@@ -58,6 +58,15 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.MoviesVi
         public MoviesViewHolder(@NonNull CastCrewCircleItemBinding view) {
             super(view.getRoot());
             this.binding = view;
+            binding.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onCastClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                        onCastClickListener.onCastClick(castList.get(getAdapterPosition()).getId(),
+                                castList.get(getAdapterPosition()).getOriginalName());
+                    }
+                }
+            });
         }
     }
 

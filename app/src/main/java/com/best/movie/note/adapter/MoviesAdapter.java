@@ -20,24 +20,21 @@ import java.util.List;
 
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
-
     private ArrayList<MovieResult> moviesList;
-    private int cardsType;
     private ArrayList<GenreResult> genres;
     private ArrayList<String> subtitleList;
+    private int cardsType;
+    private OnMovieClickListener onMovieClickListener;
 
-    private OnItemClickListener onItemClickListener;
-
-    public interface OnItemClickListener {
-        void onItemClick(int movieId, String originalName);
+    public interface OnMovieClickListener {
+        void onMovieClick(int movieId, String originalName);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {
+        this.onMovieClickListener = onMovieClickListener;
     }
 
     public MoviesAdapter(ArrayList<MovieResult> moviesList, int cardsType, ArrayList<GenreResult> genresResults) {
-
         this.moviesList = moviesList;
         this.cardsType = cardsType;
         this.genres = genresResults;
@@ -54,6 +51,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                     genres.append(getGenreById(listGenres.get(j))).append(" ");
                 }
             }
+
             if (getYear(moviesList.get(i).getReleaseDate()).length() < 3) {
                 subtitleList.add(genres.toString());
             } else {
@@ -127,7 +125,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
-
         private MovieVerticalItemBinding verticalCard;
         private MovieHorizontalItemBinding horizontalCard;
         private MovieHorizontalSmallItemBinding horizontalSmallCard;
@@ -139,8 +136,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 verticalCard.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            onItemClickListener.onItemClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
+                        if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                            onMovieClickListener.onMovieClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
                         }
                     }
                 });
@@ -154,8 +151,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 horizontalCard.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            onItemClickListener.onItemClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
+                        if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                            onMovieClickListener.onMovieClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
                         }
                     }
                 });
@@ -169,8 +166,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 horizontalSmallCard.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            onItemClickListener.onItemClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
+                        if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                            onMovieClickListener.onMovieClick(moviesList.get(getAdapterPosition()).getId(), moviesList.get(getAdapterPosition()).getOriginalTitle());
                         }
                     }
                 });

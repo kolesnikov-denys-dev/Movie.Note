@@ -13,6 +13,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fullConstraintLayout"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"

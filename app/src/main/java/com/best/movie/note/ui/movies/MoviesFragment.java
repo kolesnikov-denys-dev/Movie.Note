@@ -27,7 +27,7 @@ import com.best.movie.note.model.movies.list.MovieResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoviesFragment extends Fragment implements MoviesAdapter.OnItemClickListener {
+public class MoviesFragment extends Fragment implements MoviesAdapter.OnMovieClickListener {
 
     private MoviesViewModel moviesViewModel;
     private FragmentMoviesBinding binding;
@@ -60,9 +60,6 @@ public class MoviesFragment extends Fragment implements MoviesAdapter.OnItemClic
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        binding = FragmentMoviesBinding.inflate(inflater, container, false);
-//        return binding.getRoot();
-
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
             return binding.getRoot();
@@ -162,7 +159,7 @@ public class MoviesFragment extends Fragment implements MoviesAdapter.OnItemClic
         moviesAdapter = new MoviesAdapter(movieResults, 99, genresResults);
         popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         popularMoviesRecyclerView.setAdapter(moviesAdapter);
-        moviesAdapter.setOnItemClickListener(this);
+        moviesAdapter.setOnMovieClickListener(this);
         moviesAdapter.notifyDataSetChanged();
     }
 
@@ -171,7 +168,7 @@ public class MoviesFragment extends Fragment implements MoviesAdapter.OnItemClic
         nowPlayingMoviesAdapter = new MoviesAdapter(playingNowResults, 1, genresResults);
         nowPlayingMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         nowPlayingMoviesRecyclerView.setAdapter(nowPlayingMoviesAdapter);
-        nowPlayingMoviesAdapter.setOnItemClickListener(this);
+        nowPlayingMoviesAdapter.setOnMovieClickListener(this);
         nowPlayingMoviesAdapter.notifyDataSetChanged();
     }
 
@@ -180,7 +177,7 @@ public class MoviesFragment extends Fragment implements MoviesAdapter.OnItemClic
         trendingMoviesAdapter = new MoviesAdapter(trendingResults, 99, genresResults);
         trendingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         trendingRecyclerView.setAdapter(trendingMoviesAdapter);
-        trendingMoviesAdapter.setOnItemClickListener(this);
+        trendingMoviesAdapter.setOnMovieClickListener(this);
         trendingMoviesAdapter.notifyDataSetChanged();
     }
 
@@ -189,7 +186,7 @@ public class MoviesFragment extends Fragment implements MoviesAdapter.OnItemClic
         topRatedMoviesAdapter = new MoviesAdapter(topRatedResults, 2, genresResults);
         topRatedRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, GridLayoutManager.HORIZONTAL, false));
         topRatedRecyclerView.setAdapter(topRatedMoviesAdapter);
-        topRatedMoviesAdapter.setOnItemClickListener(this);
+        topRatedMoviesAdapter.setOnMovieClickListener(this);
         topRatedMoviesAdapter.notifyDataSetChanged();
     }
 
@@ -198,12 +195,12 @@ public class MoviesFragment extends Fragment implements MoviesAdapter.OnItemClic
         upcomingMoviesAdapter = new MoviesAdapter(upcomingResults, 99, genresResults);
         upcomingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         upcomingRecyclerView.setAdapter(upcomingMoviesAdapter);
-        upcomingMoviesAdapter.setOnItemClickListener(this);
+        upcomingMoviesAdapter.setOnMovieClickListener(this);
         upcomingMoviesAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onItemClick(int movieId, String originalName) {
+    public void onMovieClick(int movieId, String originalName) {
         Log.i("check", "was Clicked on :" + movieId);
         Bundle bundle = new Bundle();
         bundle.putInt("movie_id", movieId);

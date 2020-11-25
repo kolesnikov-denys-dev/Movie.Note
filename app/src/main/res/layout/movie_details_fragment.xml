@@ -24,6 +24,10 @@
             name="showSimilarList"
             type="Boolean" />
 
+        <variable
+            name="showCastList"
+            type="Boolean" />
+
     </data>
 
     <ScrollView
@@ -338,6 +342,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cast"
+                android:visibility="@{showCastList ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/popularSeeAllButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/castCrewSeeAllButton" />
@@ -346,6 +351,7 @@
                 android:id="@+id/castCrewSeeAllButton"
                 style="@style/yellow_arrow"
                 android:layout_marginTop="22dp"
+                android:visibility="@{showCastList ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/overviewTextView" />
 
@@ -358,6 +364,7 @@
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:padding="8dp"
+                android:visibility="@{showCastList ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/castCrewTextView"
                 tools:listitem="@layout/cast_crew_circle_item" />

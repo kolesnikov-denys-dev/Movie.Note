@@ -35,7 +35,8 @@ import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnItemClickListener {
+public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnMovieClickListener,
+        CreditsAdapter.OnCastClickListener {
 
     private MovieDetailsViewModel movieDetailsViewModel;
     private MovieDetailsFragmentBinding binding;
@@ -43,27 +44,21 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
 
     // Movie Details
     private MovieDetailsApiResponse movieDetailsResult;
-
     // Trailers video
     private VideosApiResponse trailersResult;
-
     // Cast & Crew Movies
     private CastCrewApiResponse castCrewResult;
     private RecyclerView castCrewRecyclerView;
     private CreditsAdapter castCrewAdapter;
-
     // Recommendation Movies
     private ArrayList<MovieResult> recommendationsResult;
     private RecyclerView recommendationRecyclerView;
     private MoviesAdapter recommendationAdapter;
-
     // Similar Movies
     private ArrayList<MovieResult> similarResult;
     private RecyclerView similarRecyclerView;
     private MoviesAdapter similarAdapter;
-
-    int movieId;
-
+    private int movieId;
     // Genres Movies
     private ArrayList<GenreResult> genresResults;
 
@@ -72,8 +67,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_fragment, container, false);
         binding.setButtonHandler(new MovieDetailsFragmentButtonsHandler());
-        binding.setShowRecommendationList(true);
-        binding.setShowSimilarList(true);
         return binding.getRoot();
     }
 
@@ -86,7 +79,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                 .create(MovieDetailsViewModel.class);
 
         navController = Navigation.findNavController(view);
-//        binding.setButtonHandler(new MoviesFragment.MoviesFragmentButtonsHandler());
 
         if (getArguments() != null) {
             movieId = getArguments().getInt("movie_id");
@@ -140,8 +132,12 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                     @Override
                     public void onChanged(CastCrewApiResponse data) {
                         castCrewResult = data;
-                        fillCastCrewRecyclerView();
-
+                        if (castCrewResult.getCast().isEmpty()) {
+                            binding.setShowCastList(false);
+                        } else {
+                            fillCastCrewRecyclerView();
+                            binding.setShowCastList(true);
+                        }
                     }
                 });
     }
@@ -152,9 +148,10 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                     @Override
                     public void onChanged(List<MovieResult> data) {
                         recommendationsResult = (ArrayList<MovieResult>) data;
-                        if (recommendationsResult.size() == 0) {
+                        if (recommendationsResult.isEmpty()) {
                             binding.setShowRecommendationList(false);
                         } else {
+                            binding.setShowRecommendationList(true);
                             fillRecommendationRecyclerView();
                         }
                     }
@@ -167,15 +164,56 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
                     @Override
                     public void onChanged(List<MovieResult> data) {
                         similarResult = (ArrayList<MovieResult>) data;
-                        if (similarResult.size() == 0) {
+                        if (similarResult.isEmpty()) {
                             binding.setShowSimilarList(false);
                         } else {
+                            binding.setShowSimilarList(true);
                             fillSimilarRecyclerView();
                         }
                     }
                 });
     }
 
+    private void fillCastCrewRecyclerView() {
+        castCrewRecyclerView = binding.castCrewRecyclerView;
+        castCrewAdapter = new CreditsAdapter(castCrewResult.getCast());
+        castCrewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        castCrewRecyclerView.setAdapter(castCrewAdapter);
+        castCrewAdapter.setOnCastClickListener(this);
+        castCrewAdapter.notifyDataSetChanged();
+    }
+
+    private void fillRecommendationRecyclerView() {
+        recommendationRecyclerView = binding.recommendedRecyclerView;
+        recommendationAdapter = new MoviesAdapter(recommendationsResult, 99, genresResults);
+        recommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recommendationRecyclerView.setAdapter(recommendationAdapter);
+        recommendationAdapter.setOnMovieClickListener(this);
+        recommendationAdapter.notifyDataSetChanged();
+    }
+
+    private void fillSimilarRecyclerView() {
+        similarRecyclerView = binding.similarRecyclerView;
+        similarAdapter = new MoviesAdapter(similarResult, 99, genresResults);
+        similarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        similarRecyclerView.setAdapter(similarAdapter);
+        similarAdapter.setOnMovieClickListener(this);
+        similarAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onMovieClick(int movieId, String originalName) {
+        Log.i("check", "was Clicked on :" + movieId);
+        Bundle bundle = new Bundle();
+        bundle.putInt("movie_id", movieId);
+        bundle.putString("original_name", originalName);
+        navController.navigate(R.id.action_mainMovieFragment_self, bundle);
+    }
+
+    @Override
+    public void onCastClick(int castId, String originalName) {
+        Toast.makeText(getContext(), "Implements", Toast.LENGTH_SHORT).show();
+    }
 
     public class MovieDetailsFragmentButtonsHandler {
         //TODO if not trailer
@@ -209,42 +247,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnIt
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
         }
-    }
-
-    private void fillCastCrewRecyclerView() {
-        castCrewRecyclerView = binding.castCrewRecyclerView;
-        castCrewAdapter = new CreditsAdapter(castCrewResult.getCast());
-        castCrewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        castCrewRecyclerView.setAdapter(castCrewAdapter);
-//        castCrewAdapter.setOnItemClickListener(this);
-        castCrewAdapter.notifyDataSetChanged();
-    }
-
-    private void fillRecommendationRecyclerView() {
-        recommendationRecyclerView = binding.recommendedRecyclerView;
-        recommendationAdapter = new MoviesAdapter(recommendationsResult, 99, genresResults);
-        recommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recommendationRecyclerView.setAdapter(recommendationAdapter);
-        recommendationAdapter.setOnItemClickListener(this);
-        recommendationAdapter.notifyDataSetChanged();
-    }
-
-    private void fillSimilarRecyclerView() {
-        similarRecyclerView = binding.similarRecyclerView;
-        similarAdapter = new MoviesAdapter(similarResult, 99, genresResults);
-        similarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        similarRecyclerView.setAdapter(similarAdapter);
-        similarAdapter.setOnItemClickListener(this);
-        similarAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onItemClick(int movieId, String originalName) {
-        Log.i("check", "was Clicked on :" + movieId);
-        Bundle bundle = new Bundle();
-        bundle.putInt("movie_id", movieId);
-        bundle.putString("original_name", originalName);
-        navController.navigate(R.id.action_mainMovieFragment_self, bundle);
     }
 
 }
