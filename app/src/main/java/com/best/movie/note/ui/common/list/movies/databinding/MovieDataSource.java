@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
 import com.best.movie.note.R;
-import com.best.movie.note.model.movies.list.MovieResult;
-import com.best.movie.note.model.movies.list.MoviesApiResponse;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
+import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.service.ApiService;
 import com.best.movie.note.service.ApiFactory;
 

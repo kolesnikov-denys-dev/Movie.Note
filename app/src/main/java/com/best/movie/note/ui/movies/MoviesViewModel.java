@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.best.movie.note.model.MoviesRepository;
-import com.best.movie.note.model.genres.GenreResult;
-import com.best.movie.note.model.movies.list.MovieResult;
+import com.best.movie.note.model.response.movies.genres.GenreResult;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
 
 import java.util.List;
 

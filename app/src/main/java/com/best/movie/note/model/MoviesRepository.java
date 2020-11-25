@@ -7,13 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 
 
 import com.best.movie.note.R;
-import com.best.movie.note.model.genres.GenreResult;
-import com.best.movie.note.model.genres.GenresMovieApiResponse;
-import com.best.movie.note.model.movies.list.MovieResult;
-import com.best.movie.note.model.movies.list.MoviesApiResponse;
-import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
-import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
-import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
+import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
+import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.response.movies.genres.GenreResult;
+import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
+import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
+import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.service.ApiService;
 import com.best.movie.note.service.ApiFactory;
 
@@ -101,8 +101,8 @@ public class MoviesRepository {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse moviesApiResponse = response.body();
-                if (moviesApiResponse != null && moviesApiResponse.getPopularResults() != null) {
-                    movieResults = (ArrayList<MovieResult>) moviesApiResponse.getPopularResults();
+                if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
+                    movieResults = (ArrayList<MovieResult>) moviesApiResponse.getResults();
                     mutableLiveData.setValue(movieResults);
                 }
             }
@@ -122,8 +122,8 @@ public class MoviesRepository {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse playingNowMoviesApiResponse = response.body();
-                if (playingNowMoviesApiResponse != null && playingNowMoviesApiResponse.getPopularResults() != null) {
-                    nowPlayingResults = (ArrayList<MovieResult>) playingNowMoviesApiResponse.getPopularResults();
+                if (playingNowMoviesApiResponse != null && playingNowMoviesApiResponse.getResults() != null) {
+                    nowPlayingResults = (ArrayList<MovieResult>) playingNowMoviesApiResponse.getResults();
                     playingNowMutableLiveData.setValue(nowPlayingResults);
                 }
             }
@@ -143,8 +143,8 @@ public class MoviesRepository {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse trendingMoviesApiResponse = response.body();
-                if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getPopularResults() != null) {
-                    trendingResults = (ArrayList<MovieResult>) trendingMoviesApiResponse.getPopularResults();
+                if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getResults() != null) {
+                    trendingResults = (ArrayList<MovieResult>) trendingMoviesApiResponse.getResults();
                     trendingMutableLiveData.setValue(trendingResults);
                 }
             }
@@ -164,8 +164,8 @@ public class MoviesRepository {
             @Override
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse trendingMoviesApiResponse = response.body();
-                if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getPopularResults() != null) {
-                    topRatedResults = (ArrayList<MovieResult>) trendingMoviesApiResponse.getPopularResults();
+                if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getResults() != null) {
+                    topRatedResults = (ArrayList<MovieResult>) trendingMoviesApiResponse.getResults();
                     topRatedMutableLiveData.setValue(topRatedResults);
                 }
             }
@@ -188,8 +188,8 @@ public class MoviesRepository {
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse trendingMoviesApiResponse = response.body();
                 Log.d("check", "getUpcomingMoviesMutableLiveData : " + response.toString());
-                if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getPopularResults() != null) {
-                    upcomingResults = (ArrayList<MovieResult>) trendingMoviesApiResponse.getPopularResults();
+                if (trendingMoviesApiResponse != null && trendingMoviesApiResponse.getResults() != null) {
+                    upcomingResults = (ArrayList<MovieResult>) trendingMoviesApiResponse.getResults();
                     upcomingMutableLiveData.setValue(upcomingResults);
                 }
             }
@@ -253,7 +253,6 @@ public class MoviesRepository {
             @Override
             public void onResponse(Call<VideosApiResponse> call, Response<VideosApiResponse> response) {
                 VideosApiResponse moviesApiResponse = response.body();
-                Log.i("check", "----------WORK!!!" + moviesApiResponse.toString());
                 if (moviesApiResponse != null && moviesApiResponse != null) {
                     videosResult = moviesApiResponse;
                     movieVideosApiResponseMutableLiveData.setValue(videosResult);
@@ -330,6 +329,5 @@ public class MoviesRepository {
         });
         return castCrewApiResponseMutableLiveData;
     }
-
 
 }

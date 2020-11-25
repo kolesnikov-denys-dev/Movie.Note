@@ -9,15 +9,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.CastCrewCircleItemBinding;
-import com.best.movie.note.model.movies.main.castcrew.Cast;
+import com.best.movie.note.databinding.CastCircleItemBinding;
+import com.best.movie.note.model.response.movies.cast.Cast;
 
 import java.util.List;
 
 
-public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.MoviesViewHolder> {
+public class CastsAdapter extends RecyclerView.Adapter<CastsAdapter.MoviesViewHolder> {
 
-    private List<Cast> castList;
+    private List<Cast> casts;
     private OnCastClickListener onCastClickListener;
 
     public void setOnCastClickListener(OnCastClickListener onCastClickListener) {
@@ -28,42 +28,42 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.MoviesVi
         void onCastClick(int castId, String originalName);
     }
 
-    public CreditsAdapter(List<Cast> castList) {
-        this.castList = castList;
+    public CastsAdapter(List<Cast> casts) {
+        this.casts = casts;
     }
 
     @NonNull
     @Override
     public MoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CastCrewCircleItemBinding castCrewCircleItemBinding = DataBindingUtil
+        CastCircleItemBinding castCrewCircleItemBinding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.cast_crew_circle_item, parent, false);
+                        R.layout.cast_circle_item, parent, false);
         return new MoviesViewHolder(castCrewCircleItemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
-        holder.binding.setCastResult(castList.get(position));
+        holder.binding.setCastResult(casts.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return castList.size();
+        return casts.size();
     }
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
 
-        private CastCrewCircleItemBinding binding;
+        private CastCircleItemBinding binding;
 
-        public MoviesViewHolder(@NonNull CastCrewCircleItemBinding view) {
+        public MoviesViewHolder(@NonNull CastCircleItemBinding view) {
             super(view.getRoot());
             this.binding = view;
             binding.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (onCastClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                        onCastClickListener.onCastClick(castList.get(getAdapterPosition()).getId(),
-                                castList.get(getAdapterPosition()).getOriginalName());
+                        onCastClickListener.onCastClick(casts.get(getAdapterPosition()).getId(),
+                                casts.get(getAdapterPosition()).getOriginalName());
                     }
                 }
             });

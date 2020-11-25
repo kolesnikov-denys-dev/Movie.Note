@@ -1,4 +1,4 @@
-package com.best.movie.note.model.movies.main.details;
+package com.best.movie.note.model.response.movies.details;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

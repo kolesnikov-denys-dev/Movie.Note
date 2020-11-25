@@ -1,4 +1,4 @@
-package com.best.movie.note.model.movies.list;
+package com.best.movie.note.model.response.movies.movie;
 
 import android.widget.ImageView;
 
@@ -59,7 +59,6 @@ public class MovieResult {
         String imagePath = "https://image.tmdb.org/t/p/w500/" + imageUrl;
         Glide.with(imageView.getContext())
                 .load(imagePath)
-//                .placeholder(R.drawable.ic_arrow_right_24)
                 .into(imageView);
     }
 

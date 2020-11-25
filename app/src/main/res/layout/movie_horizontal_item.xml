@@ -8,7 +8,7 @@
 
         <variable
             name="movieResult"
-            type="com.best.movie.note.model.movies.list.MovieResult" />
+            type="com.best.movie.note.model.response.movies.movie.MovieResult" />
 
         <variable
             name="subtitle"
@@ -16,9 +16,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fullConstraintLayout"
         android:layout_width="200dp"
         android:layout_height="175dp"
-        android:id="@+id/fullConstraintLayout"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp">
 

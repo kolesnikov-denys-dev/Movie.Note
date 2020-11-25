@@ -7,11 +7,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.best.movie.note.model.MoviesRepository;
-import com.best.movie.note.model.genres.GenreResult;
-import com.best.movie.note.model.movies.list.MovieResult;
-import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
-import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
-import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
+import com.best.movie.note.model.response.movies.genres.GenreResult;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
+import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
+import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 
 import java.util.List;
 

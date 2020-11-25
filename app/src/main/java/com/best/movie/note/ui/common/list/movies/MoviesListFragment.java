@@ -22,7 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.best.movie.note.R;
 import com.best.movie.note.adapter.MoviesListAdapter;
 import com.best.movie.note.databinding.MoviesListFragmentBinding;
-import com.best.movie.note.model.movies.list.MovieResult;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
 
 public class MoviesListFragment extends Fragment {
 

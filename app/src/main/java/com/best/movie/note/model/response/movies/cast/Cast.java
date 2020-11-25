@@ -1,4 +1,4 @@
-package com.best.movie.note.model.movies.main.castcrew;
+package com.best.movie.note.model.response.movies.cast;
 
 import android.widget.ImageView;
 

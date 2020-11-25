@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.MovieHorizontalListItemBinding;
-import com.best.movie.note.model.movies.list.MovieResult;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
 
 public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListAdapter.ResultViewHolder> {
 
@@ -32,11 +32,6 @@ public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListA
         MovieResult result = getItem(position);
         holder.movieHorizontalListItemBinding.setMovieResult(result);
     }
-
-//    @Override
-//    public int getItemCount() {
-//        return results.size();
-//    }
 
     public class ResultViewHolder extends RecyclerView.ViewHolder {
 

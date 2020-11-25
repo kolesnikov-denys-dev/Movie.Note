@@ -8,7 +8,7 @@
 
         <variable
             name="castResult"
-            type="com.best.movie.note.model.movies.main.castcrew.Cast" />
+            type="com.best.movie.note.model.response.movies.cast.Cast" />
 
     </data>
 

@@ -1,4 +1,4 @@
-package com.best.movie.note.model.movies.list;
+package com.best.movie.note.model.response.movies.movie;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,10 +17,6 @@ public class MoviesApiResponse {
 
     public void setResults(List<MovieResult> results) {
         this.results = results;
-    }
-    // paging library
-    public List<MovieResult> getPopularResults() {
-        return results;
     }
 
 }

@@ -1,47 +1,49 @@
 package com.best.movie.note.service;
 
 
-import com.best.movie.note.model.genres.GenresMovieApiResponse;
-import com.best.movie.note.model.movies.list.MoviesApiResponse;
-import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
-import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
-import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
+import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
+import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
+import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
+import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import static com.best.movie.note.utils.Constants.*;
+
 public interface ApiService {
 
     // Movies Region
 
     @GET("movie/popular")
-    Call<MoviesApiResponse> getPopularMovies(@Query("api_key") String apiKey);
+    Call<MoviesApiResponse> getPopularMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("movie/popular")
     Call<MoviesApiResponse> getPopularMoviesWithPaging(
-            @Query("api_key") String apiKey, @Query("page") long page);
+            @Query(PARAMS_API_KEY) String apiKey, @Query(PARAMS_PAGE) long page);
 
     @GET("movie/now_playing")
-    Call<MoviesApiResponse> getNowPlayingMovies(@Query("api_key") String apiKey);
+    Call<MoviesApiResponse> getNowPlayingMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("trending/movie/day")
-    Call<MoviesApiResponse> getTrendingMovies(@Query("api_key") String apiKey);
+    Call<MoviesApiResponse> getTrendingMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("movie/top_rated")
-    Call<MoviesApiResponse> getTopRatedMovies(@Query("api_key") String apiKey);
+    Call<MoviesApiResponse> getTopRatedMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("movie/upcoming")
     Call<MoviesApiResponse> getUpcomingMovies(
-            @Query("api_key") String apiKey,
-            @Query("language") String language,
-            @Query("page") String page);
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language,
+            @Query(PARAMS_PAGE) String page);
 
     @GET("genre/movie/list")
     Call<GenresMovieApiResponse> getGenresMovies(
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
 
     // End Region
 
@@ -50,33 +52,33 @@ public interface ApiService {
 
     @GET("movie/{movie_id}")
     Call<MovieDetailsApiResponse> getMovieDetailsById(
-            @Path("movie_id") int movieId,
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Path(PARAMS_MOVIE_ID) int movieId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
 
     @GET("movie/{movie_id}/videos")
     Call<VideosApiResponse> getMovieVideosById(
-            @Path("movie_id") int movieId,
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Path(PARAMS_MOVIE_ID) int movieId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
 
     @GET("movie/{movie_id}/recommendations")
     Call<MoviesApiResponse> getRecommendationsById(
-            @Path("movie_id") int movieId,
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Path(PARAMS_MOVIE_ID) int movieId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
 
     @GET("movie/{movie_id}/similar")
     Call<MoviesApiResponse> getSimilarById(
-            @Path("movie_id") int movieId,
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Path(PARAMS_MOVIE_ID) int movieId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
 
     @GET("movie/{movie_id}/credits")
     Call<CastCrewApiResponse> getCreditsById(
-            @Path("movie_id") int movieId,
-            @Query("api_key") String apiKey,
-            @Query("language") String language);
+            @Path(PARAMS_MOVIE_ID) int movieId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
 
     // End Region
 

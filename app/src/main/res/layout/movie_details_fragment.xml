@@ -8,7 +8,7 @@
 
         <variable
             name="movieDetailsResult"
-            type="com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse" />
+            type="com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse" />
 
         <variable
             name="buttonHandler"
@@ -367,7 +367,7 @@
                 android:visibility="@{showCastList ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/castCrewTextView"
-                tools:listitem="@layout/cast_crew_circle_item" />
+                tools:listitem="@layout/cast_circle_item" />
 
             <View
                 android:id="@+id/viewOne"

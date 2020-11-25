@@ -23,20 +23,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.adapter.CreditsAdapter;
-import com.best.movie.note.adapter.MoviesAdapter;
+import com.best.movie.note.adapter.CastsAdapter;
+import com.best.movie.note.adapter.MoviesCommonAdapter;
 import com.best.movie.note.databinding.MovieDetailsFragmentBinding;
-import com.best.movie.note.model.genres.GenreResult;
-import com.best.movie.note.model.movies.list.MovieResult;
-import com.best.movie.note.model.movies.main.castcrew.CastCrewApiResponse;
-import com.best.movie.note.model.movies.main.details.MovieDetailsApiResponse;
-import com.best.movie.note.model.movies.main.videos.VideosApiResponse;
+import com.best.movie.note.model.response.movies.genres.GenreResult;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
+import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
+import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnMovieClickListener,
-        CreditsAdapter.OnCastClickListener {
+public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
+        CastsAdapter.OnCastClickListener {
 
     private MovieDetailsViewModel movieDetailsViewModel;
     private MovieDetailsFragmentBinding binding;
@@ -49,15 +49,15 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnMo
     // Cast & Crew Movies
     private CastCrewApiResponse castCrewResult;
     private RecyclerView castCrewRecyclerView;
-    private CreditsAdapter castCrewAdapter;
+    private CastsAdapter castCrewAdapter;
     // Recommendation Movies
     private ArrayList<MovieResult> recommendationsResult;
     private RecyclerView recommendationRecyclerView;
-    private MoviesAdapter recommendationAdapter;
+    private MoviesCommonAdapter recommendationAdapter;
     // Similar Movies
     private ArrayList<MovieResult> similarResult;
     private RecyclerView similarRecyclerView;
-    private MoviesAdapter similarAdapter;
+    private MoviesCommonAdapter similarAdapter;
     private int movieId;
     // Genres Movies
     private ArrayList<GenreResult> genresResults;
@@ -176,7 +176,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnMo
 
     private void fillCastCrewRecyclerView() {
         castCrewRecyclerView = binding.castCrewRecyclerView;
-        castCrewAdapter = new CreditsAdapter(castCrewResult.getCast());
+        castCrewAdapter = new CastsAdapter(castCrewResult.getCast());
         castCrewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         castCrewRecyclerView.setAdapter(castCrewAdapter);
         castCrewAdapter.setOnCastClickListener(this);
@@ -185,7 +185,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnMo
 
     private void fillRecommendationRecyclerView() {
         recommendationRecyclerView = binding.recommendedRecyclerView;
-        recommendationAdapter = new MoviesAdapter(recommendationsResult, 99, genresResults);
+        recommendationAdapter = new MoviesCommonAdapter(recommendationsResult, 99, genresResults);
         recommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recommendationRecyclerView.setAdapter(recommendationAdapter);
         recommendationAdapter.setOnMovieClickListener(this);
@@ -194,7 +194,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesAdapter.OnMo
 
     private void fillSimilarRecyclerView() {
         similarRecyclerView = binding.similarRecyclerView;
-        similarAdapter = new MoviesAdapter(similarResult, 99, genresResults);
+        similarAdapter = new MoviesCommonAdapter(similarResult, 99, genresResults);
         similarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         similarRecyclerView.setAdapter(similarAdapter);
         similarAdapter.setOnMovieClickListener(this);

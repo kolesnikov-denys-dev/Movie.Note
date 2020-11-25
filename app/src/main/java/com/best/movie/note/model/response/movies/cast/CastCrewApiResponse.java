@@ -1,4 +1,4 @@
-package com.best.movie.note.model.movies.main.castcrew;
+package com.best.movie.note.model.response.movies.cast;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,9 +13,6 @@ public class CastCrewApiResponse {
     @SerializedName("cast")
     @Expose
     private List<Cast> cast = null;
-    @SerializedName("crew")
-    @Expose
-    private List<Crew> crew = null;
 
     public Integer getId() {
         return id;
@@ -31,14 +28,6 @@ public class CastCrewApiResponse {
 
     public void setCast(List<Cast> cast) {
         this.cast = cast;
-    }
-
-    public List<Crew> getCrew() {
-        return crew;
-    }
-
-    public void setCrew(List<Crew> crew) {
-        this.crew = crew;
     }
 
 }

@@ -1,19 +1,21 @@
 package com.best.movie.note.service;
 
 
+import com.best.movie.note.utils.Constants;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class ApiFactory {
 
     private static ApiFactory apiFactory;
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
     private ApiFactory() {
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .build();
     }
 
