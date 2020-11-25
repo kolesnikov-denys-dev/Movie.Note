@@ -35,14 +35,14 @@
         android:label="@string/title_celebrities"
         tools:layout="@layout/fragment_celebrities" />
     <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.best.movie.note.ui.search.SearchFragment"
-        android:label="@string/title_search"
+        android:id="@+id/navigation_notes"
+        android:name="com.best.movie.note.ui.notes.NotesFragment"
+        android:label="@string/title_notes"
         tools:layout="@layout/fragment_search" />
     <fragment
-        android:id="@+id/navigation_tmdb"
+        android:id="@+id/navigation_profile"
         android:name="com.best.movie.note.ui.tmdb.TmdbFragment"
-        android:label="@string/title_tmdb"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_tmdb" />
     <fragment
         android:id="@+id/navigation_movies_list"
@@ -66,4 +66,8 @@
             android:id="@+id/action_mainMovieFragment_self"
             app:destination="@id/mainMovieFragment" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.best.movie.note.MainActivity"
+        android:label="MainActivity" />
 </navigation>

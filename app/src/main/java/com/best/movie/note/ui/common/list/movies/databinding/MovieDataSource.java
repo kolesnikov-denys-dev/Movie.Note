@@ -6,12 +6,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
-import com.best.movie.note.R;
-import com.best.movie.note.model.MoviesListRepository;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.service.ApiService;
-import com.best.movie.note.service.ApiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +17,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;

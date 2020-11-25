@@ -9,7 +9,6 @@ import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
-import com.best.movie.note.service.ApiFactory;
 import com.best.movie.note.service.ApiService;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.best.movie.note.Global.getAppComponent;
 import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;
@@ -30,16 +30,14 @@ import static com.best.movie.note.utils.Constants.TAG_ERROR;
 public class MoviesRepository {
     private Application application;
 
-//    @Inject
-    private ApiFactory apiFactory;
-    private ApiService apiService;
+    @Inject
+    ApiService apiService;
     private CompositeDisposable compositeDisposable;
 
     public MoviesRepository(Application application) {
         this.application = application;
-        this.apiFactory = ApiFactory.getInstance();
-        this.apiService = apiFactory.getApiService();
         compositeDisposable = new CompositeDisposable();
+        getAppComponent().injectMoviesRepository(this);
     }
 
     // Popular Movies

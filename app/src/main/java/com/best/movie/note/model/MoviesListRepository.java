@@ -1,49 +1,32 @@
 package com.best.movie.note.model;
 
 import android.app.Application;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
-import androidx.paging.PageKeyedDataSource;
 
-import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
-import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
-import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
-import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
-import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
-import com.best.movie.note.service.ApiFactory;
 import com.best.movie.note.service.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import javax.inject.Inject;
 
-import static com.best.movie.note.utils.Constants.API_KEY;
-import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
-import static com.best.movie.note.utils.Constants.TAG_ERROR;
+import io.reactivex.disposables.CompositeDisposable;
+
+import static com.best.movie.note.Global.getAppComponent;
 
 public class MoviesListRepository {
     private Application application;
-    private ApiFactory apiFactory;
-    private ApiService apiService;
+    @Inject
+    ApiService apiService;
     private CompositeDisposable compositeDisposable;
 
     public MoviesListRepository(Application application) {
         this.application = application;
-        this.apiFactory = ApiFactory.getInstance();
-        this.apiService = apiFactory.getApiService();
         compositeDisposable = new CompositeDisposable();
+        getAppComponent().injectMoviesListRepository(this);
     }
 
     // Popular Movies

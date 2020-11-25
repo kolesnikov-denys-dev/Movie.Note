@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.search;
+package com.best.movie.note.ui.notes;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 
 import com.best.movie.note.R;
 
-public class SearchFragment extends Fragment {
+public class NotesFragment extends Fragment {
 
-    private SearchViewModel mViewModel;
+    private NotesViewModel mViewModel;
 
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
+    public static NotesFragment newInstance() {
+        return new NotesFragment();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(NotesViewModel.class);
         // TODO: Use the ViewModel
     }
 

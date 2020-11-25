@@ -12,11 +12,13 @@ import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
-import com.best.movie.note.service.ApiFactory;
 import com.best.movie.note.service.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -31,17 +33,21 @@ import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;
 
-public class MoviesDetailsRepository {
+import static com.best.movie.note.Global.getAppComponent;
+
+public class MoviesDetailsRepository extends Application {
+
     private Application application;
-    private ApiFactory apiFactory;
-    private ApiService apiService;
+
+    @Inject
+    ApiService apiService;
+
     private CompositeDisposable compositeDisposable;
 
     public MoviesDetailsRepository(Application application) {
         this.application = application;
-        this.apiFactory = ApiFactory.getInstance();
-        this.apiService = apiFactory.getApiService();
         compositeDisposable = new CompositeDisposable();
+        getAppComponent().injectMoviesDetailsRepository(this);
     }
 
     // Genres Movies

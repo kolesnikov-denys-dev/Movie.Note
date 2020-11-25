@@ -2,24 +2,23 @@ package com.best.movie.note.ui.common.list.movies;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.best.movie.note.model.MoviesDetailsRepository;
 import com.best.movie.note.model.MoviesListRepository;
-import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.service.ApiService;
-import com.best.movie.note.service.ApiFactory;
 import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSource;
 import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSourceFactory;
 
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import javax.inject.Inject;
+
+import static com.best.movie.note.Global.getAppComponent;
 
 public class MoviesListViewModel extends AndroidViewModel {
 
@@ -27,14 +26,14 @@ public class MoviesListViewModel extends AndroidViewModel {
     private Executor executor;
     private LiveData<MovieDataSource> movieDataSourceLiveData;
     private LiveData<PagedList<MovieResult>> pagedListLiveData;
-    private ApiService apiService;
-    private ApiFactory apiFactory;
 
-    public MoviesListViewModel(@NonNull Application application) {
+    @Inject
+    ApiService apiService;
+
+    public MoviesListViewModel(Application application) {
         super(application);
 
-        this.apiFactory = ApiFactory.getInstance();
-        this.apiService = apiFactory.getApiService();
+        getAppComponent().injectMoviesListViewModel(this);
 
         repository = new MoviesListRepository(application);
         // DataSource

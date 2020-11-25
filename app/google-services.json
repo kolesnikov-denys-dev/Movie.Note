@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "484697828002",
+    "firebase_url": "https://movie-note-20a7a.firebaseio.com",
+    "project_id": "movie-note-20a7a",
+    "storage_bucket": "movie-note-20a7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484697828002:android:337628aaac15666d72c5fb",
+        "android_client_info": {
+          "package_name": "com.best.movie.note"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484697828002-4hl30s5obd61bat28t23iph93mua1gf8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.best.movie.note",
+            "certificate_hash": "1e5fc5a7e14f41a21334743d40469e84243fe73f"
+          }
+        },
+        {
+          "client_id": "484697828002-gv1imv2kl9p0t9u7h0p0qe54re0bovva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGNmmfF9L_6elnZU80Gd5hEbYXelAUWPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484697828002-gv1imv2kl9p0t9u7h0p0qe54re0bovva.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

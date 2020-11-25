@@ -3,8 +3,7 @@
     <string name="title_movies">Movies</string>
     <string name="title_tv_shows">Tv Shows</string>
     <string name="title_celebrities">Celebrities</string>
-    <string name="title_search">Search</string>
-    <string name="title_tmdb">Profile</string>
+    <string name="title_profile">Profile</string>
     <string name="title_movies_list">Movies list</string>
     <string name="popular">Popular</string>
     <string name="playing_in_theathres">Playing In Theatres</string>
