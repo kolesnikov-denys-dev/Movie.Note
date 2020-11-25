@@ -5,8 +5,6 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-
-import com.best.movie.note.R;
 import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
 import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
@@ -14,8 +12,8 @@ import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
-import com.best.movie.note.service.ApiService;
 import com.best.movie.note.service.ApiFactory;
+import com.best.movie.note.service.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +26,12 @@ import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;
 
-public class MoviesRepository {
+public class MoviesListRepository {
     private Application application;
     private ApiFactory apiFactory;
     private ApiService apiService;
 
-    public MoviesRepository(Application application) {
+    public MoviesListRepository(Application application) {
         this.application = application;
         this.apiFactory = ApiFactory.getInstance();
         this.apiService = apiFactory.getApiService();
@@ -57,6 +55,29 @@ public class MoviesRepository {
     // Genres Movies
     private ArrayList<GenreResult> genreResults;
     private final MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
+    // Paging Library
+    private ArrayList<MovieResult> results = new ArrayList<>();
+    private MutableLiveData<List<MovieResult>> mutablePagingLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<List<MovieResult>> getMutableLiveData() {
+        Call<MoviesApiResponse> call = apiService.getPopularMovies(API_KEY);
+        call.enqueue(new Callback<MoviesApiResponse>() {
+            @Override
+            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
+                MoviesApiResponse movieApiResponse = response.body();
+                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
+                    results = (ArrayList<MovieResult>) movieApiResponse.getResults();
+                    mutablePagingLiveData.setValue(results);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
+
+            }
+        });
+        return mutablePagingLiveData;
+    }
 
     public MutableLiveData<List<MovieResult>> getPopularMoviesMutableLiveData() {
         Call<MoviesApiResponse> call = apiService.getPopularMovies(API_KEY);

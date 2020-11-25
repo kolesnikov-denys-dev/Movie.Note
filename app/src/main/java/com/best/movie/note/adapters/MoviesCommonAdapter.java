@@ -99,7 +99,8 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
                     @Override
                     public void onClick(View v) {
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            onMovieClickListener.onMovieClick(movies.get(getAdapterPosition()).getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                            onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
+                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
                         }
                     }
                 });
@@ -114,7 +115,8 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
                     @Override
                     public void onClick(View v) {
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            onMovieClickListener.onMovieClick(movies.get(getAdapterPosition()).getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                            onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
+                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
                         }
                     }
                 });
@@ -129,7 +131,8 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
                     @Override
                     public void onClick(View v) {
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            onMovieClickListener.onMovieClick(movies.get(getAdapterPosition()).getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                            onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
+                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
                         }
                     }
                 });

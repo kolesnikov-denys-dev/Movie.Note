@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.best.movie.note.model.MoviesDetailsRepository;
 import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
@@ -17,38 +18,37 @@ import java.util.List;
 
 public class MovieDetailsViewModel extends AndroidViewModel {
 
-    private MoviesRepository moviesRepository;
+    private final MoviesDetailsRepository repository;
 
     public MovieDetailsViewModel(@NonNull Application application) {
         super(application);
 
-        moviesRepository = new MoviesRepository(application);
+        repository = new MoviesDetailsRepository(application);
     }
 
     public LiveData<MovieDetailsApiResponse> getMovieDetails(int movieId, String language) {
-        return moviesRepository.getMovieDetailLiveData(movieId, language);
+        return repository.getMovieDetailLiveData(movieId, language);
     }
 
     public LiveData<VideosApiResponse> getMovieVideos(int movieId, String language) {
-        return moviesRepository.getMovieVideosLiveData(movieId, language);
+        return repository.getMovieVideosLiveData(movieId, language);
     }
 
 
     public LiveData<List<GenreResult>> getGenresMoviesData() {
-        return moviesRepository.getGenresMoviesMutableLiveData();
+        return repository.getGenresMoviesMutableLiveData();
     }
 
     public LiveData<List<MovieResult>> getRecommendations(int movieId, String language) {
-        return moviesRepository.getRecommendationsLiveData(movieId, language);
+        return repository.getRecommendationsLiveData(movieId, language);
     }
 
     public LiveData<List<MovieResult>> getSimilar(int movieId, String language) {
-        return moviesRepository.getSimilarLiveData(movieId, language);
+        return repository.getSimilarLiveData(movieId, language);
     }
 
     public LiveData<CastCrewApiResponse> getCredits(int movieId, String language) {
-        return moviesRepository.getCreditsLiveData(movieId, language);
+        return repository.getCreditsLiveData(movieId, language);
     }
-
 
 }

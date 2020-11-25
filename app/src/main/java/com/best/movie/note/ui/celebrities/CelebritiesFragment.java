@@ -30,7 +30,7 @@ public class CelebritiesFragment extends Fragment {
             }
         });
 
-
         return root;
     }
+
 }

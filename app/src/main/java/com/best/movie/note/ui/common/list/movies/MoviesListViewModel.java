@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.best.movie.note.model.MoviesDetailsRepository;
+import com.best.movie.note.model.MoviesListRepository;
 import com.best.movie.note.model.MoviesRepository;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.service.ApiService;
@@ -21,7 +23,7 @@ import java.util.concurrent.Executors;
 
 public class MoviesListViewModel extends AndroidViewModel {
 
-    private MoviesRepository movieRepository;
+    private MoviesListRepository repository;
     private Executor executor;
     private LiveData<MovieDataSource> movieDataSourceLiveData;
     private LiveData<PagedList<MovieResult>> pagedListLiveData;
@@ -34,7 +36,7 @@ public class MoviesListViewModel extends AndroidViewModel {
         this.apiFactory = ApiFactory.getInstance();
         this.apiService = apiFactory.getApiService();
 
-        movieRepository = new MoviesRepository(application);
+        repository = new MoviesListRepository(application);
         // DataSource
         MovieDataSourceFactory movieDataSourceFactory = new MovieDataSourceFactory(application, apiService);
         movieDataSourceLiveData = movieDataSourceFactory.getMutableLiveData();
@@ -54,7 +56,7 @@ public class MoviesListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<MovieResult>> getAllMovieData() {
-        return movieRepository.getMutableLiveData();
+        return repository.getMutableLiveData();
     }
 
     public LiveData<PagedList<MovieResult>> getPagedListLiveData() {
