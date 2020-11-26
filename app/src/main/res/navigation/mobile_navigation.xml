@@ -43,7 +43,7 @@
         />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.best.movie.note.ui.tmdb.TmdbFragment"
+        android:name="com.best.movie.note.ui.tmdb.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
