@@ -59,6 +59,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     private RecyclerView similarRecyclerView;
     private MoviesCommonAdapter similarAdapter;
     private int movieId;
+    private boolean isMovie;
     // Genres Movies
     private ArrayList<GenreResult> genresResults;
 
@@ -82,16 +83,17 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
         if (getArguments() != null) {
             movieId = getArguments().getInt("movie_id");
+            isMovie = getArguments().getBoolean("is_movie");
             String originalName = getArguments().getString("original_name");
-            Toast.makeText(getContext(), "Movie Id: " + movieId, Toast.LENGTH_SHORT).show();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(originalName);
-
-            getGenres();
-            getMovieDetail(movieId, "en-US");
-            getMovieVideos(movieId, "en-US");
-            getRecommendations(movieId, "en-US");
-            getSimilar(movieId, "en-US");
-            getCredits(movieId, "en-US");
+            if (isMovie) {
+                getGenres();
+                getMovieDetail(movieId, "en-US");
+                getMovieVideos(movieId, "en-US");
+                getRecommendations(movieId, "en-US");
+                getSimilar(movieId, "en-US");
+                getCredits(movieId, "en-US");
+            }
         }
     }
 

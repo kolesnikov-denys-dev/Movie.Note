@@ -99,8 +99,13 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
                     @Override
                     public void onClick(View v) {
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                            if (movies.get(getAdapterPosition()).getOriginalTitle() != null) {
+                                onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
+                                        .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                            } else {
+                                onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
+                                        .getId(), movies.get(getAdapterPosition()).getOriginalName());
+                            }
                         }
                     }
                 });

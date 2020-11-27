@@ -215,6 +215,7 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     public void onMovieClick(int movieId, String originalName) {
         Bundle bundle = new Bundle();
         bundle.putInt("movie_id", movieId);
+        bundle.putBoolean("is_movie", true);
         bundle.putString("original_name", originalName);
         navController.navigate(R.id.action_navigation_movies_to_mainMovieFragment, bundle);
     }

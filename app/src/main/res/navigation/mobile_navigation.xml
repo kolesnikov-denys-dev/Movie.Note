@@ -27,7 +27,11 @@
         android:id="@+id/navigation_tv_shows"
         android:name="com.best.movie.note.ui.tvshows.TvShowsFragment"
         android:label="@string/title_tv_shows"
-        tools:layout="@layout/fragment_tv_shows" />
+        tools:layout="@layout/fragment_tv_shows" >
+        <action
+            android:id="@+id/action_navigation_tv_shows_to_mainMovieFragment"
+            app:destination="@id/mainMovieFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_celebrities"

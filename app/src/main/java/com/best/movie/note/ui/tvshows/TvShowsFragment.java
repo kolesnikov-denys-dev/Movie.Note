@@ -182,8 +182,9 @@ public class TvShowsFragment extends Fragment implements MoviesCommonAdapter.OnM
     public void onMovieClick(int movieId, String originalName) {
         Bundle bundle = new Bundle();
         bundle.putInt("movie_id", movieId);
+        bundle.putBoolean("is_movie", false);
         bundle.putString("original_name", originalName);
-        navController.navigate(R.id.action_navigation_movies_to_mainMovieFragment, bundle);
+        navController.navigate(R.id.action_navigation_tv_shows_to_mainMovieFragment, bundle);
     }
 
     public class MoviesFragmentButtonsHandler {
