@@ -119,6 +119,41 @@ public interface ApiService {
     // End Region
 
 
+    // Movie Details Region
+
+    @GET("tv/{tv_id}")
+    Call<MovieDetailsApiResponse> getTvShowsDetailsById(
+            @Path(PARAMS_TV_ID) int tvId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    @GET("tv/{tv_id}/videos")
+    Call<VideosApiResponse> getTvShowsVideosById(
+            @Path(PARAMS_TV_ID) int tvId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    @GET("tv/{tv_id}/recommendations")
+    Call<MoviesApiResponse> getTvShowsRecommendationsById(
+            @Path(PARAMS_TV_ID) int tvId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    @GET("tv/{tv_id}/similar")
+    Call<MoviesApiResponse> getTvShowsSimilarById(
+            @Path(PARAMS_TV_ID) int tvId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    @GET("tv/{tv_id}/credits")
+    Call<CastCrewApiResponse> getTvShowsCreditsById(
+            @Path(PARAMS_TV_ID) int tvId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    // End Region
+
+
 }
 
 

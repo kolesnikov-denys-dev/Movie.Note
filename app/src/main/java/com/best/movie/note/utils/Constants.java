@@ -12,6 +12,8 @@ public class Constants {
     public static final String PARAMS_LANGUAGE = "language";
     public static final String PARAMS_MOVIE_ID = "movie_id";
 
+    public static final String PARAMS_TV_ID = "tv_id";
+
     public static final String QUERY_LANGUAGE = "en-US";
 
     public static final String API_KEY = "f3398ff250b7533decbfd407e06e07b8";

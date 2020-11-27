@@ -12,7 +12,7 @@
 
         <variable
             name="buttonHandler"
-            type="com.best.movie.note.ui.common.details.MovieDetailsFragment.MovieDetailsFragmentButtonsHandler" />
+            type="com.best.movie.note.ui.common.details.movie.MovieDetailsFragment.MovieDetailsFragmentButtonsHandler" />
 
         <import type="android.view.View" />
 
@@ -28,6 +28,11 @@
             name="showCastList"
             type="Boolean" />
 
+        <variable
+            name="showSeasons"
+            type="Boolean" />
+
+
     </data>
 
     <ScrollView
@@ -35,7 +40,7 @@
         android:layout_height="wrap_content"
         android:background="@color/special_black"
         android:scrollbars="none"
-        tools:context=".ui.common.details.MovieDetailsFragment">
+        tools:context=".ui.common.details.movie.MovieDetailsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -337,6 +342,38 @@
                 tools:text="long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text " />
 
             <TextView
+                android:id="@+id/seasonsTitleTextView"
+                style="@style/left_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Seasons"
+                android:visibility="@{showSeasons ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/playingInTheatresSeeAllButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seasonsSeeAllButton" />
+
+            <ImageView
+                android:id="@+id/seasonsSeeAllButton"
+                style="@style/yellow_arrow"
+                android:visibility="@{showSeasons ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/overviewTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/seasonsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="@{showSeasons ? View.VISIBLE : View.GONE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/seasonsTitleTextView"
+                tools:listitem="@layout/movie_vertical_item" />
+
+            <TextView
                 android:id="@+id/castCrewTextView"
                 style="@style/left_title"
                 android:layout_width="wrap_content"
@@ -353,7 +390,8 @@
                 android:layout_marginTop="22dp"
                 android:visibility="@{showCastList ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/overviewTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/seasonsRecyclerView" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/castCrewRecyclerView"

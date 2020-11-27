@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.common.details;
+package com.best.movie.note.ui.common.details.movie;
 
 import android.app.Application;
 
@@ -26,6 +26,8 @@ public class MovieDetailsViewModel extends AndroidViewModel {
         repository = new MoviesDetailsRepository(application);
     }
 
+    // Movie Region
+
     public LiveData<MovieDetailsApiResponse> getMovieDetails(int movieId, String language) {
         return repository.getMovieDetailLiveData(movieId, language);
     }
@@ -51,7 +53,37 @@ public class MovieDetailsViewModel extends AndroidViewModel {
         return repository.getCreditsLiveData(movieId, language);
     }
 
+    // End Movie Region
 
+
+    // Tv Shows Region
+
+    public LiveData<MovieDetailsApiResponse> getTvShowsDetails(int movieId, String language) {
+        return repository.getTvShowsDetailLiveData(movieId, language);
+    }
+
+    public LiveData<VideosApiResponse> getTvShowsVideos(int movieId, String language) {
+        return repository.getTvShowsVideosLiveData(movieId, language);
+    }
+
+
+    public LiveData<List<GenreResult>> getTvShowsGenresMoviesData() {
+        return repository.getGenresTvShowsMutableLiveData();
+    }
+
+    public LiveData<List<MovieResult>> getTvShowsRecommendations(int movieId, String language) {
+        return repository.getTvShowsRecommendationsLiveData(movieId, language);
+    }
+
+    public LiveData<List<MovieResult>> getTvShowsSimilar(int movieId, String language) {
+        return repository.getTvShowsSimilarLiveData(movieId, language);
+    }
+
+    public LiveData<CastCrewApiResponse> getTvShowsCredits(int movieId, String language) {
+        return repository.getTvShowsCreditsLiveData(movieId, language);
+    }
+
+    // End Tv Shows Region
 
 
 }
