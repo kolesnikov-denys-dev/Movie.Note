@@ -25,18 +25,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.best.movie.note.R;
 import com.best.movie.note.adapters.CastsAdapter;
 import com.best.movie.note.adapters.MoviesCommonAdapter;
+import com.best.movie.note.adapters.SeasonsAdapter;
 import com.best.movie.note.databinding.MovieDetailsFragmentBinding;
 import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
 import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
+import com.best.movie.note.model.response.tvshows.details.Season;
+import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
+
 public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
-        CastsAdapter.OnCastClickListener {
+        CastsAdapter.OnCastClickListener, SeasonsAdapter.OnSeasonClickListener {
 
     private MovieDetailsViewModel movieDetailsViewModel;
     private MovieDetailsFragmentBinding binding;
@@ -60,7 +65,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     // End Region
 
     // Tv Shows
-    private MovieDetailsApiResponse tvShowsDetailsResult;
+    private TvShowsApiResponse tvShowsDetailsResult;
     private VideosApiResponse tvShowsTrailersResult;
     private CastCrewApiResponse tvShowsCastCrewResult;
     private RecyclerView tvShowsCastCrewRecyclerView;
@@ -72,8 +77,12 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     private RecyclerView tvShowsSimilarRecyclerView;
     private MoviesCommonAdapter tvShowsSimilarAdapter;
     private ArrayList<GenreResult> tvShowsGenresResults;
-    // End Region
 
+    private RecyclerView tvShowsSeasonsRecyclerView;
+    private SeasonsAdapter tvShowsSeasonsAdapter;
+    private ArrayList<Season> tvShowsSeasonsResults;
+
+    // End Region
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -117,7 +126,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
             }
         }
     }
-
 
     // Movies Region
 
@@ -216,11 +224,13 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     public void getTvShowsDetail(int movieId, String language) {
         movieDetailsViewModel.getTvShowsDetails(movieId, language).observe(getActivity(),
-                new Observer<MovieDetailsApiResponse>() {
+                new Observer<TvShowsApiResponse>() {
                     @Override
-                    public void onChanged(MovieDetailsApiResponse data) {
-                        binding.setMovieDetailsResult(data);
+                    public void onChanged(TvShowsApiResponse data) {
+                        binding.setTvShowDetailsResult(data);
                         tvShowsDetailsResult = data;
+                        tvShowsSeasonsResults = (ArrayList<Season>)tvShowsDetailsResult.getSeasons();
+                        fillTvShowsSeasonsRecyclerView();
                     }
                 });
     }
@@ -282,6 +292,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
+
 
     // End Tv Shows Region
 
@@ -347,8 +358,16 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
         tvShowsSimilarAdapter.notifyDataSetChanged();
     }
 
-    // End Movies Region
+    private void fillTvShowsSeasonsRecyclerView() {
+        tvShowsSeasonsRecyclerView = binding.seasonsRecyclerView;
+        tvShowsSeasonsAdapter = new SeasonsAdapter(tvShowsSeasonsResults);
+        tvShowsSeasonsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        tvShowsSeasonsRecyclerView.setAdapter(tvShowsSeasonsAdapter);
+        tvShowsSeasonsAdapter.setOnSeasonClickListener(this);
+        tvShowsSeasonsAdapter.notifyDataSetChanged();
+    }
 
+    // End Movies Region
 
     @Override
     public void onMovieClick(int movieId, String originalName) {
@@ -362,6 +381,11 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     @Override
     public void onCastClick(int castId, String originalName) {
         Toast.makeText(getContext(), "Implements", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSeasonClick(int castId, String originalName) {
+
     }
 
     public class MovieDetailsFragmentButtonsHandler {

@@ -82,6 +82,7 @@ public class MovieDetailsApiResponse {
     @SerializedName("production_companies")
     @Expose
     private List<ProductionCompany> productionCompanies = null;
+
     @BindingAdapter({"getProductionCompaniesConvert"})
     public static void loadProductionCompanies(TextView textView, List<ProductionCompany> g) {
         StringBuilder gStr = new StringBuilder();
@@ -96,9 +97,11 @@ public class MovieDetailsApiResponse {
             textView.setText(gStr.toString());
         }
     }
+
     @SerializedName("production_countries")
     @Expose
     private List<ProductionCountry> productionCountries = null;
+
     @BindingAdapter({"getCountriesConvert"})
     public static void loadCountries(TextView textView, List<ProductionCountry> g) {
         StringBuilder gStr = new StringBuilder();
@@ -113,6 +116,7 @@ public class MovieDetailsApiResponse {
             textView.setText(gStr.toString());
         }
     }
+
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
@@ -125,6 +129,7 @@ public class MovieDetailsApiResponse {
     @SerializedName("spoken_languages")
     @Expose
     private List<SpokenLanguage> spokenLanguages = null;
+
     @BindingAdapter({"getSpokenLanguagesConvert"})
     public static void loadLanguages(TextView textView, List<SpokenLanguage> g) {
         StringBuilder gStr = new StringBuilder();
@@ -139,6 +144,7 @@ public class MovieDetailsApiResponse {
             textView.setText(gStr.toString());
         }
     }
+
     @SerializedName("status")
     @Expose
     private String status;

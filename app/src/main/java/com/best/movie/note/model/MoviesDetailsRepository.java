@@ -12,6 +12,7 @@ import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
+import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 import com.best.movie.note.service.ApiService;
 
 import java.util.ArrayList;
@@ -66,8 +67,12 @@ public class MoviesDetailsRepository extends Application {
     // Tv Shows Region
     private ArrayList<GenreResult> tvShowGenreResults;
     private final MutableLiveData<List<GenreResult>> tvShowGenresMutableLiveData = new MutableLiveData<>();
-    private MovieDetailsApiResponse tvShowDetailsResult;
-    private final MutableLiveData<MovieDetailsApiResponse> tvShowDetailsApiResponseMutableLiveData = new MutableLiveData<>();
+
+    // here
+    private TvShowsApiResponse tvShowDetailsResult;
+    private final MutableLiveData<TvShowsApiResponse> tvShowDetailsApiResponseMutableLiveData = new MutableLiveData<>();
+
+
     private VideosApiResponse tvShowVideosResult;
     private final MutableLiveData<VideosApiResponse> tvShowVideosApiResponseMutableLiveData = new MutableLiveData<>();
     private ArrayList<MovieResult> tvShowRecommendationsResult;
@@ -219,12 +224,12 @@ public class MoviesDetailsRepository extends Application {
         compositeDisposable.add(disposableSimpleData);
         return tvShowGenresMutableLiveData;
     }
-    public MutableLiveData<MovieDetailsApiResponse> getTvShowsDetailLiveData(int movieId, String language) {
-        Call<MovieDetailsApiResponse> call = apiService.getTvShowsDetailsById(movieId, API_KEY, language);
-        call.enqueue(new Callback<MovieDetailsApiResponse>() {
+    public MutableLiveData<TvShowsApiResponse> getTvShowsDetailLiveData(int movieId, String language) {
+        Call<TvShowsApiResponse> call = apiService.getTvShowsDetailsById(movieId, API_KEY, language);
+        call.enqueue(new Callback<TvShowsApiResponse>() {
             @Override
-            public void onResponse(Call<MovieDetailsApiResponse> call, Response<MovieDetailsApiResponse> response) {
-                MovieDetailsApiResponse moviesApiResponse = response.body();
+            public void onResponse(Call<TvShowsApiResponse> call, Response<TvShowsApiResponse> response) {
+                TvShowsApiResponse moviesApiResponse = response.body();
                 if (moviesApiResponse != null && moviesApiResponse != null) {
                     tvShowDetailsResult = moviesApiResponse;
                     tvShowDetailsApiResponseMutableLiveData.setValue(tvShowDetailsResult);
@@ -232,7 +237,7 @@ public class MoviesDetailsRepository extends Application {
             }
 
             @Override
-            public void onFailure(Call<MovieDetailsApiResponse> call, Throwable t) {
+            public void onFailure(Call<TvShowsApiResponse> call, Throwable t) {
                 Log.e(TAG_ERROR, "onFailure: getMovieDetailLiveData" + t.getLocalizedMessage());
             }
         });

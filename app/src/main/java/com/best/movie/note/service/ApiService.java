@@ -6,6 +6,7 @@ import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse
 import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
+import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -122,7 +123,7 @@ public interface ApiService {
     // Movie Details Region
 
     @GET("tv/{tv_id}")
-    Call<MovieDetailsApiResponse> getTvShowsDetailsById(
+    Call<TvShowsApiResponse> getTvShowsDetailsById(
             @Path(PARAMS_TV_ID) int tvId,
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);

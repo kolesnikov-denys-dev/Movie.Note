@@ -1,9 +1,16 @@
 package com.best.movie.note.model.response.tvshows.details;
 
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.databinding.BindingAdapter;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import static com.best.movie.note.utils.Utils.setImage;
 
 public class TvShowsApiResponse {
 
@@ -22,6 +29,37 @@ public class TvShowsApiResponse {
     @SerializedName("genres")
     @Expose
     private List<Genre> genres = null;
+
+    @BindingAdapter({"getGenresConvertTv"})
+    public static void loadGenres(TextView textView, List<Genre> g) {
+        StringBuilder gStr = new StringBuilder();
+        if (g != null) {
+            for (int i = 0; i < g.size(); i++) {
+                if (i < g.size() - 1) {
+                    gStr.append(g.get(i).getName()).append(", ");
+                } else {
+                    gStr.append(g.get(i).getName()).append(" ");
+                }
+            }
+            textView.setText(gStr.toString());
+        }
+    }
+
+    @BindingAdapter({"getCountriesConvertTv"})
+    public static void loadCountries(TextView textView, List<ProductionCountry> g) {
+        StringBuilder gStr = new StringBuilder();
+        if (g != null) {
+            for (int i = 0; i < g.size(); i++) {
+                if (i < g.size() - 1) {
+                    gStr.append(g.get(i).getName()).append(", ");
+                } else {
+                    gStr.append(g.get(i).getName()).append(" ");
+                }
+            }
+            textView.setText(gStr.toString());
+        }
+    }
+
     @SerializedName("homepage")
     @Expose
     private String homepage;
@@ -104,6 +142,47 @@ public class TvShowsApiResponse {
     public String getBackdropPath() {
         return backdropPath;
     }
+
+    @BindingAdapter({"getProductionCompaniesConvertTv"})
+    public static void loadProductionCompanies(TextView textView, List<ProductionCompany> g) {
+        StringBuilder gStr = new StringBuilder();
+        if (g != null) {
+            for (int i = 0; i < g.size(); i++) {
+                if (i < g.size() - 1) {
+                    gStr.append(g.get(i).getName()).append(", ");
+                } else {
+                    gStr.append(g.get(i).getName()).append(" ");
+                }
+            }
+            textView.setText(gStr.toString());
+        }
+    }
+
+    @BindingAdapter({"getSpokenLanguagesConvertTv"})
+    public static void loadLanguages(TextView textView, List<SpokenLanguage> g) {
+        StringBuilder gStr = new StringBuilder();
+        if (g != null) {
+            for (int i = 0; i < g.size(); i++) {
+                if (i < g.size() - 1) {
+                    gStr.append(g.get(i).getName()).append(", ");
+                } else {
+                    gStr.append(g.get(i).getName()).append(" ");
+                }
+            }
+            textView.setText(gStr.toString());
+        }
+    }
+
+    @BindingAdapter({"posterPathTv"})
+    public static void loadImage(ImageView imageView, String imageUrl) {
+        setImage(imageView, imageUrl);
+    }
+
+    @BindingAdapter({"backdropPathTv"})
+    public static void loadIBackdropImage(ImageView imageView, String imageUrl) {
+        setImage(imageView, imageUrl);
+    }
+
 
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;

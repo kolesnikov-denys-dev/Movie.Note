@@ -13,6 +13,7 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
 import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
+import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class MovieDetailsViewModel extends AndroidViewModel {
     // End Region Movie
 
     // Tv Shows Region
-    public LiveData<MovieDetailsApiResponse> getTvShowsDetails(int movieId, String language) {
+    public LiveData<TvShowsApiResponse> getTvShowsDetails(int movieId, String language) {
         return repository.getTvShowsDetailLiveData(movieId, language);
     }
     public LiveData<VideosApiResponse> getTvShowsVideos(int movieId, String language) {
