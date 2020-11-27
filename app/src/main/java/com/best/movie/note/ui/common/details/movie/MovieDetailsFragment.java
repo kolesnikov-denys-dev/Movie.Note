@@ -130,6 +130,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
+
     public void getMovieDetail(int movieId, String language) {
         movieDetailsViewModel.getMovieDetails(movieId, language).observe(getActivity(),
                 new Observer<MovieDetailsApiResponse>() {
@@ -140,6 +141,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
+
     public void getMovieVideos(int movieId, String language) {
         movieDetailsViewModel.getMovieVideos(movieId, language).observe(getActivity(),
                 new Observer<VideosApiResponse>() {
@@ -149,6 +151,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
+
     public void getMovieCredits(int movieId, String language) {
         movieDetailsViewModel.getCredits(movieId, language).observe(getActivity(),
                 new Observer<CastCrewApiResponse>() {
@@ -164,6 +167,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
+
     public void getMovieRecommendations(int movieId, String language) {
         movieDetailsViewModel.getRecommendations(movieId, language).observe(getActivity(),
                 new Observer<List<MovieResult>>() {
@@ -179,6 +183,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
+
     public void getMovieSimilar(int movieId, String language) {
         movieDetailsViewModel.getSimilar(movieId, language).observe(getActivity(),
                 new Observer<List<MovieResult>>() {
@@ -360,7 +365,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     }
 
     public class MovieDetailsFragmentButtonsHandler {
-        //TODO if not trailer
         public void showTrailer(View view) {
             if (movieTrailersResult != null &&
                     movieTrailersResult.getVideosResults() != null &&
@@ -373,6 +377,20 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     startActivity(appIntent);
                 } catch (ActivityNotFoundException ex) {
                     startActivity(webIntent);
+                }
+            } else if (tvShowsTrailersResult != null &&
+                    tvShowsTrailersResult.getVideosResults() != null &&
+                    tvShowsTrailersResult.getVideosResults().get(0) != null &&
+                    tvShowsTrailersResult.getVideosResults().get(0).getKey() != null) {
+                {
+                    String id = tvShowsTrailersResult.getVideosResults().get(0).getKey();
+                    Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + id));
+                    try {
+                        startActivity(appIntent);
+                    } catch (ActivityNotFoundException ex) {
+                        startActivity(webIntent);
+                    }
                 }
             } else {
                 Toast.makeText(getContext(), "Not trailer", Toast.LENGTH_SHORT).show();

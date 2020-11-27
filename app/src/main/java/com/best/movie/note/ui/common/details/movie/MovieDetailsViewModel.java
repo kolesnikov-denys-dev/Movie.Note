@@ -22,7 +22,6 @@ public class MovieDetailsViewModel extends AndroidViewModel {
 
     public MovieDetailsViewModel(@NonNull Application application) {
         super(application);
-
         repository = new MoviesDetailsRepository(application);
     }
 
