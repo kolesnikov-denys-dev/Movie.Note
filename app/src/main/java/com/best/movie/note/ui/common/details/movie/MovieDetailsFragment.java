@@ -59,7 +59,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     private ArrayList<GenreResult> moviesGenresResults;
     // End Region
 
-
     // Tv Shows
     private MovieDetailsApiResponse tvShowsDetailsResult;
     private VideosApiResponse tvShowsTrailersResult;
@@ -109,8 +108,12 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                 getMovieCredits(movieId, "en-US");
             } else {
                 binding.setShowSeasons(true);
-
-
+                getTvShowsGenres();
+                getTvShowsDetail(movieId, "en-US");
+                getTvShowsVideos(movieId, "en-US");
+                getTvShowsCredits(movieId, "en-US");
+                getTvShowsRecommendations(movieId, "en-US");
+                getTvShowsSimilar(movieId, "en-US");
             }
         }
     }
@@ -127,7 +130,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
-
     public void getMovieDetail(int movieId, String language) {
         movieDetailsViewModel.getMovieDetails(movieId, language).observe(getActivity(),
                 new Observer<MovieDetailsApiResponse>() {
@@ -138,7 +140,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
-
     public void getMovieVideos(int movieId, String language) {
         movieDetailsViewModel.getMovieVideos(movieId, language).observe(getActivity(),
                 new Observer<VideosApiResponse>() {
@@ -148,7 +149,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
-
     public void getMovieCredits(int movieId, String language) {
         movieDetailsViewModel.getCredits(movieId, language).observe(getActivity(),
                 new Observer<CastCrewApiResponse>() {
@@ -164,7 +164,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
-
     public void getMovieRecommendations(int movieId, String language) {
         movieDetailsViewModel.getRecommendations(movieId, language).observe(getActivity(),
                 new Observer<List<MovieResult>>() {
@@ -180,7 +179,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                     }
                 });
     }
-
     public void getMovieSimilar(int movieId, String language) {
         movieDetailsViewModel.getSimilar(movieId, language).observe(getActivity(),
                 new Observer<List<MovieResult>>() {
