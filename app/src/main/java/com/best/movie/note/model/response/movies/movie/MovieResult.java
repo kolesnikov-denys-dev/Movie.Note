@@ -16,6 +16,19 @@ import static com.best.movie.note.utils.Utils.setImage;
 
 public class MovieResult {
 
+    @SerializedName("original_name")
+    @Expose
+    private String originalName;
+
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
+    }
+
     @SerializedName("popularity")
     @Expose
     private Double popularity;

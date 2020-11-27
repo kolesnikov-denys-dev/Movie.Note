@@ -29,7 +29,7 @@ public interface ApiService {
     @GET("movie/now_playing")
     Observable<MoviesApiResponse> getNowPlayingMovies(@Query(PARAMS_API_KEY) String apiKey);
 
-    @GET("trending/movie/day")
+    @GET("trending/movie/week")
     Observable<MoviesApiResponse> getTrendingMovies(@Query(PARAMS_API_KEY) String apiKey);
 
     @GET("movie/top_rated")
@@ -43,6 +43,41 @@ public interface ApiService {
 
     @GET("genre/movie/list")
     Observable<GenresMovieApiResponse> getGenresMovies(
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    // End Region
+
+
+    // TvShows Region
+
+    @GET("tv/airing_today")
+    Observable<MoviesApiResponse> getAiringTodayTvShows(
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language,
+            @Query(PARAMS_PAGE) String page);
+
+    @GET("trending/tv/week")
+    Observable<MoviesApiResponse> getTrendingTvShows(
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language,
+            @Query(PARAMS_PAGE) String page);
+
+
+    @GET("tv/top_rated")
+    Observable<MoviesApiResponse> getTopRatedTvShows(
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language,
+            @Query(PARAMS_PAGE) String page);
+
+    @GET("tv/popular")
+    Observable<MoviesApiResponse> getPopularTvShows(
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language,
+            @Query(PARAMS_PAGE) String page);
+
+    @GET("genre/tv/list")
+    Observable<GenresMovieApiResponse> getGenresTvShows(
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);
 

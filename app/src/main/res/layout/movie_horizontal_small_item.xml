@@ -55,7 +55,7 @@
             android:layout_marginRight="12dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{movieResult.originalTitle}"
+            android:text="@{movieResult.originalTitle ?? movieResult.originalName}"
             app:layout_constraintEnd_toStartOf="@+id/grayArrowImageView"
             app:layout_constraintStart_toEndOf="@+id/movieCardView"
             app:layout_constraintTop_toTopOf="parent"

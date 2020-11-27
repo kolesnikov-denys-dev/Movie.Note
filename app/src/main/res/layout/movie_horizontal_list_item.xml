@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:text="@{movieResult.originalTitle}"
+            android:text="@{movieResult.originalTitle ?? movieResult.originalName}"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/arrowImageView"
             app:layout_constraintStart_toEndOf="@+id/movieCardView"
