@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fullConstraintLayout"
         android:layout_width="94dp"
-        android:layout_height="215dp"
+        android:layout_height="183dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp">
 
@@ -52,25 +52,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text="@{seasonResult.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieCardView"
-            tools:text="Iron Man long text long text long text long text long text long text " />
-
-        <TextView
-            android:id="@+id/genreTextView"
-            style="@style/card_subtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@{subtitle}"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieNameTextView"
-            tools:text="Iron Man long text long text long text long text long text long text " />
+            tools:text="Season 1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

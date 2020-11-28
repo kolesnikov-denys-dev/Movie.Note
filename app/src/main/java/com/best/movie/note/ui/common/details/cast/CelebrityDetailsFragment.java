@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.common.details.movie;
+package com.best.movie.note.ui.common.details.cast;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -34,13 +34,14 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.Season;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
+import com.best.movie.note.ui.common.details.movie.MovieDetailsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
 
-public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
+public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
         CastsAdapter.OnCastClickListener, SeasonsAdapter.OnSeasonClickListener {
 
     private MovieDetailsViewModel movieDetailsViewModel;
@@ -64,30 +65,10 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     private ArrayList<GenreResult> moviesGenresResults;
     // End Region
 
-    // Tv Shows
-    private TvShowsApiResponse tvShowsDetailsResult;
-    private VideosApiResponse tvShowsTrailersResult;
-    private CastCrewApiResponse tvShowsCastCrewResult;
-    private RecyclerView tvShowsCastCrewRecyclerView;
-    private CastsAdapter tvShowsCastCrewAdapter;
-    private ArrayList<MovieResult> tvShowsRecommendationsResult;
-    private RecyclerView tvShowsRecommendationRecyclerView;
-    private MoviesCommonAdapter tvShowsRecommendationAdapter;
-    private ArrayList<MovieResult> tvShowsSimilarResult;
-    private RecyclerView tvShowsSimilarRecyclerView;
-    private MoviesCommonAdapter tvShowsSimilarAdapter;
-    private ArrayList<GenreResult> tvShowsGenresResults;
-
-    private RecyclerView tvShowsSeasonsRecyclerView;
-    private SeasonsAdapter tvShowsSeasonsAdapter;
-    private ArrayList<Season> tvShowsSeasonsResults;
-
-    // End Region
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.celebrity_details_fragment, container, false);
         binding.setButtonHandler(new MovieDetailsFragmentButtonsHandler());
         return binding.getRoot();
     }
@@ -115,14 +96,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
                 getMovieRecommendations(movieId, "en-US");
                 getMovieSimilar(movieId, "en-US");
                 getMovieCredits(movieId, "en-US");
-            } else {
-                binding.setShowSeasons(true);
-                getTvShowsGenres();
-                getTvShowsDetail(movieId, "en-US");
-                getTvShowsVideos(movieId, "en-US");
-                getTvShowsCredits(movieId, "en-US");
-                getTvShowsRecommendations(movieId, "en-US");
-                getTvShowsSimilar(movieId, "en-US");
             }
         }
     }
@@ -210,90 +183,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     // End Movies Region
 
-    // Tv Shows Region
-
-    private void getTvShowsGenres() {
-        movieDetailsViewModel.getTvShowsGenresMoviesData().observe(getActivity(),
-                new Observer<List<GenreResult>>() {
-                    @Override
-                    public void onChanged(List<GenreResult> data) {
-                        tvShowsGenresResults = (ArrayList<GenreResult>) data;
-                    }
-                });
-    }
-
-    public void getTvShowsDetail(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsDetails(movieId, language).observe(getActivity(),
-                new Observer<TvShowsApiResponse>() {
-                    @Override
-                    public void onChanged(TvShowsApiResponse data) {
-                        binding.setTvShowDetailsResult(data);
-                        tvShowsDetailsResult = data;
-                        tvShowsSeasonsResults = (ArrayList<Season>) tvShowsDetailsResult.getSeasons();
-                        fillTvShowsSeasonsRecyclerView();
-                    }
-                });
-    }
-
-    public void getTvShowsVideos(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsVideos(movieId, language).observe(getActivity(),
-                new Observer<VideosApiResponse>() {
-                    @Override
-                    public void onChanged(VideosApiResponse data) {
-                        tvShowsTrailersResult = data;
-                    }
-                });
-    }
-
-    public void getTvShowsCredits(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsCredits(movieId, language).observe(getActivity(),
-                new Observer<CastCrewApiResponse>() {
-                    @Override
-                    public void onChanged(CastCrewApiResponse data) {
-                        tvShowsCastCrewResult = data;
-                        if (tvShowsCastCrewResult.getCast().isEmpty()) {
-                            binding.setShowCastList(false);
-                        } else {
-                            fillTvShowsCastCrewRecyclerView();
-                            binding.setShowCastList(true);
-                        }
-                    }
-                });
-    }
-
-    public void getTvShowsRecommendations(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsRecommendations(movieId, language).observe(getActivity(),
-                new Observer<List<MovieResult>>() {
-                    @Override
-                    public void onChanged(List<MovieResult> data) {
-                        tvShowsRecommendationsResult = (ArrayList<MovieResult>) data;
-                        if (tvShowsRecommendationsResult.isEmpty()) {
-                            binding.setShowRecommendationList(false);
-                        } else {
-                            binding.setShowRecommendationList(true);
-                            fillTvShowsRecommendationRecyclerView();
-                        }
-                    }
-                });
-    }
-
-    public void getTvShowsSimilar(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsSimilar(movieId, language).observe(getActivity(),
-                new Observer<List<MovieResult>>() {
-                    @Override
-                    public void onChanged(List<MovieResult> data) {
-                        tvShowsSimilarResult = (ArrayList<MovieResult>) data;
-                        if (tvShowsSimilarResult.isEmpty()) {
-                            binding.setShowSimilarList(false);
-                        } else {
-                            binding.setShowSimilarList(true);
-                            fillTvShowsSimilarRecyclerView();
-                        }
-                    }
-                });
-    }
-
-    // End Tv Shows Region
 
 
     // Movies Region
@@ -328,43 +217,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     // End Movies Region
 
 
-    // Tv Shows Region
-
-    private void fillTvShowsCastCrewRecyclerView() {
-        tvShowsCastCrewRecyclerView = binding.castCrewRecyclerView;
-        tvShowsCastCrewAdapter = new CastsAdapter(tvShowsCastCrewResult.getCast());
-        tvShowsCastCrewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        tvShowsCastCrewRecyclerView.setAdapter(tvShowsCastCrewAdapter);
-        tvShowsCastCrewAdapter.setOnCastClickListener(this);
-        tvShowsCastCrewAdapter.notifyDataSetChanged();
-    }
-
-    private void fillTvShowsRecommendationRecyclerView() {
-        tvShowsRecommendationRecyclerView = binding.recommendedRecyclerView;
-        tvShowsRecommendationAdapter = new MoviesCommonAdapter(tvShowsRecommendationsResult, CARD_TYPE_VERTICAL, tvShowsGenresResults);
-        tvShowsRecommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        tvShowsRecommendationRecyclerView.setAdapter(tvShowsRecommendationAdapter);
-        tvShowsRecommendationAdapter.setOnMovieClickListener(this);
-        tvShowsRecommendationAdapter.notifyDataSetChanged();
-    }
-
-    private void fillTvShowsSimilarRecyclerView() {
-        tvShowsSimilarRecyclerView = binding.similarRecyclerView;
-        tvShowsSimilarAdapter = new MoviesCommonAdapter(tvShowsSimilarResult, CARD_TYPE_VERTICAL, tvShowsGenresResults);
-        tvShowsSimilarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        tvShowsSimilarRecyclerView.setAdapter(tvShowsSimilarAdapter);
-        tvShowsSimilarAdapter.setOnMovieClickListener(this);
-        tvShowsSimilarAdapter.notifyDataSetChanged();
-    }
-
-    private void fillTvShowsSeasonsRecyclerView() {
-        tvShowsSeasonsRecyclerView = binding.seasonsRecyclerView;
-        tvShowsSeasonsAdapter = new SeasonsAdapter(tvShowsSeasonsResults);
-        tvShowsSeasonsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        tvShowsSeasonsRecyclerView.setAdapter(tvShowsSeasonsAdapter);
-        tvShowsSeasonsAdapter.setOnSeasonClickListener(this);
-        tvShowsSeasonsAdapter.notifyDataSetChanged();
-    }
 
     // End Movies Region
 

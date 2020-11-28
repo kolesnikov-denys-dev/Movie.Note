@@ -71,13 +71,19 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
         if (holder.verticalCard != null) {
             holder.verticalCard.setMovieResult(movies.get(position));
-            holder.verticalCard.setSubtitle(subtitles.get(position));
+            if (subtitles.size() != 0) {
+                holder.verticalCard.setSubtitle(subtitles.get(position));
+            }
         } else if (holder.horizontalCard != null) {
             holder.horizontalCard.setMovieResult(movies.get(position));
-            holder.horizontalCard.setSubtitle(subtitles.get(position));
+            if (subtitles.size() != 0) {
+                holder.horizontalCard.setSubtitle(subtitles.get(position));
+            }
         } else if (holder.horizontalSmallCard != null) {
             holder.horizontalSmallCard.setMovieResult(movies.get(position));
-            holder.horizontalSmallCard.setSubtitle(subtitles.get(position));
+            if (subtitles.size() != 0) {
+                holder.horizontalSmallCard.setSubtitle(subtitles.get(position));
+            }
         }
     }
 
@@ -147,20 +153,22 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
 
     private void getSubtitles() {
         subtitles = new ArrayList<>();
-        for (int i = 0; i < movies.size(); i++) {
-            StringBuilder genres = new StringBuilder();
-            List<Integer> listGenres = movies.get(i).getGenreIds();
-            for (int j = 0; j < listGenres.size(); j++) {
-                if (j < listGenres.size() - 1) {
-                    genres.append(getGenreById(listGenres.get(j))).append(", ");
-                } else {
-                    genres.append(getGenreById(listGenres.get(j))).append(" ");
+        if (genres != null) {
+            for (int i = 0; i < movies.size(); i++) {
+                StringBuilder genres = new StringBuilder();
+                List<Integer> listGenres = movies.get(i).getGenreIds();
+                for (int j = 0; j < listGenres.size(); j++) {
+                    if (j < listGenres.size() - 1) {
+                        genres.append(getGenreById(listGenres.get(j))).append(", ");
+                    } else {
+                        genres.append(getGenreById(listGenres.get(j))).append(" ");
+                    }
                 }
-            }
-            if (getYear(movies.get(i).getReleaseDate()).length() < 3) {
-                subtitles.add(genres.toString());
-            } else {
-                subtitles.add(getYear(movies.get(i).getReleaseDate()) + " " + genres);
+                if (getYear(movies.get(i).getReleaseDate()).length() < 3) {
+                    subtitles.add(genres.toString());
+                } else {
+                    subtitles.add(getYear(movies.get(i).getReleaseDate()) + " " + genres);
+                }
             }
         }
     }
