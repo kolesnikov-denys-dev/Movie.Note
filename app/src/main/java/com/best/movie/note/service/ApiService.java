@@ -7,6 +7,9 @@ import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -154,6 +157,28 @@ public interface ApiService {
 
     // End Region
 
+
+    // Person / Cast Details Region
+
+    @GET("person/{person_id}")
+    Call<CastDetailsApiResponse> getCastDetailsById(
+            @Path(PARAMS_PERSON_ID) int castId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    @GET("person/{person_id}/movie_credits")
+    Call<MoviesCastApiResponse> getMoviesByCastId(
+            @Path(PARAMS_PERSON_ID) int castId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    @GET("person/{person_id}/tv_credits")
+    Call<TvShowsCatApiResponse> getTvShowsByCastId(
+            @Path(PARAMS_PERSON_ID) int castId,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    // End Region Person / Cast Details
 
 }
 

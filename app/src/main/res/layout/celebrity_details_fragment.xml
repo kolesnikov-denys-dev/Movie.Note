@@ -10,12 +10,7 @@
 
         <variable
             name="castDetailsResult"
-            type="com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse" />
-
-        <variable
-            name="buttonHandler"
-            type="com.best.movie.note.ui.common.details.movie.MovieDetailsFragment.MovieDetailsFragmentButtonsHandler" />
-
+            type="com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse" />
 
         <variable
             name="tvShowsList"
@@ -54,7 +49,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/special_placeholder"
                     android:scaleType="centerCrop"
-                    bind:posterPath="@{castDetailsResult.posterPath}"
+                    bind:profilePath="@{castDetailsResult.profilePath}"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             </androidx.cardview.widget.CardView>
@@ -68,7 +63,7 @@
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{castDetailsResult.originalLanguage}"
+                android:text="@{castDetailsResult.name}"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -95,15 +90,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
+
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                bind:alsoKnownAs="@{castDetailsResult.alsoKnownAs}"
                 android:textColor="@color/special_subtitle_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/knownForTitleTextView"
                 app:layout_constraintTop_toTopOf="@+id/knownForTitleTextView"
-                bind:getGenresConvert="@{castDetailsResult.originalLanguage}"
-                bind:getGenresConvertTv="@{castDetailsResult.genres}"
                 tools:listitem="@layout/genres_item_small"
                 tools:text="Acting" />
 
@@ -126,7 +121,7 @@
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{castDetailsResult.originalLanguage}"
+                android:text="@{castDetailsResult.placeOfBirth}"
                 android:textColor="@color/special_subtitle_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/birthPlaceTitleTextView"
@@ -150,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="16dp"
-                android:text="@{castDetailsResult.originalLanguage}"
+                android:text="@{castDetailsResult.birthday}"
                 android:textColor="@color/special_subtitle_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dateOfBirthTitleTextView"
@@ -176,7 +171,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="7dp"
                 android:layout_marginRight="16dp"
-                android:text="@{castDetailsResult.originalLanguage}"
+                android:text="@{castDetailsResult.biography}"
                 android:textColor="@color/special_subtitle_gray"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"

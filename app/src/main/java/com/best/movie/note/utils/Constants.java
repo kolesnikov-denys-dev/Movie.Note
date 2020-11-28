@@ -13,6 +13,7 @@ public class Constants {
     public static final String PARAMS_MOVIE_ID = "movie_id";
 
     public static final String PARAMS_TV_ID = "tv_id";
+    public static final String PARAMS_PERSON_ID = "person_id";
 
     public static final String QUERY_LANGUAGE = "en-US";
 
