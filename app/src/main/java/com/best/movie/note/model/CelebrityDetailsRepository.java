@@ -14,6 +14,7 @@ import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.movie.Cast;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 import com.best.movie.note.service.ApiService;
@@ -55,13 +56,11 @@ public class CelebrityDetailsRepository extends Application {
     private CastDetailsApiResponse castDetailsResult;
     private final MutableLiveData<CastDetailsApiResponse> castDetailsMutableLiveData = new MutableLiveData<>();
 
-    private ArrayList<MovieResult> moviesCastResult;
-    private final MutableLiveData<List<MovieResult>> moviesCastResultMutableLiveData = new MutableLiveData<>();
+    private MoviesCastApiResponse moviesCastResult;
+    private final MutableLiveData<MoviesCastApiResponse> moviesCastResultMutableLiveData = new MutableLiveData<>();
 
-    private ArrayList<MovieResult> tvShowsCatResult;
-    private final MutableLiveData<List<MovieResult>> tvShowsCatResultMutableLiveData = new MutableLiveData<>();
-
-
+    private MoviesCastApiResponse tvShowsCatResult;
+    private final MutableLiveData<MoviesCastApiResponse> tvShowsCatResultMutableLiveData = new MutableLiveData<>();
 
 
     // Genres Movies
@@ -70,7 +69,6 @@ public class CelebrityDetailsRepository extends Application {
 
     private ArrayList<GenreResult> tvShowsGenresResult;
     private final MutableLiveData<List<GenreResult>> tvShowsGenresResultMutableLiveData = new MutableLiveData<>();
-
 
 
     public MutableLiveData<CastDetailsApiResponse> getCastDetailsMutableLiveData(int castId, String language) {
@@ -95,41 +93,41 @@ public class CelebrityDetailsRepository extends Application {
         return castDetailsMutableLiveData;
     }
 
-    public MutableLiveData<List<MovieResult>> getMoviesCastResultMutableLiveData(int castId, String language) {
+    public MutableLiveData<MoviesCastApiResponse> getMoviesCastResultMutableLiveData(int castId, String language) {
         Disposable disposableSimpleData = apiService.getMoviesByCastId(castId, API_KEY, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<MoviesApiResponse>() {
+                .subscribe(new Consumer<MoviesCastApiResponse>() {
                     @Override
-                    public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
+                    public void accept(MoviesCastApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse != null) {
-                            moviesCastResult = (ArrayList<MovieResult>) moviesApiResponse.getResults();
+                            moviesCastResult = moviesApiResponse;
                             moviesCastResultMutableLiveData.setValue(moviesCastResult);
-
-                            Log.e(TAG_ERROR, " ---------++++++  Movies "+moviesCastResult.toString() );
-
+//                            for (Cast x : moviesCastResult.getCast()){
+//                                Log.i("check", " ---------" + x.getTitle());
+//                            }
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Log.e(TAG_ERROR, "onFailure: getMoviesCastResultMutableLiveData" + throwable.getLocalizedMessage());
-                        Log.e(TAG_ERROR, "-------------------" + throwable.getMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
         return moviesCastResultMutableLiveData;
     }
 
-    public MutableLiveData<List<MovieResult>> getTvShowsCatMutableLiveData(int castId, String language) {
+
+    public MutableLiveData<MoviesCastApiResponse> getTvShowsCatMutableLiveData(int castId, String language) {
         Disposable disposableSimpleData = apiService.getTvShowsByCastId(castId, API_KEY, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<MoviesApiResponse>() {
+                .subscribe(new Consumer<MoviesCastApiResponse>() {
                     @Override
-                    public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
+                    public void accept(MoviesCastApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse != null) {
-                            tvShowsCatResult = (ArrayList<MovieResult>) moviesApiResponse.getResults();
+                            tvShowsCatResult = moviesApiResponse;
                             tvShowsCatResultMutableLiveData.setValue(tvShowsCatResult);
                         }
                     }
@@ -143,20 +141,6 @@ public class CelebrityDetailsRepository extends Application {
         compositeDisposable.add(disposableSimpleData);
         return tvShowsCatResultMutableLiveData;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
@@ -203,23 +187,6 @@ public class CelebrityDetailsRepository extends Application {
         compositeDisposable.add(disposableSimpleData);
         return tvShowsGenresResultMutableLiveData;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

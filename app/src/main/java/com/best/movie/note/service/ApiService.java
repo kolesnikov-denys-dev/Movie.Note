@@ -167,13 +167,13 @@ public interface ApiService {
             @Query(PARAMS_LANGUAGE) String language);
 
     @GET("person/{person_id}/movie_credits")
-    Observable<MoviesApiResponse> getMoviesByCastId(
+    Observable<MoviesCastApiResponse> getMoviesByCastId(
             @Path(PARAMS_PERSON_ID) int castId,
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);
 
     @GET("person/{person_id}/tv_credits")
-    Observable<MoviesApiResponse> getTvShowsByCastId(
+    Observable<MoviesCastApiResponse> getTvShowsByCastId(
             @Path(PARAMS_PERSON_ID) int castId,
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);

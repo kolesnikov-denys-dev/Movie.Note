@@ -26,6 +26,8 @@ import com.best.movie.note.databinding.CelebrityDetailsFragmentBinding;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.movie.Cast;
+import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +42,10 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     private CelebrityDetailsFragmentBinding binding;
     private NavController navController;
     private CastDetailsApiResponse castDetailsResult;
-    private ArrayList<MovieResult> moviesCastResult;
+    private MoviesCastApiResponse moviesCastResult;
     private RecyclerView moviesRecyclerView;
     private MoviesCommonAdapter moviesAdapter;
-    private ArrayList<MovieResult> tvShowsCatResult;
+    private MoviesCastApiResponse tvShowsCatResult;
     private RecyclerView tvShowsRecyclerView;
     private MoviesCommonAdapter tvShowsAdapter;
     private int castId;
@@ -68,8 +70,7 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
 
         navController = Navigation.findNavController(view);
 
-        getGenres();
-        getTvShowsGenres();
+//        getTvShowsGenres();
 
         if (getArguments() != null) {
             castId = getArguments().getInt("cast_id");
@@ -77,33 +78,11 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(castName);
 
             getCastDetails(castId, QUERY_LANGUAGE);
+            getMoviesGenres();
         }
 
     }
 
-    private void getGenres() {
-        celebrityDetailsViewModel.getGenresMoviesData().observe(getActivity(),
-                new Observer<List<GenreResult>>() {
-                    @Override
-                    public void onChanged(List<GenreResult> data) {
-                        genresResults = (ArrayList<GenreResult>) data;
-                        getCastMovies(castId, QUERY_LANGUAGE);
-                    }
-                });
-    }
-
-    private void getTvShowsGenres() {
-        celebrityDetailsViewModel.getTvShowsGenresMoviesData().observe(getActivity(),
-                new Observer<List<GenreResult>>() {
-                    @Override
-                    public void onChanged(List<GenreResult> data) {
-                        genresTvShowResults = (ArrayList<GenreResult>) data;
-                        getCastTvShows(castId, QUERY_LANGUAGE);
-                    }
-                });
-    }
-
-    // Movies Region
 
     private void getCastDetails(int castId, String language) {
         celebrityDetailsViewModel.getCastDetails(castId, language).observe(getActivity(),
@@ -123,33 +102,69 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
                 });
     }
 
-    public void getCastMovies(int castId, String language) {
+    public void getMovies(int castId, String language) {
         celebrityDetailsViewModel.getCastMovies(castId, language).observe(getActivity(),
-                new Observer<List<MovieResult>>() {
+                new Observer<MoviesCastApiResponse>() {
                     @Override
-                    public void onChanged(List<MovieResult> data) {
-                        moviesCastResult = (ArrayList<MovieResult>) data;
+                    public void onChanged(MoviesCastApiResponse data) {
+                        moviesCastResult = data;
                         fillCastMoviesRecyclerView();
                     }
                 });
     }
 
-    public void getCastTvShows(int castId, String language) {
+    public void getTvShows(int castId, String language) {
         celebrityDetailsViewModel.getCastTvShows(castId, language).observe(getActivity(),
-                new Observer<List<MovieResult>>() {
+                new Observer<MoviesCastApiResponse>() {
                     @Override
-                    public void onChanged(List<MovieResult> data) {
-//                        binding.setMovieDetailsResult(data);
-                        tvShowsCatResult = (ArrayList<MovieResult>) data;
-                        getCastTvShows(castId, QUERY_LANGUAGE);
+                    public void onChanged(MoviesCastApiResponse data) {
+                        tvShowsCatResult = data;
                         fillTvShowsRecyclerView();
                     }
                 });
     }
 
+    private void getMoviesGenres() {
+        celebrityDetailsViewModel.getGenresMoviesData().observe(getActivity(),
+                new Observer<List<GenreResult>>() {
+                    @Override
+                    public void onChanged(List<GenreResult> data) {
+                        genresResults = (ArrayList<GenreResult>) data;
+                        getMovies(castId, QUERY_LANGUAGE);
+                    }
+                });
+    }
+
+    private void getTvShowsGenres() {
+        celebrityDetailsViewModel.getTvShowsGenresMoviesData().observe(getActivity(),
+                new Observer<List<GenreResult>>() {
+                    @Override
+                    public void onChanged(List<GenreResult> data) {
+                        genresTvShowResults = (ArrayList<GenreResult>) data;
+                        getTvShows(castId, QUERY_LANGUAGE);
+                    }
+                });
+    }
+
     private void fillCastMoviesRecyclerView() {
+        if (moviesCastResult.getCast().size() >= 1) {
+            binding.setShowMoviesList(true);
+        }
+
+        // Convert Cast to MovieResult
+        ArrayList<MovieResult> movies = new ArrayList<>();
+        for (int i = 0; i < moviesCastResult.getCast().size(); i++) {
+            MovieResult newMovie = new MovieResult();
+            Cast oldCast = moviesCastResult.getCast().get(i);
+            newMovie.setOriginalTitle(oldCast.getOriginalTitle());
+            newMovie.setId(oldCast.getId());
+            newMovie.setPosterPath(oldCast.getPosterPath());
+            newMovie.setGenreIds(oldCast.getGenreIds());
+            movies.add(newMovie);
+        }
+
         moviesRecyclerView = binding.moviesRecyclerView;
-        moviesAdapter = new MoviesCommonAdapter(moviesCastResult, CARD_TYPE_VERTICAL, genresResults);
+        moviesAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresResults);
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         moviesRecyclerView.setAdapter(moviesAdapter);
         moviesAdapter.setOnMovieClickListener(this);
@@ -157,6 +172,23 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     }
 
     private void fillTvShowsRecyclerView() {
+        if (tvShowsCatResult.getCast().size() >= 1) {
+            binding.setTvShowsList(true);
+        }
+
+        // Convert Cast to MovieResult
+        ArrayList<MovieResult> movies = new ArrayList<>();
+        for (int i = 0; i < moviesCastResult.getCast().size(); i++) {
+            MovieResult newMovie = new MovieResult();
+            Cast oldCast = moviesCastResult.getCast().get(i);
+            newMovie.setOriginalTitle(oldCast.getOriginalTitle());
+            newMovie.setId(oldCast.getId());
+            newMovie.setPosterPath(oldCast.getPosterPath());
+            newMovie.setGenreIds(oldCast.getGenreIds());
+            movies.add(newMovie);
+        }
+
+
         tvShowsRecyclerView = binding.tvshowsRecyclerView;
         tvShowsAdapter = new MoviesCommonAdapter(tvShowsCatResult, CARD_TYPE_VERTICAL, genresTvShowResults);
         tvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
