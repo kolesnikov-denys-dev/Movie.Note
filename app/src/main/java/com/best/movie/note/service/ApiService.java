@@ -173,7 +173,7 @@ public interface ApiService {
             @Query(PARAMS_LANGUAGE) String language);
 
     @GET("person/{person_id}/tv_credits")
-    Observable<MoviesCastApiResponse> getTvShowsByCastId(
+    Observable<TvShowsCatApiResponse> getTvShowsByCastId(
             @Path(PARAMS_PERSON_ID) int castId,
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);

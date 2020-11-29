@@ -14,8 +14,8 @@ import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
-import com.best.movie.note.model.response.tvshows.details.cast.movie.Cast;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.tvshows.Cast;
 import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 import com.best.movie.note.service.ApiService;
 
@@ -59,8 +59,8 @@ public class CelebrityDetailsRepository extends Application {
     private MoviesCastApiResponse moviesCastResult;
     private final MutableLiveData<MoviesCastApiResponse> moviesCastResultMutableLiveData = new MutableLiveData<>();
 
-    private MoviesCastApiResponse tvShowsCatResult;
-    private final MutableLiveData<MoviesCastApiResponse> tvShowsCatResultMutableLiveData = new MutableLiveData<>();
+    private TvShowsCatApiResponse tvShowsCatResult;
+    private final MutableLiveData<TvShowsCatApiResponse> tvShowsCatResultMutableLiveData = new MutableLiveData<>();
 
 
     // Genres Movies
@@ -119,16 +119,25 @@ public class CelebrityDetailsRepository extends Application {
     }
 
 
-    public MutableLiveData<MoviesCastApiResponse> getTvShowsCatMutableLiveData(int castId, String language) {
+    public MutableLiveData<TvShowsCatApiResponse> getTvShowsCatMutableLiveData(int castId, String language) {
         Disposable disposableSimpleData = apiService.getTvShowsByCastId(castId, API_KEY, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<MoviesCastApiResponse>() {
+                .subscribe(new Consumer<TvShowsCatApiResponse>() {
                     @Override
-                    public void accept(MoviesCastApiResponse moviesApiResponse) throws Exception {
+                    public void accept(TvShowsCatApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse != null) {
                             tvShowsCatResult = moviesApiResponse;
                             tvShowsCatResultMutableLiveData.setValue(tvShowsCatResult);
+
+
+
+                            Log.i("check", "tvShowsCatResult----SIZE!!!!!>>>" + tvShowsCatResult.getCast());
+
+                            for (Cast x : tvShowsCatResult.getCast()) {
+                                Log.i("check", "tvShowsCatResult---->>>" + x.getOriginalName());
+                            }
+
                         }
                     }
                 }, new Consumer<Throwable>() {

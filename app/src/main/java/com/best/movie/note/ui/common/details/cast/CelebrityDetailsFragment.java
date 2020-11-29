@@ -28,6 +28,7 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.Cast;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     private MoviesCastApiResponse moviesCastResult;
     private RecyclerView moviesRecyclerView;
     private MoviesCommonAdapter moviesAdapter;
-    private MoviesCastApiResponse tvShowsCatResult;
+    private TvShowsCatApiResponse tvShowsCatResult;
     private RecyclerView tvShowsRecyclerView;
     private MoviesCommonAdapter tvShowsAdapter;
     private int castId;
@@ -70,8 +71,6 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
 
         navController = Navigation.findNavController(view);
 
-//        getTvShowsGenres();
-
         if (getArguments() != null) {
             castId = getArguments().getInt("cast_id");
             String castName = getArguments().getString("cast_name");
@@ -79,8 +78,8 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
 
             getCastDetails(castId, QUERY_LANGUAGE);
             getMoviesGenres();
+            getTvShowsGenres();
         }
-
     }
 
 
@@ -115,10 +114,16 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
 
     public void getTvShows(int castId, String language) {
         celebrityDetailsViewModel.getCastTvShows(castId, language).observe(getActivity(),
-                new Observer<MoviesCastApiResponse>() {
+                new Observer<TvShowsCatApiResponse>() {
                     @Override
-                    public void onChanged(MoviesCastApiResponse data) {
+                    public void onChanged(TvShowsCatApiResponse data) {
                         tvShowsCatResult = data;
+
+                        for (com.best.movie.note.model.response.tvshows.details.cast.tvshows.Cast x : data.getCast()) {
+                            Log.i("check", "------!!!!!!" + x.getOriginalName());
+                        }
+
+                        Log.i("check", "CHANGED!!!!!!!!!!!!!!!!!!!!");
                         fillTvShowsRecyclerView();
                     }
                 });
@@ -147,7 +152,7 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     }
 
     private void fillCastMoviesRecyclerView() {
-        if (moviesCastResult.getCast().size() >= 1) {
+        if (moviesCastResult.getCast() != null) {
             binding.setShowMoviesList(true);
         }
 
@@ -172,25 +177,27 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     }
 
     private void fillTvShowsRecyclerView() {
-        if (tvShowsCatResult.getCast().size() >= 1) {
-            binding.setTvShowsList(true);
+
+        binding.setTvShowsList(true);
+
+        if (tvShowsCatResult.getCast() != null) {
+
         }
 
         // Convert Cast to MovieResult
         ArrayList<MovieResult> movies = new ArrayList<>();
-        for (int i = 0; i < moviesCastResult.getCast().size(); i++) {
+        for (int i = 0; i < tvShowsCatResult.getCast().size(); i++) {
             MovieResult newMovie = new MovieResult();
-            Cast oldCast = moviesCastResult.getCast().get(i);
-            newMovie.setOriginalTitle(oldCast.getOriginalTitle());
+            com.best.movie.note.model.response.tvshows.details.cast.tvshows.Cast oldCast = tvShowsCatResult.getCast().get(i);
+            newMovie.setOriginalTitle(oldCast.getOriginalName());
             newMovie.setId(oldCast.getId());
             newMovie.setPosterPath(oldCast.getPosterPath());
             newMovie.setGenreIds(oldCast.getGenreIds());
             movies.add(newMovie);
         }
 
-
         tvShowsRecyclerView = binding.tvshowsRecyclerView;
-        tvShowsAdapter = new MoviesCommonAdapter(tvShowsCatResult, CARD_TYPE_VERTICAL, genresTvShowResults);
+        tvShowsAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresTvShowResults);
         tvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsRecyclerView.setAdapter(tvShowsAdapter);
         tvShowsAdapter.setOnMovieClickListener(this);

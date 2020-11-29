@@ -163,9 +163,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="6dp"
                 android:text="Death day:"
-                android:visibility="@{showDeathDay ? View.VISIBLE : View.GONE}"
-
                 android:textColor="@color/white"
+
+                android:visibility="@{showDeathDay ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/dateOfBirthTitleTextView" />
 
@@ -176,8 +176,8 @@
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="16dp"
                 android:text="@{castDetailsResult.deathday}"
-                android:visibility="@{showDeathDay ? View.VISIBLE : View.GONE}"
                 android:textColor="@color/special_subtitle_gray"
+                android:visibility="@{showDeathDay ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/deathDayTitleTextView"
                 app:layout_constraintTop_toTopOf="@+id/deathDayTitleTextView"

@@ -38,7 +38,7 @@ public class CelebrityDetailsViewModel extends AndroidViewModel {
         return repository.getMoviesCastResultMutableLiveData(castId, language);
     }
 
-    public MutableLiveData<MoviesCastApiResponse>  getCastTvShows(int castId, String language) {
+    public MutableLiveData<TvShowsCatApiResponse>  getCastTvShows(int castId, String language) {
         return repository.getTvShowsCatMutableLiveData(castId, language);
     }
 
