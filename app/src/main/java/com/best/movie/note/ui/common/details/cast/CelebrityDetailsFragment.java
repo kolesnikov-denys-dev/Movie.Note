@@ -95,8 +95,6 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
                         } else {
                             binding.setShowDeathDay(false);
                         }
-
-
                     }
                 });
     }
@@ -118,12 +116,6 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
                     @Override
                     public void onChanged(TvShowsCatApiResponse data) {
                         tvShowsCatResult = data;
-
-                        for (com.best.movie.note.model.response.tvshows.details.cast.tvshows.Cast x : data.getCast()) {
-                            Log.i("check", "------!!!!!!" + x.getOriginalName());
-                        }
-
-                        Log.i("check", "CHANGED!!!!!!!!!!!!!!!!!!!!");
                         fillTvShowsRecyclerView();
                     }
                 });
@@ -177,11 +169,8 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     }
 
     private void fillTvShowsRecyclerView() {
-
-        binding.setTvShowsList(true);
-
         if (tvShowsCatResult.getCast() != null) {
-
+            binding.setTvShowsList(true);
         }
 
         // Convert Cast to MovieResult
