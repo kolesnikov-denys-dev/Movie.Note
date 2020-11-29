@@ -60,7 +60,6 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     // Genres Movies
     private ArrayList<GenreResult> genresResults;
 
-
 //    @Override
 //    public void onCreate(@Nullable Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
