@@ -28,7 +28,7 @@ public class CastDetailsApiResponse {
     private String birthday;
     @SerializedName("deathday")
     @Expose
-    private Object deathday;
+    private String deathday;
     @SerializedName("gender")
     @Expose
     private Integer gender;
@@ -64,11 +64,15 @@ public class CastDetailsApiResponse {
 
     @BindingAdapter({"alsoKnownAs"})
     public static void loadIAlsoKnowsAs(TextView textView, List<String> alsoKnownAs) {
-        StringBuilder finalStr = new StringBuilder();
-        for (String str : alsoKnownAs) {
-            finalStr.append(str);
+
+        if (alsoKnownAs != null) {
+            StringBuilder finalStr = new StringBuilder();
+            for (String str : alsoKnownAs) {
+                finalStr.append(str);
+            }
+            textView.setText(finalStr.toString());
         }
-        textView.setText(finalStr.toString());
+
     }
 
     public Boolean getAdult() {
@@ -103,11 +107,11 @@ public class CastDetailsApiResponse {
         this.birthday = birthday;
     }
 
-    public Object getDeathday() {
+    public String getDeathday() {
         return deathday;
     }
 
-    public void setDeathday(Object deathday) {
+    public void setDeathday(String deathday) {
         this.deathday = deathday;
     }
 

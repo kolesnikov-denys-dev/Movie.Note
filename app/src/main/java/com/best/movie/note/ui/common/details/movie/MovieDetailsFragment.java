@@ -381,7 +381,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     @Override
     public void onCastClick(int castId, String castName) {
         Bundle bundle = new Bundle();
-        bundle.putInt("cast_id", movieId);
+        bundle.putInt("cast_id", castId);
         bundle.putString("cast_name", castName);
         navController.navigate(R.id.action_mainMovieFragment_to_celebrityDetailsFragment, bundle);
     }

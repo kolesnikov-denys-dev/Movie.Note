@@ -29,30 +29,33 @@ import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 import com.best.movie.note.ui.common.details.movie.MovieDetailsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
+
 public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
         CastsAdapter.OnCastClickListener, SeasonsAdapter.OnSeasonClickListener {
 
-    private MovieDetailsViewModel movieDetailsViewModel;
+    private CelebrityDetailsViewModel celebrityDetailsViewModel;
     private CelebrityDetailsFragmentBinding binding;
     private NavController navController;
 
-    // Movies Region
-    private MovieDetailsApiResponse movieDetailsResult;
-    private VideosApiResponse movieTrailersResult;
-    private CastCrewApiResponse moviesCastCrewResult;
-    private RecyclerView moviesCastCrewRecyclerView;
-    private CastsAdapter moviesCastCrewAdapter;
-    private ArrayList<MovieResult> moviesRecommendationsResult;
-    private RecyclerView moviesRecommendationRecyclerView;
-    private MoviesCommonAdapter moviesRecommendationAdapter;
-    private ArrayList<MovieResult> moviesSimilarResult;
-    private RecyclerView moviesSimilarRecyclerView;
-    private MoviesCommonAdapter moviesSimilarAdapter;
+    private CastDetailsApiResponse castDetailsResult;
+
+    private MoviesCastApiResponse moviesCastResult;
+    private RecyclerView moviesRecyclerView;
+    private MoviesCommonAdapter moviesAdapter;
+
+    private TvShowsCatApiResponse tvShowsCatResult;
+    private RecyclerView tvShowsRecyclerView;
+    private MoviesCommonAdapter tvShowsAdapter;
+
     private int castId;
     private boolean isMovie;
     private ArrayList<GenreResult> moviesGenresResults;
@@ -69,9 +72,9 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        movieDetailsViewModel = new ViewModelProvider
+        celebrityDetailsViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getActivity().getApplication())
-                .create(MovieDetailsViewModel.class);
+                .create(CelebrityDetailsViewModel.class);
 
         navController = Navigation.findNavController(view);
 
@@ -80,92 +83,71 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
             String castName = getArguments().getString("cast_name");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(castName);
 
-//            binding.setShowSeasons(false);
-//            getMovieGenres();
-//            getMovieDetail(movieId, "en-US");
-//            getMovieVideos(movieId, "en-US");
-//            getMovieRecommendations(movieId, "en-US");
-//            getMovieSimilar(movieId, "en-US");
-//            getMovieCredits(movieId, "en-US");
+
+            getCastDetails(castId, QUERY_LANGUAGE);
+
 
         }
     }
 
     // Movies Region
 
-//    private void getMovieGenres() {
-//        movieDetailsViewModel.getGenresMoviesData().observe(getActivity(),
-//                new Observer<List<GenreResult>>() {
-//                    @Override
-//                    public void onChanged(List<GenreResult> data) {
-//                        moviesGenresResults = (ArrayList<GenreResult>) data;
-//                    }
-//                });
-//    }
-//
-//    public void getMovieDetail(int movieId, String language) {
-//        movieDetailsViewModel.getMovieDetails(movieId, language).observe(getActivity(),
-//                new Observer<MovieDetailsApiResponse>() {
-//                    @Override
-//                    public void onChanged(MovieDetailsApiResponse data) {
+    private void getCastDetails(int castId, String language) {
+        celebrityDetailsViewModel.getCastDetails(castId, language).observe(getActivity(),
+                new Observer<CastDetailsApiResponse>() {
+                    @Override
+                    public void onChanged(CastDetailsApiResponse data) {
+                        castDetailsResult = data;
+                        binding.setCastDetailsResult(data);
+                        if (castDetailsResult.getDeathday() != null) {
+                            binding.setShowDeathDay(true);
+                        } else {
+                            binding.setShowDeathDay(false);
+                        }
+                    }
+                });
+    }
+
+    public void getCastMovies(int castId, String language) {
+        celebrityDetailsViewModel.getCastMovies(castId, language).observe(getActivity(),
+                new Observer<MoviesCastApiResponse>() {
+                    @Override
+                    public void onChanged(MoviesCastApiResponse data) {
 //                        binding.setMovieDetailsResult(data);
-//                        movieDetailsResult = data;
-//                    }
-//                });
-//    }
-//
-//    public void getMovieVideos(int movieId, String language) {
-//        movieDetailsViewModel.getMovieVideos(movieId, language).observe(getActivity(),
-//                new Observer<VideosApiResponse>() {
-//                    @Override
-//                    public void onChanged(VideosApiResponse data) {
-//                        movieTrailersResult = data;
-//                    }
-//                });
-//    }
-//
-//    public void getMovieCredits(int movieId, String language) {
-//        movieDetailsViewModel.getCredits(movieId, language).observe(getActivity(),
-//                new Observer<CastCrewApiResponse>() {
-//                    @Override
-//                    public void onChanged(CastCrewApiResponse data) {
-//                        moviesCastCrewResult = data;
-//                        if (moviesCastCrewResult.getCast().isEmpty()) {
-//                            binding.setShowCastList(false);
-//                        } else {
-//                            fillCastCrewRecyclerView();
-//                            binding.setShowCastList(true);
-//                        }
-//                    }
-//                });
-//    }
-//
-//    // End Movies Region
-//
-//
-//    // Movies Region
-//
-//    private void fillCastCrewRecyclerView() {
-//        moviesCastCrewRecyclerView = binding.castCrewRecyclerView;
-//        moviesCastCrewAdapter = new CastsAdapter(moviesCastCrewResult.getCast());
-//        moviesCastCrewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        moviesCastCrewRecyclerView.setAdapter(moviesCastCrewAdapter);
-//        moviesCastCrewAdapter.setOnCastClickListener(this);
-//        moviesCastCrewAdapter.notifyDataSetChanged();
-//    }
-//
-//    private void fillRecommendationRecyclerView() {
-//        moviesRecommendationRecyclerView = binding.recommendedRecyclerView;
-//        moviesRecommendationAdapter = new MoviesCommonAdapter(moviesRecommendationsResult, 99, moviesGenresResults);
-//        moviesRecommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        moviesRecommendationRecyclerView.setAdapter(moviesRecommendationAdapter);
-//        moviesRecommendationAdapter.setOnMovieClickListener(this);
-//        moviesRecommendationAdapter.notifyDataSetChanged();
-//    }
-//    // End Movies Region
-//
-//
-//    // End Movies Region
+                        moviesCastResult = data;
+                    }
+                });
+    }
+
+    public void getCastTvShows(int castId, String language) {
+        celebrityDetailsViewModel.getCastTvShows(castId, language).observe(getActivity(),
+                new Observer<TvShowsCatApiResponse>() {
+                    @Override
+                    public void onChanged(TvShowsCatApiResponse data) {
+//                        binding.setMovieDetailsResult(data);
+                        tvShowsCatResult = data;
+                    }
+                });
+    }
+
+    private void fillCastMoviesRecyclerView() {
+        moviesRecyclerView = binding.moviesRecyclerView;
+        moviesAdapter = new CastsAdapter(moviesCastResult);
+        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        moviesRecyclerView.setAdapter(moviesAdapter);
+//        moviesAdapter.setOnCastClickListener(this);
+        moviesAdapter.notifyDataSetChanged();
+    }
+
+    private void fillTvShowsRecyclerView() {
+
+        tvShowsRecyclerView = binding.tvshowsRecyclerView;
+        tvShowsAdapter = new MoviesCommonAdapter(tvShowsCatResult, 99, moviesGenresResults);
+        tvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        tvShowsRecyclerView.setAdapter(moviesRecommendationAdapter);
+        tvShowsAdapter.setOnMovieClickListener(this);
+        tvShowsAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onMovieClick(int movieId, String originalName) {

@@ -1,5 +1,6 @@
 package com.best.movie.note.model.dagger.component;
 
+import com.best.movie.note.model.CelebrityDetailsRepository;
 import com.best.movie.note.model.MoviesDetailsRepository;
 import com.best.movie.note.model.MoviesListRepository;
 import com.best.movie.note.model.MoviesRepository;
@@ -23,5 +24,7 @@ public interface AppDataComponent {
     void injectMoviesListViewModel(MoviesListViewModel moviesListViewModel);
 
     void injectTvShowsViewModel(TvShowsRepository tvShowsRepository);
+
+    void injectCelebrityDetailsRepository(CelebrityDetailsRepository celebrityDetailsRepository);
 
 }

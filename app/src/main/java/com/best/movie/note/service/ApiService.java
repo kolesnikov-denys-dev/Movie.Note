@@ -161,19 +161,19 @@ public interface ApiService {
     // Person / Cast Details Region
 
     @GET("person/{person_id}")
-    Call<CastDetailsApiResponse> getCastDetailsById(
+    Observable<CastDetailsApiResponse> getCastDetailsById(
             @Path(PARAMS_PERSON_ID) int castId,
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);
 
     @GET("person/{person_id}/movie_credits")
-    Call<MoviesCastApiResponse> getMoviesByCastId(
+    Observable<MoviesCastApiResponse> getMoviesByCastId(
             @Path(PARAMS_PERSON_ID) int castId,
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);
 
     @GET("person/{person_id}/tv_credits")
-    Call<TvShowsCatApiResponse> getTvShowsByCastId(
+    Observable<TvShowsCatApiResponse> getTvShowsByCastId(
             @Path(PARAMS_PERSON_ID) int castId,
             @Query(PARAMS_API_KEY) String apiKey,
             @Query(PARAMS_LANGUAGE) String language);

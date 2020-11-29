@@ -13,6 +13,9 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
+import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 import com.best.movie.note.service.ApiService;
 
 import java.util.ArrayList;
@@ -46,143 +49,82 @@ public class CelebrityDetailsRepository extends Application {
     public CelebrityDetailsRepository(Application application) {
         this.application = application;
         compositeDisposable = new CompositeDisposable();
-        getAppComponent().injectMoviesDetailsRepository(this);
+        getAppComponent().injectCelebrityDetailsRepository(this);
     }
 
-    // Movies Region
-    private ArrayList<GenreResult> genreResults;
-    private final MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
-    private MovieDetailsApiResponse movieDetailsResult;
-    private final MutableLiveData<MovieDetailsApiResponse> movieDetailsApiResponseMutableLiveData = new MutableLiveData<>();
-    private VideosApiResponse videosResult;
-    private final MutableLiveData<VideosApiResponse> movieVideosApiResponseMutableLiveData = new MutableLiveData<>();
-    private ArrayList<MovieResult> recommendationsResult;
-    private final MutableLiveData<List<MovieResult>> recommendationsApiResponseMutableLiveData = new MutableLiveData<>();
-    private ArrayList<MovieResult> similarResult;
-    private final MutableLiveData<List<MovieResult>> similarApiResponseMutableLiveData = new MutableLiveData<>();
-    private CastCrewApiResponse castCrewResult;
-    private final MutableLiveData<CastCrewApiResponse> castCrewApiResponseMutableLiveData = new MutableLiveData<>();
-    // End Region Movies
+    private CastDetailsApiResponse castDetailsResult;
+    private final MutableLiveData<CastDetailsApiResponse> castDetailsMutableLiveData = new MutableLiveData<>();
 
+    private MoviesCastApiResponse moviesCastResult;
+    private final MutableLiveData<MoviesCastApiResponse> moviesCastResultMutableLiveData = new MutableLiveData<>();
 
-    // Movies Region
-    public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
-        Disposable disposableSimpleData = apiService.getGenresMovies(API_KEY, QUERY_LANGUAGE)
+    private TvShowsCatApiResponse tvShowsCatResult;
+    private final MutableLiveData<TvShowsCatApiResponse> tvShowsCatResultMutableLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<CastDetailsApiResponse> getCastDetailsMutableLiveData(int castId, String language) {
+        Disposable disposableSimpleData = apiService.getCastDetailsById(castId, API_KEY, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<GenresMovieApiResponse>() {
+                .subscribe(new Consumer<CastDetailsApiResponse>() {
                     @Override
-                    public void accept(GenresMovieApiResponse moviesApiResponse) throws Exception {
-                        if (moviesApiResponse != null && moviesApiResponse.getGenres() != null) {
-                            genreResults = (ArrayList<GenreResult>) moviesApiResponse.getGenres();
-                            genresMutableLiveData.setValue(genreResults);
+                    public void accept(CastDetailsApiResponse moviesApiResponse) throws Exception {
+                        if (moviesApiResponse != null && moviesApiResponse != null) {
+                            castDetailsResult = moviesApiResponse;
+                            castDetailsMutableLiveData.setValue(castDetailsResult);
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG_ERROR, "onFailure: getUpcomingMoviesMutableLiveData" + throwable.getLocalizedMessage());
+                        Log.e(TAG_ERROR, "onFailure: getCastDetailsMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
-        return genresMutableLiveData;
+        return castDetailsMutableLiveData;
     }
-    public MutableLiveData<MovieDetailsApiResponse> getMovieDetailLiveData(int movieId, String language) {
-        Call<MovieDetailsApiResponse> call = apiService.getMovieDetailsById(movieId, API_KEY, language);
-        call.enqueue(new Callback<MovieDetailsApiResponse>() {
-            @Override
-            public void onResponse(Call<MovieDetailsApiResponse> call, Response<MovieDetailsApiResponse> response) {
-                MovieDetailsApiResponse moviesApiResponse = response.body();
-                if (moviesApiResponse != null && moviesApiResponse != null) {
-                    movieDetailsResult = moviesApiResponse;
-                    movieDetailsApiResponseMutableLiveData.setValue(movieDetailsResult);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<MovieDetailsApiResponse> call, Throwable t) {
-                Log.e(TAG_ERROR, "onFailure: getMovieDetailLiveData" + t.getLocalizedMessage());
-            }
-        });
-        return movieDetailsApiResponseMutableLiveData;
+    public MutableLiveData<MoviesCastApiResponse> getMoviesCastResultMutableLiveData(int castId, String language) {
+        Disposable disposableSimpleData = apiService.getMoviesByCastId(castId, API_KEY, language)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<MoviesCastApiResponse>() {
+                    @Override
+                    public void accept(MoviesCastApiResponse moviesApiResponse) throws Exception {
+                        if (moviesApiResponse != null && moviesApiResponse != null) {
+                            moviesCastResult = moviesApiResponse;
+                            moviesCastResultMutableLiveData.setValue(moviesCastResult);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e(TAG_ERROR, "onFailure: getMoviesCastResultMutableLiveData" + throwable.getLocalizedMessage());
+                    }
+                });
+        compositeDisposable.add(disposableSimpleData);
+        return moviesCastResultMutableLiveData;
     }
-    public MutableLiveData<VideosApiResponse> getMovieVideosLiveData(int movieId, String language) {
-        Call<VideosApiResponse> call = apiService.getMovieVideosById(movieId, API_KEY, language);
-        call.enqueue(new Callback<VideosApiResponse>() {
-            @Override
-            public void onResponse(Call<VideosApiResponse> call, Response<VideosApiResponse> response) {
-                VideosApiResponse moviesApiResponse = response.body();
-                if (moviesApiResponse != null && moviesApiResponse != null) {
-                    videosResult = moviesApiResponse;
-                    movieVideosApiResponseMutableLiveData.setValue(videosResult);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<VideosApiResponse> call, Throwable t) {
-                Log.e(TAG_ERROR, "onFailure: getMovieVideosLiveData" + t.getLocalizedMessage());
-            }
-        });
-        return movieVideosApiResponseMutableLiveData;
+    public MutableLiveData<TvShowsCatApiResponse> getTvShowsCatMutableLiveData(int castId, String language) {
+        Disposable disposableSimpleData = apiService.getTvShowsByCastId(castId, API_KEY, language)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<TvShowsCatApiResponse>() {
+                    @Override
+                    public void accept(TvShowsCatApiResponse moviesApiResponse) throws Exception {
+                        if (moviesApiResponse != null && moviesApiResponse != null) {
+                            tvShowsCatResult = moviesApiResponse;
+                            tvShowsCatResultMutableLiveData.setValue(tvShowsCatResult);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e(TAG_ERROR, "onFailure: getTvShowsCatMutableLiveData" + throwable.getLocalizedMessage());
+                    }
+                });
+        compositeDisposable.add(disposableSimpleData);
+        return tvShowsCatResultMutableLiveData;
     }
-    public MutableLiveData<List<MovieResult>> getRecommendationsLiveData(int movieId, String language) {
-        Call<MoviesApiResponse> call = apiService.getRecommendationsById(movieId, API_KEY, language);
-        call.enqueue(new Callback<MoviesApiResponse>() {
-            @Override
-            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
-                MoviesApiResponse movieApiResponse = response.body();
-                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    recommendationsResult = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    recommendationsApiResponseMutableLiveData.setValue(recommendationsResult);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-                Log.e(TAG_ERROR, "onFailure: getRecommendationsLiveData" + t.getLocalizedMessage());
-            }
-        });
-        return recommendationsApiResponseMutableLiveData;
-    }
-    public MutableLiveData<List<MovieResult>> getSimilarLiveData(int movieId, String language) {
-        Call<MoviesApiResponse> call = apiService.getSimilarById(movieId, API_KEY, language);
-        call.enqueue(new Callback<MoviesApiResponse>() {
-            @Override
-            public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
-                MoviesApiResponse movieApiResponse = response.body();
-                if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    similarResult = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    similarApiResponseMutableLiveData.setValue(similarResult);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MoviesApiResponse> call, Throwable t) {
-                Log.e(TAG_ERROR, "onFailure: getSimilarLiveData" + t.getLocalizedMessage());
-            }
-        });
-        return similarApiResponseMutableLiveData;
-    }
-    public MutableLiveData<CastCrewApiResponse> getCreditsLiveData(int movieId, String language) {
-        Call<CastCrewApiResponse> call = apiService.getCreditsById(movieId, API_KEY, language);
-        call.enqueue(new Callback<CastCrewApiResponse>() {
-            @Override
-            public void onResponse(Call<CastCrewApiResponse> call, Response<CastCrewApiResponse> response) {
-                CastCrewApiResponse movieApiResponse = response.body();
-                if (movieApiResponse != null && movieApiResponse != null) {
-                    castCrewResult = movieApiResponse;
-                    castCrewApiResponseMutableLiveData.setValue(castCrewResult);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CastCrewApiResponse> call, Throwable t) {
-                Log.e(TAG_ERROR, "onFailure: getCreditsLiveData" + t.getLocalizedMessage());
-            }
-        });
-        return castCrewApiResponseMutableLiveData;
-    }
-    // End Region Movies
-
 
 }
