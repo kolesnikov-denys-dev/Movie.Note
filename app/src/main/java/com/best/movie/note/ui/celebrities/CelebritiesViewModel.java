@@ -1,19 +1,30 @@
 package com.best.movie.note.ui.celebrities;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class CelebritiesViewModel extends ViewModel {
+import com.best.movie.note.model.repositories.CelebritiesRepository;
+import com.best.movie.note.model.response.tvshows.persons.popular.PopularPersonApiResponse;
+import com.best.movie.note.model.response.tvshows.persons.trending.TrendingPersonApiResponse;
 
-    private MutableLiveData<String> mText;
+public class CelebritiesViewModel extends AndroidViewModel {
+    private final CelebritiesRepository repository;
 
-    public CelebritiesViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+    public CelebritiesViewModel(@NonNull Application application) {
+        super(application);
+        repository = new CelebritiesRepository(application);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<PopularPersonApiResponse> getPopularPerson(String language, String page) {
+        return repository.getPopularPersonMutableLiveData(language, page);
     }
+
+    public MutableLiveData<TrendingPersonApiResponse> getTrendingPerson(String language) {
+        return repository.getTrendingPersonMutableLiveData(language);
+    }
+
 }
