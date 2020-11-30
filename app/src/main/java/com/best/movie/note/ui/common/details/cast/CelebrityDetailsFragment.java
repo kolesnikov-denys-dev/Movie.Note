@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.adapters.CastsAdapter;
-import com.best.movie.note.adapters.MoviesCommonAdapter;
+import com.best.movie.note.adapters.CommonContentAdapter;
 import com.best.movie.note.databinding.CelebrityDetailsFragmentBinding;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
@@ -38,7 +38,7 @@ import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 
-public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
+public class CelebrityDetailsFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener,
         CastsAdapter.OnCastClickListener {
 
     private CelebrityDetailsViewModel celebrityDetailsViewModel;
@@ -47,10 +47,10 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     private CastDetailsApiResponse castDetailsResult;
     private MoviesCastApiResponse moviesCastResult;
     private RecyclerView moviesRecyclerView;
-    private MoviesCommonAdapter moviesAdapter;
+    private CommonContentAdapter moviesAdapter;
     private TvShowsCatApiResponse tvShowsCatResult;
     private RecyclerView tvShowsRecyclerView;
-    private MoviesCommonAdapter tvShowsAdapter;
+    private CommonContentAdapter tvShowsAdapter;
     private int castId;
     private boolean isMovie;
     private ArrayList<GenreResult> genresResults;
@@ -163,7 +163,7 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
         }
 
         moviesRecyclerView = binding.moviesRecyclerView;
-        moviesAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
+        moviesAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         moviesRecyclerView.setAdapter(moviesAdapter);
         moviesAdapter.setOnMovieClickListener(this);
@@ -188,7 +188,7 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
         }
 
         tvShowsRecyclerView = binding.tvshowsRecyclerView;
-        tvShowsAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresTvShowResults, CONTENT_TYPE_TV_SHOW);
+        tvShowsAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, genresTvShowResults, CONTENT_TYPE_TV_SHOW);
         tvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsRecyclerView.setAdapter(tvShowsAdapter);
         tvShowsAdapter.setOnMovieClickListener(this);
@@ -198,7 +198,6 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     @Override
     public void onMovieClick(int contentId, String originalName, int contentType) {
         Bundle bundle = new Bundle();
-
         switch (contentType) {
             case CONTENT_TYPE_MOVIE: {
                 Log.i("check", "was Clicked on :" + contentId);

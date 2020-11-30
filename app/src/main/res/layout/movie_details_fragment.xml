@@ -365,7 +365,7 @@
             <ImageView
                 android:id="@+id/seasonsSeeAllButton"
                 style="@style/yellow_arrow"
-                android:visibility="@{showSeasons ? View.VISIBLE : View.GONE}"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/overviewTextView" />
 
@@ -397,10 +397,9 @@
                 android:id="@+id/castCrewSeeAllButton"
                 style="@style/yellow_arrow"
                 android:layout_marginTop="22dp"
-                android:visibility="@{showCastList ? View.VISIBLE : View.GONE}"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/seasonsRecyclerView" />
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/castCrewRecyclerView"

@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.adapters.MoviesCommonAdapter;
+import com.best.movie.note.adapters.CommonContentAdapter;
 import com.best.movie.note.databinding.FragmentMoviesBinding;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
@@ -32,7 +32,7 @@ import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 
-public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener {
+public class MoviesFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener {
 
     private MoviesViewModel moviesViewModel;
     private FragmentMoviesBinding binding;
@@ -41,23 +41,23 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     // Popular Movies
     private ArrayList<MovieResult> movieResults;
     private RecyclerView popularMoviesRecyclerView;
-    private MoviesCommonAdapter moviesCommonAdapter;
+    private CommonContentAdapter commonContentAdapter;
     // Playing Now Movies
     private ArrayList<MovieResult> playingNowResults;
     private RecyclerView nowPlayingMoviesRecyclerView;
-    private MoviesCommonAdapter nowPlayingMoviesCommonAdapter;
+    private CommonContentAdapter nowPlayingCommonContentAdapter;
     // Trending Movies
     private ArrayList<MovieResult> trendingResults;
     private RecyclerView trendingRecyclerView;
-    private MoviesCommonAdapter trendingMoviesCommonAdapter;
+    private CommonContentAdapter trendingCommonContentAdapter;
     // Top Rated Movies
     private ArrayList<MovieResult> topRatedResults;
     private RecyclerView topRatedRecyclerView;
-    private MoviesCommonAdapter topRatedMoviesCommonAdapter;
+    private CommonContentAdapter topRatedCommonContentAdapter;
     // Upcoming Movies
     private ArrayList<MovieResult> upcomingResults;
     private RecyclerView upcomingRecyclerView;
-    private MoviesCommonAdapter upcomingMoviesCommonAdapter;
+    private CommonContentAdapter upcomingCommonContentAdapter;
     // Genres Movies
     private ArrayList<GenreResult> genresResults;
 
@@ -158,57 +158,57 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
 
     private void fillPopularRecyclerView() {
         popularMoviesRecyclerView = binding.popularRecyclerView;
-        moviesCommonAdapter = new MoviesCommonAdapter(
+        commonContentAdapter = new CommonContentAdapter(
                 movieResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         popularMoviesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        popularMoviesRecyclerView.setAdapter(moviesCommonAdapter);
-        moviesCommonAdapter.setOnMovieClickListener(this);
-        moviesCommonAdapter.notifyDataSetChanged();
+        popularMoviesRecyclerView.setAdapter(commonContentAdapter);
+        commonContentAdapter.setOnMovieClickListener(this);
+        commonContentAdapter.notifyDataSetChanged();
     }
 
     private void fillPlayingNowRecyclerView() {
         nowPlayingMoviesRecyclerView = binding.playingInTheatresRecyclerView;
-        nowPlayingMoviesCommonAdapter = new MoviesCommonAdapter(
+        nowPlayingCommonContentAdapter = new CommonContentAdapter(
                 playingNowResults, CARD_TYPE_HORIZONTAL, genresResults, CONTENT_TYPE_MOVIE);
         nowPlayingMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
-        nowPlayingMoviesRecyclerView.setAdapter(nowPlayingMoviesCommonAdapter);
-        nowPlayingMoviesCommonAdapter.setOnMovieClickListener(this);
-        nowPlayingMoviesCommonAdapter.notifyDataSetChanged();
+        nowPlayingMoviesRecyclerView.setAdapter(nowPlayingCommonContentAdapter);
+        nowPlayingCommonContentAdapter.setOnMovieClickListener(this);
+        nowPlayingCommonContentAdapter.notifyDataSetChanged();
     }
 
     private void fillTrendingRecyclerView() {
         trendingRecyclerView = binding.trendingRecyclerView;
-        trendingMoviesCommonAdapter = new MoviesCommonAdapter(
+        trendingCommonContentAdapter = new CommonContentAdapter(
                 trendingResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         trendingRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
-        trendingRecyclerView.setAdapter(trendingMoviesCommonAdapter);
-        trendingMoviesCommonAdapter.setOnMovieClickListener(this);
-        trendingMoviesCommonAdapter.notifyDataSetChanged();
+        trendingRecyclerView.setAdapter(trendingCommonContentAdapter);
+        trendingCommonContentAdapter.setOnMovieClickListener(this);
+        trendingCommonContentAdapter.notifyDataSetChanged();
     }
 
     private void fillTopRatedRecyclerView() {
         topRatedRecyclerView = binding.topRatedRecyclerView;
-        topRatedMoviesCommonAdapter = new MoviesCommonAdapter(
+        topRatedCommonContentAdapter = new CommonContentAdapter(
                 topRatedResults, CARD_TYPE_HORIZONTAL_SMALL, genresResults, CONTENT_TYPE_MOVIE);
         topRatedRecyclerView.setLayoutManager(new GridLayoutManager(
                 getContext(), SPAN_COUNT_HORIZONTAL_SMALL, GridLayoutManager.HORIZONTAL, false));
-        topRatedRecyclerView.setAdapter(topRatedMoviesCommonAdapter);
-        topRatedMoviesCommonAdapter.setOnMovieClickListener(this);
-        topRatedMoviesCommonAdapter.notifyDataSetChanged();
+        topRatedRecyclerView.setAdapter(topRatedCommonContentAdapter);
+        topRatedCommonContentAdapter.setOnMovieClickListener(this);
+        topRatedCommonContentAdapter.notifyDataSetChanged();
     }
 
     private void fillUpcomingRecyclerView() {
         upcomingRecyclerView = binding.upComingRecyclerView;
-        upcomingMoviesCommonAdapter = new MoviesCommonAdapter(
+        upcomingCommonContentAdapter = new CommonContentAdapter(
                 upcomingResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         upcomingRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
-        upcomingRecyclerView.setAdapter(upcomingMoviesCommonAdapter);
-        upcomingMoviesCommonAdapter.setOnMovieClickListener(this);
-        upcomingMoviesCommonAdapter.notifyDataSetChanged();
+        upcomingRecyclerView.setAdapter(upcomingCommonContentAdapter);
+        upcomingCommonContentAdapter.setOnMovieClickListener(this);
+        upcomingCommonContentAdapter.notifyDataSetChanged();
     }
 
     @Override

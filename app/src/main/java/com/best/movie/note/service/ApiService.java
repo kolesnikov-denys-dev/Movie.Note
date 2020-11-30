@@ -10,6 +10,8 @@ import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
+import com.best.movie.note.model.response.tvshows.persons.popular.PopularPersonApiResponse;
+import com.best.movie.note.model.response.tvshows.persons.trending.TrendingPersonApiResponse;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -17,7 +19,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import static com.best.movie.note.utils.Constants.*;
+import static com.best.movie.note.utils.Constants.PARAMS_API_KEY;
+import static com.best.movie.note.utils.Constants.PARAMS_LANGUAGE;
+import static com.best.movie.note.utils.Constants.PARAMS_MOVIE_ID;
+import static com.best.movie.note.utils.Constants.PARAMS_PAGE;
+import static com.best.movie.note.utils.Constants.PARAMS_PERSON_ID;
+import static com.best.movie.note.utils.Constants.PARAMS_TV_ID;
 
 public interface ApiService {
 
@@ -179,6 +186,22 @@ public interface ApiService {
             @Query(PARAMS_LANGUAGE) String language);
 
     // End Region Person / Cast Details
+
+
+    // Region Celebrities
+
+    @GET("person/popular")
+    Observable<PopularPersonApiResponse> getPopularPersons(
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language,
+            @Query(PARAMS_PAGE) String page);
+
+    @GET("trending/person/week")
+    Observable<TrendingPersonApiResponse> getTrendingPersons(
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    // End Region Celebrities
 
 }
 

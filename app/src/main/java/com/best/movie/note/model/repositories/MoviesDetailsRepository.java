@@ -1,4 +1,4 @@
-package com.best.movie.note.model;
+package com.best.movie.note.model.repositories;
 
 import android.app.Application;
 import android.util.Log;

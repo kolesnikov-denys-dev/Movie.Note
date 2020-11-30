@@ -22,14 +22,14 @@ import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
 
 
-public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapter.MoviesViewHolder> {
+public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdapter.MoviesViewHolder> {
 
     private ArrayList<MovieResult> movies;
     private ArrayList<GenreResult> genres;
     private ArrayList<String> subtitles;
     private OnMovieClickListener onMovieClickListener;
     private int cardType;
-    private int contentType; // 0 Movies 1 TvShows
+    private int contentType;
 
     public interface OnMovieClickListener {
         void onMovieClick(int movieId, String originalName, int contentType);
@@ -39,7 +39,7 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
         this.onMovieClickListener = onMovieClickListener;
     }
 
-    public MoviesCommonAdapter(ArrayList<MovieResult> movies, int cardType, ArrayList<GenreResult> genresResults, int contentType) {
+    public CommonContentAdapter(ArrayList<MovieResult> movies, int cardType, ArrayList<GenreResult> genresResults, int contentType) {
         this.movies = movies;
         this.cardType = cardType;
         this.genres = genresResults;

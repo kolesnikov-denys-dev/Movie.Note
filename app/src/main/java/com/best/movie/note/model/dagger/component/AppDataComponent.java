@@ -1,13 +1,13 @@
 package com.best.movie.note.model.dagger.component;
 
-import com.best.movie.note.model.CelebrityDetailsRepository;
-import com.best.movie.note.model.MoviesDetailsRepository;
-import com.best.movie.note.model.MoviesListRepository;
-import com.best.movie.note.model.MoviesRepository;
-import com.best.movie.note.model.TvShowsRepository;
+import com.best.movie.note.model.repositories.CelebritiesRepository;
+import com.best.movie.note.model.repositories.CelebrityDetailsRepository;
+import com.best.movie.note.model.repositories.MoviesDetailsRepository;
+import com.best.movie.note.model.repositories.MoviesListRepository;
+import com.best.movie.note.model.repositories.MoviesRepository;
+import com.best.movie.note.model.repositories.TvShowsRepository;
 import com.best.movie.note.model.dagger.module.DataModule;
 import com.best.movie.note.ui.common.list.movies.MoviesListViewModel;
-import com.best.movie.note.ui.tvshows.TvShowsViewModel;
 
 
 import dagger.Component;
@@ -26,5 +26,7 @@ public interface AppDataComponent {
     void injectTvShowsViewModel(TvShowsRepository tvShowsRepository);
 
     void injectCelebrityDetailsRepository(CelebrityDetailsRepository celebrityDetailsRepository);
+
+    void injectCelebritiesRepository(CelebritiesRepository celebritiesRepository);
 
 }

@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.adapters.CastsAdapter;
-import com.best.movie.note.adapters.MoviesCommonAdapter;
+import com.best.movie.note.adapters.CommonContentAdapter;
 import com.best.movie.note.adapters.SeasonsAdapter;
 import com.best.movie.note.databinding.MovieDetailsFragmentBinding;
 import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
@@ -42,7 +42,7 @@ import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 
-public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
+public class MovieDetailsFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener,
         CastsAdapter.OnCastClickListener, SeasonsAdapter.OnSeasonClickListener {
 
     private MovieDetailsViewModel movieDetailsViewModel;
@@ -57,10 +57,10 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     private CastsAdapter moviesCastCrewAdapter;
     private ArrayList<MovieResult> moviesRecommendationsResult;
     private RecyclerView moviesRecommendationRecyclerView;
-    private MoviesCommonAdapter moviesRecommendationAdapter;
+    private CommonContentAdapter moviesRecommendationAdapter;
     private ArrayList<MovieResult> moviesSimilarResult;
     private RecyclerView moviesSimilarRecyclerView;
-    private MoviesCommonAdapter moviesSimilarAdapter;
+    private CommonContentAdapter moviesSimilarAdapter;
     private int contentId;
     private int contentType;
     private ArrayList<GenreResult> moviesGenresResults;
@@ -74,10 +74,10 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     private CastsAdapter tvShowsCastCrewAdapter;
     private ArrayList<MovieResult> tvShowsRecommendationsResult;
     private RecyclerView tvShowsRecommendationRecyclerView;
-    private MoviesCommonAdapter tvShowsRecommendationAdapter;
+    private CommonContentAdapter tvShowsRecommendationAdapter;
     private ArrayList<MovieResult> tvShowsSimilarResult;
     private RecyclerView tvShowsSimilarRecyclerView;
-    private MoviesCommonAdapter tvShowsSimilarAdapter;
+    private CommonContentAdapter tvShowsSimilarAdapter;
     private ArrayList<GenreResult> tvShowsGenresResults;
 
     private RecyclerView tvShowsSeasonsRecyclerView;
@@ -136,7 +136,6 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     }
 
     // Movies Region
-
     private void getMovieGenres() {
         movieDetailsViewModel.getGenresMoviesData().observe(getActivity(),
                 new Observer<List<GenreResult>>() {
@@ -317,7 +316,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillRecommendationRecyclerView() {
         moviesRecommendationRecyclerView = binding.recommendedRecyclerView;
-        moviesRecommendationAdapter = new MoviesCommonAdapter(moviesRecommendationsResult, CARD_TYPE_VERTICAL, moviesGenresResults, CONTENT_TYPE_MOVIE);
+        moviesRecommendationAdapter = new CommonContentAdapter(moviesRecommendationsResult, CARD_TYPE_VERTICAL, moviesGenresResults, CONTENT_TYPE_MOVIE);
         moviesRecommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         moviesRecommendationRecyclerView.setAdapter(moviesRecommendationAdapter);
         moviesRecommendationAdapter.setOnMovieClickListener(this);
@@ -326,7 +325,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillSimilarRecyclerView() {
         moviesSimilarRecyclerView = binding.similarRecyclerView;
-        moviesSimilarAdapter = new MoviesCommonAdapter(moviesSimilarResult, CARD_TYPE_VERTICAL, moviesGenresResults, CONTENT_TYPE_MOVIE);
+        moviesSimilarAdapter = new CommonContentAdapter(moviesSimilarResult, CARD_TYPE_VERTICAL, moviesGenresResults, CONTENT_TYPE_MOVIE);
         moviesSimilarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         moviesSimilarRecyclerView.setAdapter(moviesSimilarAdapter);
         moviesSimilarAdapter.setOnMovieClickListener(this);
@@ -349,7 +348,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillTvShowsRecommendationRecyclerView() {
         tvShowsRecommendationRecyclerView = binding.recommendedRecyclerView;
-        tvShowsRecommendationAdapter = new MoviesCommonAdapter(tvShowsRecommendationsResult, CARD_TYPE_VERTICAL, tvShowsGenresResults, CONTENT_TYPE_TV_SHOW);
+        tvShowsRecommendationAdapter = new CommonContentAdapter(tvShowsRecommendationsResult, CARD_TYPE_VERTICAL, tvShowsGenresResults, CONTENT_TYPE_TV_SHOW);
         tvShowsRecommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsRecommendationRecyclerView.setAdapter(tvShowsRecommendationAdapter);
         tvShowsRecommendationAdapter.setOnMovieClickListener(this);
@@ -358,7 +357,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillTvShowsSimilarRecyclerView() {
         tvShowsSimilarRecyclerView = binding.similarRecyclerView;
-        tvShowsSimilarAdapter = new MoviesCommonAdapter(tvShowsSimilarResult, CARD_TYPE_VERTICAL, tvShowsGenresResults, CONTENT_TYPE_TV_SHOW);
+        tvShowsSimilarAdapter = new CommonContentAdapter(tvShowsSimilarResult, CARD_TYPE_VERTICAL, tvShowsGenresResults, CONTENT_TYPE_TV_SHOW);
         tvShowsSimilarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsSimilarRecyclerView.setAdapter(tvShowsSimilarAdapter);
         tvShowsSimilarAdapter.setOnMovieClickListener(this);

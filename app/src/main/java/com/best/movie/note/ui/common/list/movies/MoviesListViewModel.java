@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.best.movie.note.model.MoviesListRepository;
+import com.best.movie.note.model.repositories.MoviesListRepository;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.service.ApiService;
 import com.best.movie.note.ui.common.list.movies.databinding.MovieDataSource;
