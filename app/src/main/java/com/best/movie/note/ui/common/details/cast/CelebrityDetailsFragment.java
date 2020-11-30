@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 
 public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
@@ -161,7 +163,7 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
         }
 
         moviesRecyclerView = binding.moviesRecyclerView;
-        moviesAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresResults);
+        moviesAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         moviesRecyclerView.setAdapter(moviesAdapter);
         moviesAdapter.setOnMovieClickListener(this);
@@ -186,7 +188,7 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
         }
 
         tvShowsRecyclerView = binding.tvshowsRecyclerView;
-        tvShowsAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresTvShowResults);
+        tvShowsAdapter = new MoviesCommonAdapter(movies, CARD_TYPE_VERTICAL, genresTvShowResults, CONTENT_TYPE_TV_SHOW);
         tvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsRecyclerView.setAdapter(tvShowsAdapter);
         tvShowsAdapter.setOnMovieClickListener(this);
@@ -194,13 +196,26 @@ public class CelebrityDetailsFragment extends Fragment implements MoviesCommonAd
     }
 
     @Override
-    public void onMovieClick(int movieId, String originalName) {
-        Log.i("check", "was Clicked on :" + movieId);
+    public void onMovieClick(int contentId, String originalName, int contentType) {
         Bundle bundle = new Bundle();
-        bundle.putInt("movie_id", movieId);
-        bundle.putBoolean("is_movie", isMovie);
-        bundle.putString("original_name", originalName);
-        navController.navigate(R.id.action_mainMovieFragment_self, bundle);
+
+        switch (contentType) {
+            case CONTENT_TYPE_MOVIE: {
+                Log.i("check", "was Clicked on :" + contentId);
+                bundle.putInt("content_id", contentId);
+                bundle.putInt("content_type", contentType);
+                bundle.putString("original_name", originalName);
+                navController.navigate(R.id.action_celebrityDetailsFragment_to_mainMovieFragment, bundle);
+            }
+            break;
+            case CONTENT_TYPE_TV_SHOW: {
+                bundle.putInt("content_id", contentId);
+                bundle.putInt("content_type", contentType);
+                bundle.putString("original_name", originalName);
+                navController.navigate(R.id.action_celebrityDetailsFragment_to_mainMovieFragment, bundle);
+            }
+            break;
+        }
     }
 
     @Override

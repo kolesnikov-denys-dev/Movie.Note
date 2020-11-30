@@ -29,19 +29,21 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
     private ArrayList<String> subtitles;
     private OnMovieClickListener onMovieClickListener;
     private int cardType;
+    private int contentType; // 0 Movies 1 TvShows
 
     public interface OnMovieClickListener {
-        void onMovieClick(int movieId, String originalName);
+        void onMovieClick(int movieId, String originalName, int contentType);
     }
 
     public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {
         this.onMovieClickListener = onMovieClickListener;
     }
 
-    public MoviesCommonAdapter(ArrayList<MovieResult> movies, int cardType, ArrayList<GenreResult> genresResults) {
+    public MoviesCommonAdapter(ArrayList<MovieResult> movies, int cardType, ArrayList<GenreResult> genresResults, int contentType) {
         this.movies = movies;
         this.cardType = cardType;
         this.genres = genresResults;
+        this.contentType = contentType;
         getSubtitles();
     }
 
@@ -107,10 +109,10 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                             if (movies.get(getAdapterPosition()).getOriginalTitle() != null) {
                                 onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                        .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                                        .getId(), movies.get(getAdapterPosition()).getOriginalTitle(),contentType);
                             } else {
                                 onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                        .getId(), movies.get(getAdapterPosition()).getOriginalName());
+                                        .getId(), movies.get(getAdapterPosition()).getOriginalName(),contentType);
                             }
                         }
                     }
@@ -127,7 +129,7 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
                     public void onClick(View v) {
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                             onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle(), contentType);
                         }
                     }
                 });
@@ -143,7 +145,7 @@ public class MoviesCommonAdapter extends RecyclerView.Adapter<MoviesCommonAdapte
                     public void onClick(View v) {
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                             onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle());
+                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle(),contentType);
                         }
                     }
                 });

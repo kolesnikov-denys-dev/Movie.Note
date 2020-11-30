@@ -87,5 +87,8 @@
             android:name="cast_name"
             app:argType="string"
             android:defaultValue="empty name" />
+        <action
+            android:id="@+id/action_celebrityDetailsFragment_to_mainMovieFragment"
+            app:destination="@id/mainMovieFragment" />
     </fragment>
 </navigation>

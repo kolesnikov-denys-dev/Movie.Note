@@ -28,6 +28,12 @@ public class Constants {
     public static final int CARD_TYPE_HORIZONTAL = 1;
     public static final int CARD_TYPE_HORIZONTAL_SMALL = 2;
 
+    // Content Type
+    public static final int CONTENT_TYPE_MOVIE = 0;
+    public static final int CONTENT_TYPE_TV_SHOW = 1;
+
+
+
     public static final int SPAN_COUNT_HORIZONTAL_SMALL = 4;
 
     // End Region

@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 
 public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener,
         CastsAdapter.OnCastClickListener, SeasonsAdapter.OnSeasonClickListener {
@@ -59,8 +61,8 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     private ArrayList<MovieResult> moviesSimilarResult;
     private RecyclerView moviesSimilarRecyclerView;
     private MoviesCommonAdapter moviesSimilarAdapter;
-    private int movieId;
-    private boolean isMovie;
+    private int contentId;
+    private int contentType;
     private ArrayList<GenreResult> moviesGenresResults;
     // End Region
 
@@ -103,26 +105,32 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
         navController = Navigation.findNavController(view);
 
         if (getArguments() != null) {
-            movieId = getArguments().getInt("movie_id");
-            isMovie = getArguments().getBoolean("is_movie");
+            contentId = getArguments().getInt("content_id");
+            contentType = getArguments().getInt("content_type");
             String originalName = getArguments().getString("original_name");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(originalName);
-            if (isMovie) {
-                binding.setShowSeasons(false);
-                getMovieGenres();
-                getMovieDetail(movieId, "en-US");
-                getMovieVideos(movieId, "en-US");
-                getMovieRecommendations(movieId, "en-US");
-                getMovieSimilar(movieId, "en-US");
-                getMovieCredits(movieId, "en-US");
-            } else {
-                binding.setShowSeasons(true);
-                getTvShowsGenres();
-                getTvShowsDetail(movieId, "en-US");
-                getTvShowsVideos(movieId, "en-US");
-                getTvShowsCredits(movieId, "en-US");
-                getTvShowsRecommendations(movieId, "en-US");
-                getTvShowsSimilar(movieId, "en-US");
+
+            switch (contentType) {
+                case CONTENT_TYPE_MOVIE: {
+                    binding.setShowSeasons(false);
+                    getMovieGenres();
+                    getMovieDetail(contentId, "en-US");
+                    getMovieVideos(contentId, "en-US");
+                    getMovieRecommendations(contentId, "en-US");
+                    getMovieSimilar(contentId, "en-US");
+                    getMovieCredits(contentId, "en-US");
+                }
+                break;
+                case CONTENT_TYPE_TV_SHOW: {
+                    binding.setShowSeasons(true);
+                    getTvShowsGenres();
+                    getTvShowsDetail(contentId, "en-US");
+                    getTvShowsVideos(contentId, "en-US");
+                    getTvShowsCredits(contentId, "en-US");
+                    getTvShowsRecommendations(contentId, "en-US");
+                    getTvShowsSimilar(contentId, "en-US");
+                }
+                break;
             }
         }
     }
@@ -309,7 +317,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillRecommendationRecyclerView() {
         moviesRecommendationRecyclerView = binding.recommendedRecyclerView;
-        moviesRecommendationAdapter = new MoviesCommonAdapter(moviesRecommendationsResult, 99, moviesGenresResults);
+        moviesRecommendationAdapter = new MoviesCommonAdapter(moviesRecommendationsResult, CARD_TYPE_VERTICAL, moviesGenresResults, CONTENT_TYPE_MOVIE);
         moviesRecommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         moviesRecommendationRecyclerView.setAdapter(moviesRecommendationAdapter);
         moviesRecommendationAdapter.setOnMovieClickListener(this);
@@ -318,7 +326,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillSimilarRecyclerView() {
         moviesSimilarRecyclerView = binding.similarRecyclerView;
-        moviesSimilarAdapter = new MoviesCommonAdapter(moviesSimilarResult, 99, moviesGenresResults);
+        moviesSimilarAdapter = new MoviesCommonAdapter(moviesSimilarResult, CARD_TYPE_VERTICAL, moviesGenresResults, CONTENT_TYPE_MOVIE);
         moviesSimilarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         moviesSimilarRecyclerView.setAdapter(moviesSimilarAdapter);
         moviesSimilarAdapter.setOnMovieClickListener(this);
@@ -341,7 +349,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillTvShowsRecommendationRecyclerView() {
         tvShowsRecommendationRecyclerView = binding.recommendedRecyclerView;
-        tvShowsRecommendationAdapter = new MoviesCommonAdapter(tvShowsRecommendationsResult, CARD_TYPE_VERTICAL, tvShowsGenresResults);
+        tvShowsRecommendationAdapter = new MoviesCommonAdapter(tvShowsRecommendationsResult, CARD_TYPE_VERTICAL, tvShowsGenresResults, CONTENT_TYPE_TV_SHOW);
         tvShowsRecommendationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsRecommendationRecyclerView.setAdapter(tvShowsRecommendationAdapter);
         tvShowsRecommendationAdapter.setOnMovieClickListener(this);
@@ -350,7 +358,7 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
 
     private void fillTvShowsSimilarRecyclerView() {
         tvShowsSimilarRecyclerView = binding.similarRecyclerView;
-        tvShowsSimilarAdapter = new MoviesCommonAdapter(tvShowsSimilarResult, CARD_TYPE_VERTICAL, tvShowsGenresResults);
+        tvShowsSimilarAdapter = new MoviesCommonAdapter(tvShowsSimilarResult, CARD_TYPE_VERTICAL, tvShowsGenresResults, CONTENT_TYPE_TV_SHOW);
         tvShowsSimilarRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsSimilarRecyclerView.setAdapter(tvShowsSimilarAdapter);
         tvShowsSimilarAdapter.setOnMovieClickListener(this);
@@ -369,11 +377,11 @@ public class MovieDetailsFragment extends Fragment implements MoviesCommonAdapte
     // End Movies Region
 
     @Override
-    public void onMovieClick(int movieId, String originalName) {
+    public void onMovieClick(int movieId, String originalName, int contentType) {
         Log.i("check", "was Clicked on :" + movieId);
         Bundle bundle = new Bundle();
-        bundle.putInt("movie_id", movieId);
-        bundle.putBoolean("is_movie", isMovie);
+        bundle.putInt("content_id", movieId);
+        bundle.putInt("content_type", contentType);
         bundle.putString("original_name", originalName);
         navController.navigate(R.id.action_mainMovieFragment_self, bundle);
     }

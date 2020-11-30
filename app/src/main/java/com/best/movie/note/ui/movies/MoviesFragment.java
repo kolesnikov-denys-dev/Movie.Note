@@ -29,6 +29,7 @@ import java.util.List;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 
 public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener {
@@ -158,7 +159,7 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     private void fillPopularRecyclerView() {
         popularMoviesRecyclerView = binding.popularRecyclerView;
         moviesCommonAdapter = new MoviesCommonAdapter(
-                movieResults, CARD_TYPE_VERTICAL, genresResults);
+                movieResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         popularMoviesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         popularMoviesRecyclerView.setAdapter(moviesCommonAdapter);
@@ -169,7 +170,7 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     private void fillPlayingNowRecyclerView() {
         nowPlayingMoviesRecyclerView = binding.playingInTheatresRecyclerView;
         nowPlayingMoviesCommonAdapter = new MoviesCommonAdapter(
-                playingNowResults, CARD_TYPE_HORIZONTAL, genresResults);
+                playingNowResults, CARD_TYPE_HORIZONTAL, genresResults, CONTENT_TYPE_MOVIE);
         nowPlayingMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
         nowPlayingMoviesRecyclerView.setAdapter(nowPlayingMoviesCommonAdapter);
@@ -180,7 +181,7 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     private void fillTrendingRecyclerView() {
         trendingRecyclerView = binding.trendingRecyclerView;
         trendingMoviesCommonAdapter = new MoviesCommonAdapter(
-                trendingResults, CARD_TYPE_VERTICAL, genresResults);
+                trendingResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         trendingRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
         trendingRecyclerView.setAdapter(trendingMoviesCommonAdapter);
@@ -191,7 +192,7 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     private void fillTopRatedRecyclerView() {
         topRatedRecyclerView = binding.topRatedRecyclerView;
         topRatedMoviesCommonAdapter = new MoviesCommonAdapter(
-                topRatedResults, CARD_TYPE_HORIZONTAL_SMALL, genresResults);
+                topRatedResults, CARD_TYPE_HORIZONTAL_SMALL, genresResults, CONTENT_TYPE_MOVIE);
         topRatedRecyclerView.setLayoutManager(new GridLayoutManager(
                 getContext(), SPAN_COUNT_HORIZONTAL_SMALL, GridLayoutManager.HORIZONTAL, false));
         topRatedRecyclerView.setAdapter(topRatedMoviesCommonAdapter);
@@ -202,7 +203,7 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     private void fillUpcomingRecyclerView() {
         upcomingRecyclerView = binding.upComingRecyclerView;
         upcomingMoviesCommonAdapter = new MoviesCommonAdapter(
-                upcomingResults, CARD_TYPE_VERTICAL, genresResults);
+                upcomingResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
         upcomingRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
         upcomingRecyclerView.setAdapter(upcomingMoviesCommonAdapter);
@@ -211,12 +212,14 @@ public class MoviesFragment extends Fragment implements MoviesCommonAdapter.OnMo
     }
 
     @Override
-    public void onMovieClick(int movieId, String originalName) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("movie_id", movieId);
-        bundle.putBoolean("is_movie", true);
-        bundle.putString("original_name", originalName);
-        navController.navigate(R.id.action_navigation_movies_to_mainMovieFragment, bundle);
+    public void onMovieClick(int movieId, String originalName, int contentType) {
+        if (contentType == CONTENT_TYPE_MOVIE) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("content_id", movieId);
+            bundle.putInt("content_type", contentType);
+            bundle.putString("original_name", originalName);
+            navController.navigate(R.id.action_navigation_movies_to_mainMovieFragment, bundle);
+        }
     }
 
     public class MoviesFragmentButtonsHandler {

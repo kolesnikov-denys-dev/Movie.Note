@@ -29,6 +29,7 @@ import java.util.List;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 
 public class TvShowsFragment extends Fragment implements MoviesCommonAdapter.OnMovieClickListener {
@@ -136,7 +137,7 @@ public class TvShowsFragment extends Fragment implements MoviesCommonAdapter.OnM
     private void fillAiringTodayRecyclerView() {
         airingTodayRecyclerView = binding.airingTodayRecyclerView;
         airingTodayCommonAdapter = new MoviesCommonAdapter(
-                airingTodayResults, CARD_TYPE_HORIZONTAL, genresResults);
+                airingTodayResults, CARD_TYPE_HORIZONTAL, genresResults, CONTENT_TYPE_TV_SHOW);
         airingTodayRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         airingTodayRecyclerView.setAdapter(airingTodayCommonAdapter);
@@ -147,7 +148,7 @@ public class TvShowsFragment extends Fragment implements MoviesCommonAdapter.OnM
     private void fillTrendingRecyclerView() {
         trendingRecyclerView = binding.trendingRecyclerView;
         trendingCommonAdapter = new MoviesCommonAdapter(
-                trendingResults, CARD_TYPE_VERTICAL, genresResults);
+                trendingResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_TV_SHOW);
         trendingRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
         trendingRecyclerView.setAdapter(trendingCommonAdapter);
@@ -158,7 +159,7 @@ public class TvShowsFragment extends Fragment implements MoviesCommonAdapter.OnM
     private void fillTopRatedRecyclerView() {
         topRatedRecyclerView = binding.topRatedRecyclerView;
         topRatedCommonAdapter = new MoviesCommonAdapter(
-                topRatedResult, CARD_TYPE_HORIZONTAL_SMALL, genresResults);
+                topRatedResult, CARD_TYPE_HORIZONTAL_SMALL, genresResults, CONTENT_TYPE_TV_SHOW);
         topRatedRecyclerView.setLayoutManager(new GridLayoutManager(
                 getContext(), SPAN_COUNT_HORIZONTAL_SMALL,
                 GridLayoutManager.HORIZONTAL, false));
@@ -170,7 +171,7 @@ public class TvShowsFragment extends Fragment implements MoviesCommonAdapter.OnM
     private void fillPopularRecyclerView() {
         popularRecyclerView = binding.popularRecyclerView;
         popularCommonAdapter = new MoviesCommonAdapter(
-                popularResults, CARD_TYPE_VERTICAL, genresResults);
+                popularResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_TV_SHOW);
         popularRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false));
         popularRecyclerView.setAdapter(popularCommonAdapter);
@@ -179,10 +180,10 @@ public class TvShowsFragment extends Fragment implements MoviesCommonAdapter.OnM
     }
 
     @Override
-    public void onMovieClick(int movieId, String originalName) {
+    public void onMovieClick(int movieId, String originalName, int contentType) {
         Bundle bundle = new Bundle();
-        bundle.putInt("movie_id", movieId);
-        bundle.putBoolean("is_movie", false);
+        bundle.putInt("content_id", movieId);
+        bundle.putInt("content_type", contentType);
         bundle.putString("original_name", originalName);
         navController.navigate(R.id.action_navigation_tv_shows_to_mainMovieFragment, bundle);
     }
