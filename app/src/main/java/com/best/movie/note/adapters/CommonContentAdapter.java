@@ -44,7 +44,10 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
         this.cardType = cardType;
         this.genres = genresResults;
         this.contentType = contentType;
-        getSubtitles();
+
+        if (genresResults != null) {
+            getSubtitles();
+        }
     }
 
     @NonNull
@@ -73,17 +76,17 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
         if (holder.verticalCard != null) {
             holder.verticalCard.setMovieResult(movies.get(position));
-            if (subtitles.size() != 0) {
+            if (subtitles != null) {
                 holder.verticalCard.setSubtitle(subtitles.get(position));
             }
         } else if (holder.horizontalCard != null) {
             holder.horizontalCard.setMovieResult(movies.get(position));
-            if (subtitles.size() != 0) {
+            if (subtitles != null) {
                 holder.horizontalCard.setSubtitle(subtitles.get(position));
             }
         } else if (holder.horizontalSmallCard != null) {
             holder.horizontalSmallCard.setMovieResult(movies.get(position));
-            if (subtitles.size() != 0) {
+            if (subtitles != null) {
                 holder.horizontalSmallCard.setSubtitle(subtitles.get(position));
             }
         }
@@ -109,10 +112,10 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                             if (movies.get(getAdapterPosition()).getOriginalTitle() != null) {
                                 onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                        .getId(), movies.get(getAdapterPosition()).getOriginalTitle(),contentType);
+                                        .getId(), movies.get(getAdapterPosition()).getOriginalTitle(), contentType);
                             } else {
                                 onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                        .getId(), movies.get(getAdapterPosition()).getOriginalName(),contentType);
+                                        .getId(), movies.get(getAdapterPosition()).getOriginalName(), contentType);
                             }
                         }
                     }
@@ -145,7 +148,7 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
                     public void onClick(View v) {
                         if (onMovieClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                             onMovieClickListener.onMovieClick(movies.get(getAdapterPosition())
-                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle(),contentType);
+                                    .getId(), movies.get(getAdapterPosition()).getOriginalTitle(), contentType);
                         }
                     }
                 });

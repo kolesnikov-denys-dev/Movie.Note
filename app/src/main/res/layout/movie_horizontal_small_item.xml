@@ -40,7 +40,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:backdropPath="@{movieResult.backdropPath}"
+                bind:posterPath="@{movieResult.posterPath}"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         </androidx.cardview.widget.CardView>

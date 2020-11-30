@@ -198,6 +198,7 @@ public class CelebrityDetailsFragment extends Fragment implements CommonContentA
     @Override
     public void onMovieClick(int contentId, String originalName, int contentType) {
         Bundle bundle = new Bundle();
+
         switch (contentType) {
             case CONTENT_TYPE_MOVIE: {
                 Log.i("check", "was Clicked on :" + contentId);

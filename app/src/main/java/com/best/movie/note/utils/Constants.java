@@ -31,6 +31,7 @@ public class Constants {
     // Content Type
     public static final int CONTENT_TYPE_MOVIE = 0;
     public static final int CONTENT_TYPE_TV_SHOW = 1;
+    public static final int CONTENT_TYPE_PERSON = 2;
 
 
 

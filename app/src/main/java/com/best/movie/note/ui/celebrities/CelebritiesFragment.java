@@ -14,24 +14,26 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
 import com.best.movie.note.adapters.CommonContentAdapter;
-import com.best.movie.note.databinding.CelebrityDetailsFragmentBinding;
 import com.best.movie.note.databinding.FragmentCelebritiesBinding;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
-import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 import com.best.movie.note.model.response.tvshows.persons.popular.PopularPersonApiResponse;
 import com.best.movie.note.model.response.tvshows.persons.popular.Result;
 import com.best.movie.note.model.response.tvshows.persons.trending.TrendingPersonApiResponse;
 
 import java.util.ArrayList;
 
+import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_PERSON;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
+import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 
 public class CelebritiesFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener {
 
@@ -90,7 +92,7 @@ public class CelebritiesFragment extends Fragment implements CommonContentAdapte
                     @Override
                     public void onChanged(TrendingPersonApiResponse data) {
                         trendingPersonResult = data;
-//                        fillTrendingPersonsRecyclerView();
+                        fillTrendingRecyclerView();
                     }
                 });
     }
@@ -98,42 +100,37 @@ public class CelebritiesFragment extends Fragment implements CommonContentAdapte
     private void fillPopularOneRecyclerView() {
         // Convert Cast to MovieResult
         ArrayList<MovieResult> movies = new ArrayList<>();
-        for (int i = 0; i < popularPersonResult.getResults().size(); i++) {
+        for (int i = 0; i < popularPersonResult.getResults().size() / 2; i++) {
             MovieResult newMovie = new MovieResult();
             Result oldCast = popularPersonResult.getResults().get(i);
             newMovie.setOriginalTitle(oldCast.getName());
             newMovie.setId(oldCast.getId());
             newMovie.setPosterPath(oldCast.getProfilePath());
-            // TODO HERE
-            newMovie.setTitle(oldCast.getKnownForDepartment());
             movies.add(newMovie);
         }
 
         popularOneRecyclerView = binding.popularCelebritiesOneRecyclerView;
-        popularOneAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, null, CONTENT_TYPE_MOVIE);
+        popularOneAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, null, CONTENT_TYPE_PERSON);
         popularOneRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         popularOneRecyclerView.setAdapter(popularOneAdapter);
         popularOneAdapter.setOnMovieClickListener(this);
         popularOneAdapter.notifyDataSetChanged();
     }
 
-
     public void fillPopularTwoRecyclerView() {
         // Convert Cast to MovieResult
-        ArrayList<MovieResult> movies = new ArrayList<>();
-        for (int i = 0; i < popularPersonResult.getResults().size(); i++) {
+        ArrayList<MovieResult> movies2 = new ArrayList<>();
+        for (int i = popularPersonResult.getResults().size() / 2; i < popularPersonResult.getResults().size(); i++) {
             MovieResult newMovie = new MovieResult();
             Result oldCast = popularPersonResult.getResults().get(i);
             newMovie.setOriginalTitle(oldCast.getName());
             newMovie.setId(oldCast.getId());
             newMovie.setPosterPath(oldCast.getProfilePath());
-            // TODO HERE
-            newMovie.setTitle(oldCast.getKnownForDepartment());
-            movies.add(newMovie);
+            movies2.add(newMovie);
         }
 
         popularTwoRecyclerView = binding.popularCelebritiesTwoRecyclerView;
-        popularTwoAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, null, CONTENT_TYPE_MOVIE);
+        popularTwoAdapter = new CommonContentAdapter(movies2, CARD_TYPE_VERTICAL, null, CONTENT_TYPE_PERSON);
         popularTwoRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         popularTwoRecyclerView.setAdapter(popularTwoAdapter);
         popularTwoAdapter.setOnMovieClickListener(this);
@@ -141,19 +138,35 @@ public class CelebritiesFragment extends Fragment implements CommonContentAdapte
     }
 
 
+    public void fillTrendingRecyclerView() {
+        // Convert Cast to MovieResult
+        ArrayList<MovieResult> movies2 = new ArrayList<>();
+        for (int i = 0; i < trendingPersonResult.getResults().size(); i++) {
+            MovieResult newMovie = new MovieResult();
+            com.best.movie.note.model.response.tvshows.persons.trending.Result oldCast = trendingPersonResult.getResults().get(i);
+            newMovie.setOriginalTitle(oldCast.getName());
+            newMovie.setId(oldCast.getId());
+            newMovie.setPosterPath(oldCast.getProfilePath());
+            movies2.add(newMovie);
+        }
+
+        trendingRecyclerView = binding.trendingCelebritiesRecyclerView;
+        trendingAdapter = new CommonContentAdapter(movies2, CARD_TYPE_HORIZONTAL_SMALL, null, CONTENT_TYPE_PERSON);
+        trendingRecyclerView.setLayoutManager(new GridLayoutManager(
+                getContext(), SPAN_COUNT_HORIZONTAL_SMALL, GridLayoutManager.HORIZONTAL, false));
+        trendingRecyclerView.setAdapter(trendingAdapter);
+        trendingAdapter.setOnMovieClickListener(this);
+        trendingAdapter.notifyDataSetChanged();
+    }
+
+
+
     @Override
     public void onMovieClick(int contentId, String originalName, int contentType) {
         Bundle bundle = new Bundle();
         switch (contentType) {
-            case CONTENT_TYPE_MOVIE: {
+            case CONTENT_TYPE_PERSON: {
                 Log.i("check", "was Clicked on :" + contentId);
-                bundle.putInt("content_id", contentId);
-                bundle.putInt("content_type", contentType);
-                bundle.putString("original_name", originalName);
-                navController.navigate(R.id.action_celebrityDetailsFragment_to_mainMovieFragment, bundle);
-            }
-            break;
-            case CONTENT_TYPE_TV_SHOW: {
                 bundle.putInt("content_id", contentId);
                 bundle.putInt("content_type", contentType);
                 bundle.putString("original_name", originalName);
@@ -162,6 +175,5 @@ public class CelebritiesFragment extends Fragment implements CommonContentAdapte
             break;
         }
     }
-
 
 }
