@@ -37,7 +37,11 @@
         android:id="@+id/navigation_celebrities"
         android:name="com.best.movie.note.ui.celebrities.CelebritiesFragment"
         android:label="@string/title_celebrities"
-        tools:layout="@layout/fragment_celebrities" />
+        tools:layout="@layout/fragment_celebrities" >
+        <action
+            android:id="@+id/action_navigation_celebrities_to_celebrityDetailsFragment"
+            app:destination="@id/celebrityDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_notes"
         android:name="com.best.movie.note.ui.notes.NotesFragment"

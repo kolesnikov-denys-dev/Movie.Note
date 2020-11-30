@@ -1,7 +1,6 @@
 package com.best.movie.note.ui.celebrities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +29,7 @@ import java.util.ArrayList;
 
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
-import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_PERSON;
-import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 
 public class CelebritiesFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener {
@@ -72,7 +69,6 @@ public class CelebritiesFragment extends Fragment implements CommonContentAdapte
         getPopularPersons("en-US", "1");
         getTrendingPersons("en-US");
     }
-
 
     private void getPopularPersons(String language, String page) {
         celebritiesViewModel.getPopularPerson(language, page).observe(getActivity(),
@@ -159,21 +155,32 @@ public class CelebritiesFragment extends Fragment implements CommonContentAdapte
         trendingAdapter.notifyDataSetChanged();
     }
 
-
-
     @Override
     public void onMovieClick(int contentId, String originalName, int contentType) {
         Bundle bundle = new Bundle();
         switch (contentType) {
             case CONTENT_TYPE_PERSON: {
-                Log.i("check", "was Clicked on :" + contentId);
-                bundle.putInt("content_id", contentId);
-                bundle.putInt("content_type", contentType);
-                bundle.putString("original_name", originalName);
-                navController.navigate(R.id.action_celebrityDetailsFragment_to_mainMovieFragment, bundle);
+                bundle.putInt("cast_id", contentId);
+                bundle.putString("cast_name", originalName);
+                navController.navigate(R.id.action_navigation_celebrities_to_celebrityDetailsFragment, bundle);
             }
             break;
         }
+    }
+
+    public class CelebritiesFragmentButtonsHandler {
+        Bundle bundle = new Bundle();
+
+        public void popularSeeAll(View view) {
+            bundle.putString("what_open", getString(R.string.popular));
+            navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
+        }
+
+        public void nowPlayingSeeAll(View view) {
+            bundle.putString("what_open", getString(R.string.playing_in_theathres));
+            navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
+        }
+
     }
 
 }

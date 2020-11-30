@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="buttonHandler"
+            type="com.best.movie.note.ui.celebrities.CelebritiesFragment.CelebritiesFragmentButtonsHandler" />
     </data>
 
     <ScrollView
@@ -19,26 +22,27 @@
 
             <TextView
                 android:id="@+id/popularCelebritiesTextView"
+                style="@style/left_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_left"
                 android:text="Popular"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/popularCelebritiesSeeAllTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/popularCelebritiesSeeAllImageView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/popularCelebritiesSeeAllTextView" />
+                app:layout_constraintTop_toTopOf="@+id/popularCelebritiesSeeAllImageView" />
 
-            <Button
-                android:id="@+id/popularCelebritiesSeeAllTextView"
+            <ImageView
+                android:id="@+id/popularSeeAllButton"
+                style="@style/yellow_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/popularCelebritiesSeeAllImageView"
+                style="@style/yellow_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/ic_arrow_right_24"
-                android:drawablePadding="3dp"
-                android:text="See All"
-                android:textAllCaps="false"
-                android:textColor="#000"
-                android:textSize="10sp"
+                android:onClick="@{buttonHandler::popularSeeAll}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +54,7 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesSeeAllTextView"
+                app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesSeeAllImageView"
                 tools:listitem="@layout/movie_vertical_item" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -66,26 +70,20 @@
 
             <TextView
                 android:id="@+id/trendingCelebritiesTextView"
+                style="@style/left_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_left"
                 android:text="Trending"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/trendingCelebritiesSeeAllTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/trendingCelebritiesSeeAllImageView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/trendingCelebritiesSeeAllTextView" />
+                app:layout_constraintTop_toTopOf="@+id/trendingCelebritiesSeeAllImageView" />
 
-            <Button
-                android:id="@+id/trendingCelebritiesSeeAllTextView"
+            <ImageView
+                android:id="@+id/trendingCelebritiesSeeAllImageView"
+                style="@style/yellow_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/ic_arrow_right_24"
-                android:drawablePadding="3dp"
-                android:text="See All"
-                android:textAllCaps="false"
-                android:textColor="#000"
-                android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popularCelebritiesTwoRecyclerView" />
 
@@ -95,8 +93,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trendingCelebritiesTextView"
                 tools:layout_editor_absoluteX="-16dp"
                 tools:listitem="@layout/movie_horizontal_small_item" />
