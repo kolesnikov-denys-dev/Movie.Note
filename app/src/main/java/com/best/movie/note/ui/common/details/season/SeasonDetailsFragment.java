@@ -75,7 +75,6 @@ public class SeasonDetailsFragment extends Fragment {
             seasonNumber = getArguments().getInt("season_number");
             name = getArguments().getString("original_name");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(name);
-
             getEpisodes(tvId, seasonNumber, QUERY_LANGUAGE);
         }
     }
@@ -86,12 +85,6 @@ public class SeasonDetailsFragment extends Fragment {
                     @Override
                     public void onChanged(SeasonApiResponse data) {
                         seasonResult = data;
-
-                        Log.i("check", "season_number--->>> " + data.season_number);
-                        Log.i("check", "overview--->>> " + data.episodes.get(0).overview);
-                        Log.i("check", "still_path--->>> " + data.episodes.get(0).still_path);
-                        Log.i("check", "air_date--->>> " + data.episodes.get(0).air_date);
-
                         fillEpisodesRecyclerView();
                     }
                 });

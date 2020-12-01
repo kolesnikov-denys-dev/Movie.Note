@@ -98,10 +98,10 @@
 
             <ImageView
                 android:id="@+id/starImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="8dp"
                 android:background="@drawable/ic_star_24px" />
 
             <TextView
@@ -110,13 +110,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="3dp"
                 android:layout_toRightOf="@+id/starImageView"
                 android:text="@{episodeResult.vote_average.toString()}"
                 android:textColor="@color/special_blue"
+                android:textSize="10sp"
                 tools:text="4.7" />
         </RelativeLayout>
 
