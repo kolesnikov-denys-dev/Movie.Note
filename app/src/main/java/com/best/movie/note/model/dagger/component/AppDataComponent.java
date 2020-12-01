@@ -5,6 +5,7 @@ import com.best.movie.note.model.repositories.CelebrityDetailsRepository;
 import com.best.movie.note.model.repositories.MoviesDetailsRepository;
 import com.best.movie.note.model.repositories.MoviesListRepository;
 import com.best.movie.note.model.repositories.MoviesRepository;
+import com.best.movie.note.model.repositories.SeasonsRepository;
 import com.best.movie.note.model.repositories.TvShowsRepository;
 import com.best.movie.note.model.dagger.module.DataModule;
 import com.best.movie.note.ui.common.list.movies.MoviesListViewModel;
@@ -28,5 +29,7 @@ public interface AppDataComponent {
     void injectCelebrityDetailsRepository(CelebrityDetailsRepository celebrityDetailsRepository);
 
     void injectCelebritiesRepository(CelebritiesRepository celebritiesRepository);
+
+    void injectSeasonsRepository(SeasonsRepository seasonsRepository);
 
 }

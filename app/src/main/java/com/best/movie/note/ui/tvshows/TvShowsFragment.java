@@ -1,6 +1,7 @@
 package com.best.movie.note.ui.tvshows;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,9 +181,12 @@ public class TvShowsFragment extends Fragment implements CommonContentAdapter.On
     }
 
     @Override
-    public void onMovieClick(int movieId, String originalName, int contentType) {
+    public void onMovieClick(int tvShowId, String originalName, int contentType) {
+        Log.i("check", "tvShowId:" + tvShowId);
+
+
         Bundle bundle = new Bundle();
-        bundle.putInt("content_id", movieId);
+        bundle.putInt("content_id", tvShowId);
         bundle.putInt("content_type", contentType);
         bundle.putString("original_name", originalName);
         navController.navigate(R.id.action_navigation_tv_shows_to_mainMovieFragment, bundle);

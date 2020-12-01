@@ -12,6 +12,7 @@ import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastA
 import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 import com.best.movie.note.model.response.tvshows.persons.popular.PopularPersonApiResponse;
 import com.best.movie.note.model.response.tvshows.persons.trending.TrendingPersonApiResponse;
+import com.best.movie.note.model.response.tvshows.seasons.SeasonApiResponse;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -208,7 +209,7 @@ public interface ApiService {
     // Seasons Region
 
     @GET("tv/{tv_id}/season/{season_number}")
-    Observable<PopularPersonApiResponse> getSeasonByTvShowId(
+    Observable<SeasonApiResponse> getSeasonByTvShowId(
             @Path(PARAMS_TV_ID) int tvId,
             @Path(PARAMS_SEASON_NUMBER) int seasonNumber,
             @Query(PARAMS_API_KEY) String apiKey,

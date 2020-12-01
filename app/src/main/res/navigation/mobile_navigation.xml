@@ -78,6 +78,9 @@
         <action
             android:id="@+id/action_mainMovieFragment_to_celebrityDetailsFragment"
             app:destination="@id/celebrityDetailsFragment" />
+        <action
+            android:id="@+id/action_mainMovieFragment_to_seasonDetailsFragment"
+            app:destination="@id/seasonDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/celebrityDetailsFragment"
@@ -95,4 +98,8 @@
             android:id="@+id/action_celebrityDetailsFragment_to_mainMovieFragment"
             app:destination="@id/mainMovieFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/seasonDetailsFragment"
+        android:name="com.best.movie.note.ui.common.details.season.SeasonDetailsFragment"
+        android:label="SeasonDetailsFragment" />
 </navigation>

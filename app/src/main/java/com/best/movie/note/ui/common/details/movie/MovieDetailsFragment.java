@@ -394,10 +394,12 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     @Override
-    public void onSeasonClick(int castId, String originalName, int season) {
-
-        Log.i("check", "Season:" + season + " Id:" + castId);
-
+    public void onSeasonClick(int tvId, String originalName, int season) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("tv_id", contentId);
+        bundle.putInt("season_number", season);
+        bundle.putString("original_name", originalName);
+        navController.navigate(R.id.action_mainMovieFragment_to_seasonDetailsFragment, bundle);
     }
 
     public class MovieDetailsFragmentButtonsHandler {

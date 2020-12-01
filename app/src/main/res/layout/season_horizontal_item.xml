@@ -7,12 +7,9 @@
     <data>
 
         <variable
-            name="movieResult"
-            type="com.best.movie.note.model.response.movies.movie.MovieResult" />
+            name="episodeResult"
+            type="com.best.movie.note.model.response.tvshows.seasons.Episode" />
 
-        <variable
-            name="subtitle"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +37,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:posterPath="@{movieResult.posterPath}"
+                bind:posterPath="@{episodeResult.still_path}"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         </androidx.cardview.widget.CardView>
@@ -55,7 +52,7 @@
             android:layout_marginRight="12dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{movieResult.originalTitle ?? movieResult.originalName}"
+            android:text="@{episodeResult.name}"
             app:layout_constraintEnd_toStartOf="@+id/rating"
             app:layout_constraintStart_toEndOf="@+id/movieCardView"
             app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +66,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="12dp"
-            android:text="@{subtitle}"
+            android:text="@{episodeResult.air_date}"
             app:layout_constraintEnd_toStartOf="@+id/rating"
             app:layout_constraintStart_toEndOf="@+id/movieCardView"
             app:layout_constraintTop_toBottomOf="@+id/seasonNameTextView"
@@ -83,7 +80,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="12dp"
-            android:text="@{subtitle}"
+            android:text="@{episodeResult.overview}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/movieCardView"
             app:layout_constraintTop_toBottomOf="@+id/seasonDateTextView"
@@ -118,11 +115,10 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/starImageView"
+                android:text="@{episodeResult.vote_average.toString()}"
                 android:textColor="@color/special_blue"
                 tools:text="4.7" />
         </RelativeLayout>
-
-        <!--        android:text="@{movieDetailsResult.voteAverage.toString() ?? tvShowDetailsResult.voteAverage.toString()}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

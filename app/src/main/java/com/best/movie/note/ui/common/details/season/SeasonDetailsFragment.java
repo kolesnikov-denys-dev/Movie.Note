@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.best.movie.note.R;
 import com.best.movie.note.adapters.CastsAdapter;
 import com.best.movie.note.adapters.CommonContentAdapter;
+import com.best.movie.note.adapters.EpisodesAdapter;
 import com.best.movie.note.databinding.CelebrityDetailsFragmentBinding;
 import com.best.movie.note.databinding.SeasonDetailsFragmentBinding;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
@@ -30,6 +31,7 @@ import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiRes
 import com.best.movie.note.model.response.tvshows.details.cast.movie.Cast;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
+import com.best.movie.note.model.response.tvshows.seasons.SeasonApiResponse;
 import com.best.movie.note.ui.common.details.cast.CelebrityDetailsViewModel;
 
 import java.util.ArrayList;
@@ -40,28 +42,23 @@ import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 
-public class SeasonDetailsFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener,
-        CastsAdapter.OnCastClickListener {
+public class SeasonDetailsFragment extends Fragment {
 
-    private CelebrityDetailsViewModel celebrityDetailsViewModel;
+    private SeasonDetailsViewModel seasonDetailsViewModel;
     private SeasonDetailsFragmentBinding binding;
-    private NavController navController;
-    private CastDetailsApiResponse castDetailsResult;
-    private MoviesCastApiResponse moviesCastResult;
-    private RecyclerView moviesRecyclerView;
-    private CommonContentAdapter moviesAdapter;
-    private TvShowsCatApiResponse tvShowsCatResult;
-    private RecyclerView tvShowsRecyclerView;
-    private CommonContentAdapter tvShowsAdapter;
-    private int castId;
-    private boolean isMovie;
-    private ArrayList<GenreResult> genresResults;
-    private ArrayList<GenreResult> genresTvShowResults;
+
+    private SeasonApiResponse seasonResult;
+    private RecyclerView episodesRecyclerView;
+    private EpisodesAdapter episodesAdapter;
+
+    private int tvId;
+    private String name;
+    private int seasonNumber;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.celebrity_details_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.season_details_fragment, container, false);
         return binding.getRoot();
     }
 
@@ -69,115 +66,43 @@ public class SeasonDetailsFragment extends Fragment implements CommonContentAdap
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        celebrityDetailsViewModel = new ViewModelProvider
+        seasonDetailsViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getActivity().getApplication())
-                .create(CelebrityDetailsViewModel.class);
-
-        navController = Navigation.findNavController(view);
+                .create(SeasonDetailsViewModel.class);
 
         if (getArguments() != null) {
-            castId = getArguments().getInt("cast_id");
-            String castName = getArguments().getString("cast_name");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(castName);
+            tvId = getArguments().getInt("tv_id");
+            seasonNumber = getArguments().getInt("season_number");
+            name = getArguments().getString("original_name");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(name);
 
-            getCastDetails(castId, QUERY_LANGUAGE);
-            getMoviesGenres();
-            getTvShowsGenres();
+            getEpisodes(tvId, seasonNumber, QUERY_LANGUAGE);
         }
     }
 
-    private void getCastDetails(int castId, String language) {
-        celebrityDetailsViewModel.getCastDetails(castId, language).observe(getActivity(),
-                new Observer<CastDetailsApiResponse>() {
+    private void getEpisodes(int tvId, int seasonNumber, String language) {
+        seasonDetailsViewModel.getSeason(tvId, seasonNumber, language).observe(getActivity(),
+                new Observer<SeasonApiResponse>() {
                     @Override
-                    public void onChanged(CastDetailsApiResponse data) {
-                        castDetailsResult = data;
-                        binding.setCastDetailsResult(data);
-                        if (castDetailsResult.getDeathday() != null) {
-                            binding.setShowDeathDay(true);
-                        } else {
-                            binding.setShowDeathDay(false);
-                        }
+                    public void onChanged(SeasonApiResponse data) {
+                        seasonResult = data;
+
+                        Log.i("check", "season_number--->>> " + data.season_number);
+                        Log.i("check", "overview--->>> " + data.episodes.get(0).overview);
+                        Log.i("check", "still_path--->>> " + data.episodes.get(0).still_path);
+                        Log.i("check", "air_date--->>> " + data.episodes.get(0).air_date);
+
+                        fillEpisodesRecyclerView();
                     }
                 });
     }
-
-
-
-    private void getMoviesGenres() {
-        celebrityDetailsViewModel.getGenresMoviesData().observe(getActivity(),
-                new Observer<List<GenreResult>>() {
-                    @Override
-                    public void onChanged(List<GenreResult> data) {
-                        genresResults = (ArrayList<GenreResult>) data;
-                        getMovies(castId, QUERY_LANGUAGE);
-                    }
-                });
-    }
-
-    private void getTvShowsGenres() {
-        celebrityDetailsViewModel.getTvShowsGenresMoviesData().observe(getActivity(),
-                new Observer<List<GenreResult>>() {
-                    @Override
-                    public void onChanged(List<GenreResult> data) {
-                        genresTvShowResults = (ArrayList<GenreResult>) data;
-                        getTvShows(castId, QUERY_LANGUAGE);
-                    }
-                });
-    }
-
 
     private void fillEpisodesRecyclerView() {
-        if (tvShowsCatResult.getCast() != null) {
-            binding.setTvShowsList(true);
-        }
-
-        // Convert Cast to MovieResult
-        ArrayList<MovieResult> movies = new ArrayList<>();
-        for (int i = 0; i < tvShowsCatResult.getCast().size(); i++) {
-            MovieResult newMovie = new MovieResult();
-            com.best.movie.note.model.response.tvshows.details.cast.tvshows.Cast oldCast = tvShowsCatResult.getCast().get(i);
-            newMovie.setOriginalTitle(oldCast.getOriginalName());
-            newMovie.setId(oldCast.getId());
-            newMovie.setPosterPath(oldCast.getPosterPath());
-            newMovie.setGenreIds(oldCast.getGenreIds());
-            movies.add(newMovie);
-        }
-
-        tvShowsRecyclerView = binding.episodesRecyclerView;
-        tvShowsAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, genresTvShowResults, CONTENT_TYPE_TV_SHOW);
-        tvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        tvShowsRecyclerView.setAdapter(tvShowsAdapter);
-        tvShowsAdapter.setOnMovieClickListener(this);
-        tvShowsAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onMovieClick(int contentId, String originalName, int contentType) {
-        Bundle bundle = new Bundle();
-
-        switch (contentType) {
-            case CONTENT_TYPE_MOVIE: {
-                Log.i("check", "was Clicked on :" + contentId);
-                bundle.putInt("content_id", contentId);
-                bundle.putInt("content_type", contentType);
-                bundle.putString("original_name", originalName);
-                navController.navigate(R.id.action_celebrityDetailsFragment_to_mainMovieFragment, bundle);
-            }
-            break;
-            case CONTENT_TYPE_TV_SHOW: {
-                bundle.putInt("content_id", contentId);
-                bundle.putInt("content_type", contentType);
-                bundle.putString("original_name", originalName);
-                navController.navigate(R.id.action_celebrityDetailsFragment_to_mainMovieFragment, bundle);
-            }
-            break;
-        }
-    }
-
-    @Override
-    public void onCastClick(int castId, String originalName) {
-        Toast.makeText(getContext(), "Implements", Toast.LENGTH_SHORT).show();
+        episodesRecyclerView = binding.episodesRecyclerView;
+        episodesAdapter = new EpisodesAdapter(seasonResult.episodes);
+        episodesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        episodesRecyclerView.setAdapter(episodesAdapter);
+        episodesAdapter.notifyDataSetChanged();
     }
 
 }
