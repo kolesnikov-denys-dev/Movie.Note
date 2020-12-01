@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.common.details.cast;
+package com.best.movie.note.ui.common.details.season;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -23,12 +23,14 @@ import com.best.movie.note.R;
 import com.best.movie.note.adapters.CastsAdapter;
 import com.best.movie.note.adapters.CommonContentAdapter;
 import com.best.movie.note.databinding.CelebrityDetailsFragmentBinding;
+import com.best.movie.note.databinding.SeasonDetailsFragmentBinding;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.Cast;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
+import com.best.movie.note.ui.common.details.cast.CelebrityDetailsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +40,11 @@ import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 
-public class CelebrityDetailsFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener,
+public class SeasonDetailsFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener,
         CastsAdapter.OnCastClickListener {
 
     private CelebrityDetailsViewModel celebrityDetailsViewModel;
-    private CelebrityDetailsFragmentBinding binding;
+    private SeasonDetailsFragmentBinding binding;
     private NavController navController;
     private CastDetailsApiResponse castDetailsResult;
     private MoviesCastApiResponse moviesCastResult;
@@ -100,27 +102,7 @@ public class CelebrityDetailsFragment extends Fragment implements CommonContentA
                 });
     }
 
-    public void getMovies(int castId, String language) {
-        celebrityDetailsViewModel.getCastMovies(castId, language).observe(getActivity(),
-                new Observer<MoviesCastApiResponse>() {
-                    @Override
-                    public void onChanged(MoviesCastApiResponse data) {
-                        moviesCastResult = data;
-                        fillCastMoviesRecyclerView();
-                    }
-                });
-    }
 
-    public void getTvShows(int castId, String language) {
-        celebrityDetailsViewModel.getCastTvShows(castId, language).observe(getActivity(),
-                new Observer<TvShowsCatApiResponse>() {
-                    @Override
-                    public void onChanged(TvShowsCatApiResponse data) {
-                        tvShowsCatResult = data;
-                        fillTvShowsRecyclerView();
-                    }
-                });
-    }
 
     private void getMoviesGenres() {
         celebrityDetailsViewModel.getGenresMoviesData().observe(getActivity(),
@@ -144,32 +126,8 @@ public class CelebrityDetailsFragment extends Fragment implements CommonContentA
                 });
     }
 
-    private void fillCastMoviesRecyclerView() {
-        if (moviesCastResult.getCast() != null) {
-            binding.setShowMoviesList(true);
-        }
 
-        // Convert Cast to MovieResult
-        ArrayList<MovieResult> movies = new ArrayList<>();
-        for (int i = 0; i < moviesCastResult.getCast().size(); i++) {
-            MovieResult newMovie = new MovieResult();
-            Cast oldCast = moviesCastResult.getCast().get(i);
-            newMovie.setOriginalTitle(oldCast.getOriginalTitle());
-            newMovie.setId(oldCast.getId());
-            newMovie.setPosterPath(oldCast.getPosterPath());
-            newMovie.setGenreIds(oldCast.getGenreIds());
-            movies.add(newMovie);
-        }
-
-        moviesRecyclerView = binding.moviesRecyclerView;
-        moviesAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
-        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        moviesRecyclerView.setAdapter(moviesAdapter);
-        moviesAdapter.setOnMovieClickListener(this);
-        moviesAdapter.notifyDataSetChanged();
-    }
-
-    private void fillTvShowsRecyclerView() {
+    private void fillEpisodesRecyclerView() {
         if (tvShowsCatResult.getCast() != null) {
             binding.setTvShowsList(true);
         }
@@ -186,7 +144,7 @@ public class CelebrityDetailsFragment extends Fragment implements CommonContentA
             movies.add(newMovie);
         }
 
-        tvShowsRecyclerView = binding.tvshowsRecyclerView;
+        tvShowsRecyclerView = binding.episodesRecyclerView;
         tvShowsAdapter = new CommonContentAdapter(movies, CARD_TYPE_VERTICAL, genresTvShowResults, CONTENT_TYPE_TV_SHOW);
         tvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         tvShowsRecyclerView.setAdapter(tvShowsAdapter);

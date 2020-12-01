@@ -24,6 +24,7 @@ import static com.best.movie.note.utils.Constants.PARAMS_LANGUAGE;
 import static com.best.movie.note.utils.Constants.PARAMS_MOVIE_ID;
 import static com.best.movie.note.utils.Constants.PARAMS_PAGE;
 import static com.best.movie.note.utils.Constants.PARAMS_PERSON_ID;
+import static com.best.movie.note.utils.Constants.PARAMS_SEASON_NUMBER;
 import static com.best.movie.note.utils.Constants.PARAMS_TV_ID;
 
 public interface ApiService {
@@ -202,6 +203,18 @@ public interface ApiService {
             @Query(PARAMS_LANGUAGE) String language);
 
     // End Region Celebrities
+
+
+    // Seasons Region
+
+    @GET("tv/{tv_id}/season/{season_number}")
+    Observable<PopularPersonApiResponse> getSeasonByTvShowId(
+            @Path(PARAMS_TV_ID) int tvId,
+            @Path(PARAMS_SEASON_NUMBER) int seasonNumber,
+            @Query(PARAMS_API_KEY) String apiKey,
+            @Query(PARAMS_LANGUAGE) String language);
+
+    // End Seasons Region
 
 }
 
