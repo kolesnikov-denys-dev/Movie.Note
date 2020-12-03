@@ -1,6 +1,7 @@
 package com.best.movie.note.ui.movies;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,49 +41,43 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
     private FragmentMoviesBinding binding;
     private NavController navController;
 
-    // Popular Movies
     private ArrayList<MovieResult> movieResults;
     private RecyclerView popularMoviesRecyclerView;
     private CommonContentAdapter commonContentAdapter;
-    // Playing Now Movies
     private ArrayList<MovieResult> playingNowResults;
     private RecyclerView nowPlayingMoviesRecyclerView;
     private CommonContentAdapter nowPlayingCommonContentAdapter;
-    // Trending Movies
     private ArrayList<MovieResult> trendingResults;
     private RecyclerView trendingRecyclerView;
     private CommonContentAdapter trendingCommonContentAdapter;
-    // Top Rated Movies
     private ArrayList<MovieResult> topRatedResults;
     private RecyclerView topRatedRecyclerView;
     private CommonContentAdapter topRatedCommonContentAdapter;
-    // Upcoming Movies
     private ArrayList<MovieResult> upcomingResults;
     private RecyclerView upcomingRecyclerView;
     private CommonContentAdapter upcomingCommonContentAdapter;
-    // Genres Movies
     private ArrayList<GenreResult> genresResults;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        setRetainInstance(true);
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
+        binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        moviesViewModel = new ViewModelProvider
-                .AndroidViewModelFactory(getActivity().getApplication())
-                .create(MoviesViewModel.class);
+
+//        moviesViewModel = new ViewModelProvider
+//                .AndroidViewModelFactory(getActivity().getApplication())
+//                .create(MoviesViewModel.class);
 
         navController = Navigation.findNavController(view);
+        ViewModelProvider viewModelProvider = new ViewModelProvider(navController.getViewModelStoreOwner(R.id.mobile_navigation));
+        moviesViewModel = viewModelProvider.get(MoviesViewModel.class);
+
         binding.setButtonHandler(new MoviesFragment.MoviesFragmentButtonsHandler());
 
         observeErrors();
@@ -92,10 +87,7 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
         observeTrendingMovies();
         observeTopRatedMovies();
         observeUpcomingMovies();
-
-
     }
-
 
     public void updateData() {
         moviesViewModel.updateGenresMoviesData();
@@ -105,7 +97,6 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
         moviesViewModel.updateTopRatedMoviesData();
         moviesViewModel.updateUpcomingMoviesData();
     }
-
 
     private void observeErrors() {
         moviesViewModel.getErrors().observe(getActivity(), new Observer<Throwable>() {
@@ -124,6 +115,7 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
                 new Observer<List<GenreResult>>() {
                     @Override
                     public void onChanged(List<GenreResult> data) {
+                        Log.i("check","STEP 1");
                         genresResults = (ArrayList<GenreResult>) data;
                     }
                 });
@@ -260,9 +252,7 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
         Bundle bundle = new Bundle();
 
         public void popularSeeAll(View view) {
-
             updateData();
-
 //            bundle.putString("what_open", getString(R.string.popular));
 //            navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }

@@ -43,8 +43,6 @@ public class MoviesViewModel extends ViewModel {
         return moviesRepository.getGenresMoviesMutableLiveData();
     }
 
-//
-
     public LiveData<List<MovieResult>> updatePopularMoviesData() {
         return moviesRepository.updatePopularMoviesMutableLiveData();
     }
@@ -68,7 +66,6 @@ public class MoviesViewModel extends ViewModel {
     public LiveData<List<GenreResult>> updateGenresMoviesData() {
         return moviesRepository.updateGenresMoviesMutableLiveData();
     }
-
 
     public LiveData<Throwable> getErrors() {
         return moviesRepository.getErrors();
