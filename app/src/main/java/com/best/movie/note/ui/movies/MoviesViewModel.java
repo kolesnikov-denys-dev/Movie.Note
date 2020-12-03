@@ -1,10 +1,9 @@
 package com.best.movie.note.ui.movies;
 
-import android.app.Application;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.best.movie.note.model.repositories.MoviesRepository;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
@@ -12,14 +11,12 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 
 import java.util.List;
 
-public class MoviesViewModel extends AndroidViewModel {
+public class MoviesViewModel extends ViewModel {
 
     private MoviesRepository moviesRepository;
 
-    public MoviesViewModel(@NonNull Application application) {
-        super(application);
-
-        moviesRepository = new MoviesRepository(application);
+    public MoviesViewModel() {
+        moviesRepository = new MoviesRepository();
     }
 
     public LiveData<List<MovieResult>> getPopularMoviesData() {
@@ -46,7 +43,44 @@ public class MoviesViewModel extends AndroidViewModel {
         return moviesRepository.getGenresMoviesMutableLiveData();
     }
 
-    public void disposeDisposable (){
+//
+
+    public LiveData<List<MovieResult>> updatePopularMoviesData() {
+        return moviesRepository.updatePopularMoviesMutableLiveData();
+    }
+
+    public LiveData<List<MovieResult>> updateNowPlayingMoviesData() {
+        return moviesRepository.updateNowPlayingMoviesMutableLiveData();
+    }
+
+    public LiveData<List<MovieResult>> updateTrendingMoviesData() {
+        return moviesRepository.updateTrendingMoviesMutableLiveData();
+    }
+
+    public LiveData<List<MovieResult>> updateTopRatedMoviesData() {
+        return moviesRepository.updateTopRatedMoviesMutableLiveData();
+    }
+
+    public LiveData<List<MovieResult>> updateUpcomingMoviesData() {
+        return moviesRepository.updateUpcomingMoviesMutableLiveData();
+    }
+
+    public LiveData<List<GenreResult>> updateGenresMoviesData() {
+        return moviesRepository.updateGenresMoviesMutableLiveData();
+    }
+
+
+    public LiveData<Throwable> getErrors() {
+        return moviesRepository.getErrors();
+    }
+
+    public void clearErrors() {
+        moviesRepository.clearErrors();
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
         moviesRepository.disposeDisposable();
     }
 

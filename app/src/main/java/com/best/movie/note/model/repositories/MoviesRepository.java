@@ -1,8 +1,8 @@
 package com.best.movie.note.model.repositories;
 
-import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.best.movie.note.model.response.movies.genres.GenreResult;
@@ -28,39 +28,63 @@ import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;
 
 public class MoviesRepository {
-    private Application application;
 
     @Inject
     ApiService apiService;
     private CompositeDisposable compositeDisposable;
 
-    public MoviesRepository(Application application) {
-        this.application = application;
+    public MoviesRepository() {
         compositeDisposable = new CompositeDisposable();
         getAppComponent().injectMoviesRepository(this);
     }
 
-    // Popular Movies
+    private MutableLiveData<Throwable> errors = new MutableLiveData<>();
     private ArrayList<MovieResult> movieResults;
-    private final MutableLiveData<List<MovieResult>> mutableLiveData = new MutableLiveData<>();
-    // Playing Now Movies
+    private MutableLiveData<List<MovieResult>> mutableLiveData = new MutableLiveData<>();
     private ArrayList<MovieResult> nowPlayingResults;
-    private final MutableLiveData<List<MovieResult>> playingNowMutableLiveData = new MutableLiveData<>();
-    // Trending Movies
+    private MutableLiveData<List<MovieResult>> playingNowMutableLiveData = new MutableLiveData<>();
     private ArrayList<MovieResult> trendingResults;
-    private final MutableLiveData<List<MovieResult>> trendingMutableLiveData = new MutableLiveData<>();
-    // Top Rated Movies
+    private MutableLiveData<List<MovieResult>> trendingMutableLiveData = new MutableLiveData<>();
     private ArrayList<MovieResult> topRatedResults;
-    private final MutableLiveData<List<MovieResult>> topRatedMutableLiveData = new MutableLiveData<>();
-    // Upcoming Movies
+    private MutableLiveData<List<MovieResult>> topRatedMutableLiveData = new MutableLiveData<>();
     private ArrayList<MovieResult> upcomingResults;
-    private final MutableLiveData<List<MovieResult>> upcomingMutableLiveData = new MutableLiveData<>();
-    // Genres Movies
+    private MutableLiveData<List<MovieResult>> upcomingMutableLiveData = new MutableLiveData<>();
     private ArrayList<GenreResult> genreResults;
-    private final MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
 
+    public LiveData<Throwable> getErrors() {
+        return errors;
+    }
+
+    public void clearErrors() {
+        errors.setValue(null);
+    }
 
     public MutableLiveData<List<MovieResult>> getPopularMoviesMutableLiveData() {
+        return this.mutableLiveData;
+    }
+
+    public MutableLiveData<List<MovieResult>> getNowPlayingMoviesMutableLiveData() {
+        return this.playingNowMutableLiveData;
+    }
+
+    public MutableLiveData<List<MovieResult>> getTrendingMoviesMutableLiveData() {
+        return this.trendingMutableLiveData;
+    }
+
+    public MutableLiveData<List<MovieResult>> getTopRatedMoviesMutableLiveData() {
+        return this.topRatedMutableLiveData;
+    }
+
+    public MutableLiveData<List<MovieResult>> getUpcomingMoviesMutableLiveData() {
+        return this.upcomingMutableLiveData;
+    }
+
+    public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
+        return this.genresMutableLiveData;
+    }
+
+    public MutableLiveData<List<MovieResult>> updatePopularMoviesMutableLiveData() {
         Disposable disposableSimpleData = apiService.getPopularMovies(API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -75,14 +99,15 @@ public class MoviesRepository {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG_ERROR, "onFailure: getPopularMoviesMutableLiveData" + throwable.getLocalizedMessage());
+                        errors.setValue(throwable);
+                        Log.e(TAG_ERROR, "accept: getPopularMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
         return mutableLiveData;
     }
 
-    public MutableLiveData<List<MovieResult>> getNowPlayingMoviesMutableLiveData() {
+    public MutableLiveData<List<MovieResult>> updateNowPlayingMoviesMutableLiveData() {
         Disposable disposableSimpleData = apiService.getNowPlayingMovies(API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -97,14 +122,15 @@ public class MoviesRepository {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG_ERROR, "onFailure: getNowPlayingMoviesMutableLiveData" + throwable.getLocalizedMessage());
+                        errors.setValue(throwable);
+                        Log.e(TAG_ERROR, "accept: getNowPlayingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
         return playingNowMutableLiveData;
     }
 
-    public MutableLiveData<List<MovieResult>> getTrendingMoviesMutableLiveData() {
+    public MutableLiveData<List<MovieResult>> updateTrendingMoviesMutableLiveData() {
         Disposable disposableSimpleData = apiService.getTrendingMovies(API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -119,14 +145,15 @@ public class MoviesRepository {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG_ERROR, "onFailure: getTrendingMoviesMutableLiveData" + throwable.getLocalizedMessage());
+                        errors.setValue(throwable);
+                        Log.e(TAG_ERROR, "accept: getTrendingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
         return trendingMutableLiveData;
     }
 
-    public MutableLiveData<List<MovieResult>> getTopRatedMoviesMutableLiveData() {
+    public MutableLiveData<List<MovieResult>> updateTopRatedMoviesMutableLiveData() {
         Disposable disposableSimpleData = apiService.getTopRatedMovies(API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -141,14 +168,15 @@ public class MoviesRepository {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG_ERROR, "onFailure: getTopRatedMoviesMutableLiveData" + throwable.getLocalizedMessage());
+                        errors.setValue(throwable);
+                        Log.e(TAG_ERROR, "accept: getTopRatedMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
         return topRatedMutableLiveData;
     }
 
-    public MutableLiveData<List<MovieResult>> getUpcomingMoviesMutableLiveData() {
+    public MutableLiveData<List<MovieResult>> updateUpcomingMoviesMutableLiveData() {
         Disposable disposableSimpleData = apiService.getUpcomingMovies(API_KEY, QUERY_LANGUAGE,
                 "1")
                 .subscribeOn(Schedulers.io())
@@ -164,14 +192,15 @@ public class MoviesRepository {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG_ERROR, "onFailure: getUpcomingMoviesMutableLiveData" + throwable.getLocalizedMessage());
+                        errors.setValue(throwable);
+                        Log.e(TAG_ERROR, "accept: getUpcomingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
         return upcomingMutableLiveData;
     }
 
-    public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
+    public MutableLiveData<List<GenreResult>> updateGenresMoviesMutableLiveData() {
         Disposable disposableSimpleData = apiService.getGenresMovies(API_KEY, QUERY_LANGUAGE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -186,7 +215,8 @@ public class MoviesRepository {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG_ERROR, "onFailure: getUpcomingMoviesMutableLiveData" + throwable.getLocalizedMessage());
+                        errors.setValue(throwable);
+                        Log.e(TAG_ERROR, "accept: getUpcomingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);

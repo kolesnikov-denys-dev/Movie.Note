@@ -57,6 +57,14 @@ public class MoviesListFragment extends Fragment {
                 .AndroidViewModelFactory(getActivity().getApplication())
                 .create(MoviesListViewModel.class);
 
+        // What load?
+        // Movies:
+        //1. Popular All
+        //2. Playing In Theatres All
+        //3. Trending All
+        //4. Top Rated All
+        //5. Upcoming All
+
         getPopularMovies(whatLoad);
 
         swipeRefreshLayout = binding.swipeRefresh;

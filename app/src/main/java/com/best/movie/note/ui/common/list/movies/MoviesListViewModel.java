@@ -27,15 +27,23 @@ public class MoviesListViewModel extends AndroidViewModel {
     private LiveData<MovieDataSource> movieDataSourceLiveData;
     private LiveData<PagedList<MovieResult>> pagedListLiveData;
 
+    private Application application;
+
     @Inject
     ApiService apiService;
 
     public MoviesListViewModel(Application application) {
         super(application);
 
+        this.application = application;
         getAppComponent().injectMoviesListViewModel(this);
 
         repository = new MoviesListRepository(application);
+
+    }
+
+
+    public LiveData<PagedList<MovieResult>> getPagedListLiveData() {
         // DataSource
         MovieDataSourceFactory movieDataSourceFactory = new MovieDataSourceFactory(application, apiService);
         movieDataSourceLiveData = movieDataSourceFactory.getMutableLiveData();
@@ -52,11 +60,16 @@ public class MoviesListViewModel extends AndroidViewModel {
         pagedListLiveData = new LivePagedListBuilder<Long, MovieResult>(movieDataSourceFactory, config)
                 .setFetchExecutor(executor)
                 .build();
-    }
 
-
-    public LiveData<PagedList<MovieResult>> getPagedListLiveData() {
         return pagedListLiveData;
     }
+
+    // type 1 2 3 4 5
+
+    // type 1 2 3 4 5
+
+    // type 1 2 3 4 5
+
+    // type 1 2 3 4 5
 
 }
