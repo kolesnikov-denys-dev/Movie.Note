@@ -1,7 +1,5 @@
 package com.best.movie.note.model.repositories;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -25,12 +23,12 @@ import io.reactivex.schedulers.Schedulers;
 import static com.best.movie.note.Global.getAppComponent;
 import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
-import static com.best.movie.note.utils.Constants.TAG_ERROR;
 
 public class MoviesRepository {
 
     @Inject
     ApiService apiService;
+
     private CompositeDisposable compositeDisposable;
     private MutableLiveData<Throwable> errors = new MutableLiveData<>();
     private MutableLiveData<List<MovieResult>> popularMutableLiveData = new MutableLiveData<>();
@@ -68,7 +66,6 @@ public class MoviesRepository {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         errors.setValue(throwable);
-                        Log.e(TAG_ERROR, "accept: getPopularMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
@@ -90,7 +87,6 @@ public class MoviesRepository {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         errors.setValue(throwable);
-                        Log.e(TAG_ERROR, "accept: getNowPlayingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
@@ -112,7 +108,6 @@ public class MoviesRepository {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         errors.setValue(throwable);
-                        Log.e(TAG_ERROR, "accept: getTrendingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
@@ -134,7 +129,6 @@ public class MoviesRepository {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         errors.setValue(throwable);
-                        Log.e(TAG_ERROR, "accept: getTopRatedMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
@@ -157,7 +151,6 @@ public class MoviesRepository {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         errors.setValue(throwable);
-                        Log.e(TAG_ERROR, "accept: getUpcomingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);
@@ -179,7 +172,6 @@ public class MoviesRepository {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         errors.setValue(throwable);
-                        Log.e(TAG_ERROR, "accept: getUpcomingMoviesMutableLiveData" + throwable.getLocalizedMessage());
                     }
                 });
         compositeDisposable.add(disposableSimpleData);

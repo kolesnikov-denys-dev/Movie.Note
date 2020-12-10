@@ -1,7 +1,6 @@
 package com.best.movie.note.ui.movies;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +33,18 @@ import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
+import static com.best.movie.note.utils.Constants.ERROR_INTERNET;
+import static com.best.movie.note.utils.Constants.KEY_CONTENT_ID;
+import static com.best.movie.note.utils.Constants.KEY_CONTENT_TYPE;
+import static com.best.movie.note.utils.Constants.KEY_ORIGINAL_NAME;
 import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
+import static com.best.movie.note.utils.Constants.KEY_WHAT_OPEN;
 
 public class MoviesFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener {
 
     private MoviesViewModel moviesViewModel;
     private FragmentMoviesBinding binding;
     private NavController navController;
-
     private RecyclerView popularMoviesRecyclerView;
     private CommonContentAdapter commonContentAdapter;
     private RecyclerView nowPlayingMoviesRecyclerView;
@@ -75,7 +78,7 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
             @Override
             public void onChanged(Throwable throwable) {
                 if (throwable != null) {
-                    Toast.makeText(getContext(), "Internet Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), ERROR_INTERNET, Toast.LENGTH_SHORT).show();
                     moviesViewModel.clearErrors();
                 }
             }
@@ -85,7 +88,6 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
                 new Observer<List<GenreResult>>() {
                     @Override
                     public void onChanged(List<GenreResult> data) {
-                        Log.i("check", "STEP 1");
                         genresResults = (ArrayList<GenreResult>) data;
                     }
                 });
@@ -131,7 +133,6 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
                     }
                 });
     }
-
 
     private void fillPopularRecyclerView(ArrayList<MovieResult> movieResults) {
         popularMoviesRecyclerView = binding.popularRecyclerView;
@@ -197,41 +198,40 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
     public void onMovieClick(int movieId, String originalName, int contentType) {
         if (contentType == CONTENT_TYPE_MOVIE) {
             Bundle bundle = new Bundle();
-            bundle.putInt("content_id", movieId);
-            bundle.putInt("content_type", contentType);
-            bundle.putString("original_name", originalName);
+            bundle.putInt(KEY_CONTENT_ID, movieId);
+            bundle.putInt(KEY_CONTENT_TYPE, contentType);
+            bundle.putString(KEY_ORIGINAL_NAME, originalName);
             navController.navigate(R.id.action_navigation_movies_to_mainMovieFragment, bundle);
         }
     }
 
     public class MoviesFragmentButtonsHandler {
-
         Bundle bundle = new Bundle();
 
         public void popularSeeAll(View view) {
-//            updateData();
-            bundle.putString("what_open", getString(R.string.popular));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.popular));
             navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }
 
         public void nowPlayingSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.playing_in_theathres));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.playing_in_theathres));
             navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }
 
         public void trendingSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.trending));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.trending));
             navController.navigate(R.id.navigation_movies_list, bundle);
         }
 
         public void topRatedSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.top_rated));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.top_rated));
             navController.navigate(R.id.navigation_movies_list, bundle);
         }
 
         public void upComingSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.upcoming));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.upcoming));
             navController.navigate(R.id.navigation_movies_list, bundle);
         }
     }
+
 }

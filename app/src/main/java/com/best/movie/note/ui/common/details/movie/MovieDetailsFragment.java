@@ -35,6 +35,7 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.Season;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
+import com.best.movie.note.ui.movies.MoviesFragment;
 import com.best.movie.note.ui.movies.MoviesViewModel;
 
 import java.util.ArrayList;
@@ -43,6 +44,15 @@ import java.util.List;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
+import static com.best.movie.note.utils.Constants.ERROR_NOT_TRAILER;
+import static com.best.movie.note.utils.Constants.KEY_CAST_ID;
+import static com.best.movie.note.utils.Constants.KEY_CAST_NAME;
+import static com.best.movie.note.utils.Constants.KEY_CONTENT_ID;
+import static com.best.movie.note.utils.Constants.KEY_CONTENT_TYPE;
+import static com.best.movie.note.utils.Constants.KEY_ORIGINAL_NAME;
+import static com.best.movie.note.utils.Constants.KEY_SEASON_NUMBER;
+import static com.best.movie.note.utils.Constants.KEY_TV_ID;
+import static com.best.movie.note.utils.Constants.LANGUAGE_EN;
 
 public class MovieDetailsFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener,
         CastsAdapter.OnCastClickListener, SeasonsAdapter.OnSeasonClickListener {
@@ -81,11 +91,9 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     private RecyclerView tvShowsSimilarRecyclerView;
     private CommonContentAdapter tvShowsSimilarAdapter;
     private ArrayList<GenreResult> tvShowsGenresResults;
-
     private RecyclerView tvShowsSeasonsRecyclerView;
     private SeasonsAdapter tvShowsSeasonsAdapter;
     private ArrayList<Season> tvShowsSeasonsResults;
-
     // End Region
 
     @Override
@@ -102,34 +110,39 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
-        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.mobile_navigation);
-        movieDetailsViewModel = new ViewModelProvider(backStackEntry).get(MovieDetailsViewModel.class);
+
+        movieDetailsViewModel = new ViewModelProvider
+                .AndroidViewModelFactory(getActivity().getApplication())
+                .create(MovieDetailsViewModel.class);
+
+//        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.mobile_navigation);
+//        movieDetailsViewModel = new ViewModelProvider(backStackEntry).get(MovieDetailsViewModel.class);
 
         if (getArguments() != null) {
-            contentId = getArguments().getInt("content_id");
-            contentType = getArguments().getInt("content_type");
-            String originalName = getArguments().getString("original_name");
+            contentId = getArguments().getInt(KEY_CONTENT_ID);
+            contentType = getArguments().getInt(KEY_CONTENT_TYPE);
+            String originalName = getArguments().getString(KEY_ORIGINAL_NAME);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(originalName);
 
             switch (contentType) {
                 case CONTENT_TYPE_MOVIE: {
                     binding.setShowSeasons(false);
                     getMovieGenres();
-                    getMovieDetail(contentId, "en-US");
-                    getMovieVideos(contentId, "en-US");
-                    getMovieRecommendations(contentId, "en-US");
-                    getMovieSimilar(contentId, "en-US");
-                    getMovieCredits(contentId, "en-US");
+                    getMovieDetail(contentId, LANGUAGE_EN);
+                    getMovieVideos(contentId, LANGUAGE_EN);
+                    getMovieRecommendations(contentId, LANGUAGE_EN);
+                    getMovieSimilar(contentId, LANGUAGE_EN);
+                    getMovieCredits(contentId, LANGUAGE_EN);
                 }
                 break;
                 case CONTENT_TYPE_TV_SHOW: {
                     binding.setShowSeasons(true);
                     getTvShowsGenres();
-                    getTvShowsDetail(contentId, "en-US");
-                    getTvShowsVideos(contentId, "en-US");
-                    getTvShowsCredits(contentId, "en-US");
-                    getTvShowsRecommendations(contentId, "en-US");
-                    getTvShowsSimilar(contentId, "en-US");
+                    getTvShowsDetail(contentId, LANGUAGE_EN);
+                    getTvShowsVideos(contentId, LANGUAGE_EN);
+                    getTvShowsCredits(contentId, LANGUAGE_EN);
+                    getTvShowsRecommendations(contentId, LANGUAGE_EN);
+                    getTvShowsSimilar(contentId, LANGUAGE_EN);
                 }
                 break;
             }
@@ -138,7 +151,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
 
     // Movies Region
     private void getMovieGenres() {
-        movieDetailsViewModel.updateGenresMoviesData().observe(getActivity(),
+        movieDetailsViewModel.updateGenresMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<GenreResult>>() {
                     @Override
                     public void onChanged(List<GenreResult> data) {
@@ -148,7 +161,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieDetail(int movieId, String language) {
-        movieDetailsViewModel.updateMovieDetails(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateMovieDetails(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<MovieDetailsApiResponse>() {
                     @Override
                     public void onChanged(MovieDetailsApiResponse data) {
@@ -159,7 +172,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieVideos(int movieId, String language) {
-        movieDetailsViewModel.updateMovieVideos(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateMovieVideos(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<VideosApiResponse>() {
                     @Override
                     public void onChanged(VideosApiResponse data) {
@@ -169,7 +182,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieCredits(int movieId, String language) {
-        movieDetailsViewModel.updateCredits(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateCredits(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<CastCrewApiResponse>() {
                     @Override
                     public void onChanged(CastCrewApiResponse data) {
@@ -185,7 +198,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieRecommendations(int movieId, String language) {
-        movieDetailsViewModel.updateRecommendations(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateRecommendations(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
@@ -201,7 +214,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieSimilar(int movieId, String language) {
-        movieDetailsViewModel.updateSimilar(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateSimilar(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
@@ -215,13 +228,11 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
                     }
                 });
     }
-
     // End Movies Region
 
     // Tv Shows Region
-
     private void getTvShowsGenres() {
-        movieDetailsViewModel.getTvShowsGenresMoviesData().observe(getActivity(),
+        movieDetailsViewModel.getTvShowsGenresMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<GenreResult>>() {
                     @Override
                     public void onChanged(List<GenreResult> data) {
@@ -231,7 +242,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getTvShowsDetail(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsDetails(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.getTvShowsDetails(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<TvShowsApiResponse>() {
                     @Override
                     public void onChanged(TvShowsApiResponse data) {
@@ -244,7 +255,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getTvShowsVideos(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsVideos(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.getTvShowsVideos(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<VideosApiResponse>() {
                     @Override
                     public void onChanged(VideosApiResponse data) {
@@ -254,7 +265,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getTvShowsCredits(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsCredits(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.getTvShowsCredits(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<CastCrewApiResponse>() {
                     @Override
                     public void onChanged(CastCrewApiResponse data) {
@@ -270,7 +281,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getTvShowsRecommendations(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsRecommendations(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.getTvShowsRecommendations(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
@@ -286,7 +297,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getTvShowsSimilar(int movieId, String language) {
-        movieDetailsViewModel.getTvShowsSimilar(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.getTvShowsSimilar(movieId, language).observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
@@ -378,28 +389,27 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
 
     @Override
     public void onMovieClick(int movieId, String originalName, int contentType) {
-        Log.i("check", "was Clicked on :" + movieId);
         Bundle bundle = new Bundle();
-        bundle.putInt("content_id", movieId);
-        bundle.putInt("content_type", contentType);
-        bundle.putString("original_name", originalName);
+        bundle.putInt(KEY_CONTENT_ID, movieId);
+        bundle.putInt(KEY_CONTENT_TYPE, contentType);
+        bundle.putString(KEY_ORIGINAL_NAME, originalName);
         navController.navigate(R.id.action_mainMovieFragment_self, bundle);
     }
 
     @Override
     public void onCastClick(int castId, String castName) {
         Bundle bundle = new Bundle();
-        bundle.putInt("cast_id", castId);
-        bundle.putString("cast_name", castName);
+        bundle.putInt(KEY_CAST_ID, castId);
+        bundle.putString(KEY_CAST_NAME, castName);
         navController.navigate(R.id.action_mainMovieFragment_to_celebrityDetailsFragment, bundle);
     }
 
     @Override
     public void onSeasonClick(int tvId, String originalName, int season) {
         Bundle bundle = new Bundle();
-        bundle.putInt("tv_id", contentId);
-        bundle.putInt("season_number", season);
-        bundle.putString("original_name", originalName);
+        bundle.putInt(KEY_TV_ID, contentId);
+        bundle.putInt(KEY_SEASON_NUMBER, season);
+        bundle.putString(KEY_ORIGINAL_NAME, originalName);
         navController.navigate(R.id.action_mainMovieFragment_to_seasonDetailsFragment, bundle);
     }
 
@@ -432,7 +442,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
                     }
                 }
             } else {
-                Toast.makeText(getContext(), "Not trailer", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), ERROR_NOT_TRAILER, Toast.LENGTH_SHORT).show();
             }
         }
 

@@ -1,6 +1,7 @@
 package com.best.movie.note.ui.common.details.movie;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.best.movie.note.model.repositories.MoviesDetailsRepository;
@@ -17,63 +18,70 @@ public class MovieDetailsViewModel extends ViewModel {
 
     private final MoviesDetailsRepository repository;
 
+    // Movies Region
+    private MutableLiveData<List<GenreResult>> genresMutableLiveData;
+    private MutableLiveData<MovieDetailsApiResponse> movieDetailsApiResponseMutableLiveData;
+    private MutableLiveData<VideosApiResponse> movieVideosApiResponseMutableLiveData;
+    private MutableLiveData<List<MovieResult>> recommendationsApiResponseMutableLiveData;
+    private MutableLiveData<List<MovieResult>> similarApiResponseMutableLiveData;
+    private MutableLiveData<CastCrewApiResponse> castCrewApiResponseMutableLiveData;
+    // End Region Movies
+
+    // Tv Shows Region
+    private MutableLiveData<List<GenreResult>> tvShowGenresMutableLiveData;
+    private MutableLiveData<TvShowsApiResponse> tvShowDetailsApiResponseMutableLiveData;
+    private MutableLiveData<VideosApiResponse> tvShowVideosApiResponseMutableLiveData;
+    private MutableLiveData<List<MovieResult>> tvShowRecommendationsApiResponseMutableLiveData;
+    private MutableLiveData<List<MovieResult>> tvShowSimilarApiResponseMutableLiveData;
+    private MutableLiveData<CastCrewApiResponse> tvShowCastCrewApiResponseMutableLiveData;
+    // End Region
+
     public MovieDetailsViewModel() {
         repository = new MoviesDetailsRepository();
     }
 
-    // Movie Region
-
-    public LiveData<List<GenreResult>> getGenresMoviesData() {
-        return repository.getGenresMutableLiveData();
-    }
-
-
-    public LiveData<MovieDetailsApiResponse> getMovieDetails() {
-        return repository.getMovieDetailMutableLiveData();
-    }
-
-    public LiveData<VideosApiResponse> getMovieVideos() {
-        return repository.getMovieVideosLiveData();
-    }
-
-
-    public LiveData<List<MovieResult>> getRecommendations() {
-        return repository.getRecommendationsLiveData();
-    }
-
-    public LiveData<List<MovieResult>> getSimilar() {
-        return repository.getTvShowSimilarLiveData();
-    }
-
-    public LiveData<CastCrewApiResponse> getCredits() {
-        return repository.getStvShowCastCrewLiveData();
-    }
-    // End Region Movie
-
-
     // Movie Region Update
+
+    public LiveData<List<GenreResult>> updateGenresMoviesData() {
+        if (genresMutableLiveData == null) {
+            genresMutableLiveData = repository.updateGenresMoviesMutableLiveData();
+        }
+        return genresMutableLiveData;
+    }
+
     public LiveData<MovieDetailsApiResponse> updateMovieDetails(int movieId, String language) {
-        return repository.updateMovieDetailLiveData(movieId, language);
+        if (movieDetailsApiResponseMutableLiveData == null) {
+            movieDetailsApiResponseMutableLiveData = repository.updateMovieDetailLiveData(movieId, language);
+        }
+        return movieDetailsApiResponseMutableLiveData;
     }
 
     public LiveData<VideosApiResponse> updateMovieVideos(int movieId, String language) {
-        return repository.updateMovieVideosLiveData(movieId, language);
-    }
-
-    public LiveData<List<GenreResult>> updateGenresMoviesData() {
-        return repository.updateGenresMoviesMutableLiveData();
+        if (movieVideosApiResponseMutableLiveData == null) {
+            movieVideosApiResponseMutableLiveData = repository.updateMovieVideosLiveData(movieId, language);
+        }
+        return movieVideosApiResponseMutableLiveData;
     }
 
     public LiveData<List<MovieResult>> updateRecommendations(int movieId, String language) {
-        return repository.updateRecommendationsLiveData(movieId, language);
+        if (recommendationsApiResponseMutableLiveData == null) {
+            recommendationsApiResponseMutableLiveData = repository.updateRecommendationsLiveData(movieId, language);
+        }
+        return recommendationsApiResponseMutableLiveData;
     }
 
     public LiveData<List<MovieResult>> updateSimilar(int movieId, String language) {
-        return repository.updateSimilarLiveData(movieId, language);
+        if (similarApiResponseMutableLiveData == null) {
+            similarApiResponseMutableLiveData = repository.updateSimilarLiveData(movieId, language);
+        }
+        return similarApiResponseMutableLiveData;
     }
 
     public LiveData<CastCrewApiResponse> updateCredits(int movieId, String language) {
-        return repository.updateCreditsLiveData(movieId, language);
+        if (castCrewApiResponseMutableLiveData == null) {
+            castCrewApiResponseMutableLiveData = repository.updateCreditsLiveData(movieId, language);
+        }
+        return castCrewApiResponseMutableLiveData;
     }
     // End Region Movie
 

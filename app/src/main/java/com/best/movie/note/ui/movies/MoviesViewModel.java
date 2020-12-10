@@ -65,30 +65,6 @@ public class MoviesViewModel extends ViewModel {
         }
         return genresMutableLiveData;
     }
-//
-//    public void updatePopularMoviesData() {
-//        popularMutableLiveData = moviesRepository.updatePopularMoviesMutableLiveData();
-//    }
-//
-//    public void updateNowPlayingMoviesData() {
-//        playingNowMutableLiveData = moviesRepository.updateNowPlayingMoviesMutableLiveData();
-//    }
-//
-//    public void updateTrendingMoviesData() {
-//        trendingMutableLiveData = moviesRepository.updateTrendingMoviesMutableLiveData();
-//    }
-//
-//    public void updateTopRatedMoviesData() {
-//        topRatedMutableLiveData = moviesRepository.updateTopRatedMoviesMutableLiveData();
-//    }
-//
-//    public void updateUpcomingMoviesData() {
-//        upcomingMutableLiveData = moviesRepository.updateUpcomingMoviesMutableLiveData();
-//    }
-//
-//    public LiveData<List<GenreResult>> updateGenresMoviesData() {
-//        return moviesRepository.updateGenresMoviesMutableLiveData();
-//    }
 
     public LiveData<Throwable> getErrors() {
         return moviesRepository.getErrors();

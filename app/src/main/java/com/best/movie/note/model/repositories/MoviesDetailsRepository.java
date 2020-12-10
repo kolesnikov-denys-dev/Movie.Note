@@ -1,6 +1,5 @@
 package com.best.movie.note.model.repositories;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -46,58 +45,22 @@ public class MoviesDetailsRepository {
     }
 
     // Movies Region
-    private ArrayList<GenreResult> genreResults;
     private MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
-    private MovieDetailsApiResponse movieDetailsResult;
     private MutableLiveData<MovieDetailsApiResponse> movieDetailsApiResponseMutableLiveData = new MutableLiveData<>();
-    private VideosApiResponse videosResult;
     private MutableLiveData<VideosApiResponse> movieVideosApiResponseMutableLiveData = new MutableLiveData<>();
-    private ArrayList<MovieResult> recommendationsResult;
     private MutableLiveData<List<MovieResult>> recommendationsApiResponseMutableLiveData = new MutableLiveData<>();
-    private ArrayList<MovieResult> similarResult;
     private MutableLiveData<List<MovieResult>> similarApiResponseMutableLiveData = new MutableLiveData<>();
-    private CastCrewApiResponse castCrewResult;
     private MutableLiveData<CastCrewApiResponse> castCrewApiResponseMutableLiveData = new MutableLiveData<>();
     // End Region Movies
 
     // Tv Shows Region
-    private ArrayList<GenreResult> tvShowGenreResults;
-    private MutableLiveData<List<GenreResult>> tvShowGenresMutableLiveData;
-    private TvShowsApiResponse tvShowDetailsResult;
-    private MutableLiveData<TvShowsApiResponse> tvShowDetailsApiResponseMutableLiveData;
-    private VideosApiResponse tvShowVideosResult;
-    private MutableLiveData<VideosApiResponse> tvShowVideosApiResponseMutableLiveData;
-    private ArrayList<MovieResult> tvShowRecommendationsResult;
-    private MutableLiveData<List<MovieResult>> tvShowRecommendationsApiResponseMutableLiveData;
-    private ArrayList<MovieResult> tvShowSimilarResult;
-    private MutableLiveData<List<MovieResult>> tvShowSimilarApiResponseMutableLiveData;
-    private CastCrewApiResponse tvShowCastCrewResult;
-    private MutableLiveData<CastCrewApiResponse> tvShowCastCrewApiResponseMutableLiveData;
+    private MutableLiveData<List<GenreResult>> tvShowGenresMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<TvShowsApiResponse> tvShowDetailsApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<VideosApiResponse> tvShowVideosApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> tvShowRecommendationsApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> tvShowSimilarApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<CastCrewApiResponse> tvShowCastCrewApiResponseMutableLiveData = new MutableLiveData<>();
     // End Region
-
-    public MutableLiveData<List<GenreResult>> getGenresMutableLiveData() {
-        return genresMutableLiveData;
-    }
-
-    public MutableLiveData<MovieDetailsApiResponse> getMovieDetailMutableLiveData() {
-        return movieDetailsApiResponseMutableLiveData;
-    }
-
-    public MutableLiveData<VideosApiResponse> getMovieVideosLiveData() {
-        return movieVideosApiResponseMutableLiveData;
-    }
-
-    public MutableLiveData<List<MovieResult>> getTvShowSimilarLiveData() {
-        return similarApiResponseMutableLiveData;
-    }
-
-    public MutableLiveData<List<MovieResult>> getRecommendationsLiveData() {
-        return recommendationsApiResponseMutableLiveData;
-    }
-
-    public MutableLiveData<CastCrewApiResponse> getStvShowCastCrewLiveData() {
-        return castCrewApiResponseMutableLiveData;
-    }
 
     // Movies Region
     public MutableLiveData<List<GenreResult>> updateGenresMoviesMutableLiveData() {
@@ -108,8 +71,7 @@ public class MoviesDetailsRepository {
                     @Override
                     public void accept(GenresMovieApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getGenres() != null) {
-                            genreResults = (ArrayList<GenreResult>) moviesApiResponse.getGenres();
-                            genresMutableLiveData.setValue(genreResults);
+                            genresMutableLiveData.setValue((ArrayList<GenreResult>) moviesApiResponse.getGenres());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -129,8 +91,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<MovieDetailsApiResponse> call, Response<MovieDetailsApiResponse> response) {
                 MovieDetailsApiResponse moviesApiResponse = response.body();
                 if (moviesApiResponse != null && moviesApiResponse != null) {
-                    movieDetailsResult = moviesApiResponse;
-                    movieDetailsApiResponseMutableLiveData.setValue(movieDetailsResult);
+                    movieDetailsApiResponseMutableLiveData.setValue(moviesApiResponse);
                 }
             }
 
@@ -149,8 +110,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<VideosApiResponse> call, Response<VideosApiResponse> response) {
                 VideosApiResponse moviesApiResponse = response.body();
                 if (moviesApiResponse != null && moviesApiResponse != null) {
-                    videosResult = moviesApiResponse;
-                    movieVideosApiResponseMutableLiveData.setValue(videosResult);
+                    movieVideosApiResponseMutableLiveData.setValue(moviesApiResponse);
                 }
             }
 
@@ -169,8 +129,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse movieApiResponse = response.body();
                 if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    recommendationsResult = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    recommendationsApiResponseMutableLiveData.setValue(recommendationsResult);
+                    recommendationsApiResponseMutableLiveData.setValue((ArrayList<MovieResult>) movieApiResponse.getResults());
                 }
             }
 
@@ -189,8 +148,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse movieApiResponse = response.body();
                 if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    similarResult = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    similarApiResponseMutableLiveData.setValue(similarResult);
+                    similarApiResponseMutableLiveData.setValue((ArrayList<MovieResult>) movieApiResponse.getResults());
                 }
             }
 
@@ -209,8 +167,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<CastCrewApiResponse> call, Response<CastCrewApiResponse> response) {
                 CastCrewApiResponse movieApiResponse = response.body();
                 if (movieApiResponse != null && movieApiResponse != null) {
-                    castCrewResult = movieApiResponse;
-                    castCrewApiResponseMutableLiveData.setValue(castCrewResult);
+                    castCrewApiResponseMutableLiveData.setValue(movieApiResponse);
                 }
             }
 
@@ -232,8 +189,7 @@ public class MoviesDetailsRepository {
                     @Override
                     public void accept(GenresMovieApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getGenres() != null) {
-                            tvShowGenreResults = (ArrayList<GenreResult>) moviesApiResponse.getGenres();
-                            tvShowGenresMutableLiveData.setValue(tvShowGenreResults);
+                            tvShowGenresMutableLiveData.setValue((ArrayList<GenreResult>) moviesApiResponse.getGenres());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -253,8 +209,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<TvShowsApiResponse> call, Response<TvShowsApiResponse> response) {
                 TvShowsApiResponse moviesApiResponse = response.body();
                 if (moviesApiResponse != null && moviesApiResponse != null) {
-                    tvShowDetailsResult = moviesApiResponse;
-                    tvShowDetailsApiResponseMutableLiveData.setValue(tvShowDetailsResult);
+                    tvShowDetailsApiResponseMutableLiveData.setValue(moviesApiResponse);
                 }
             }
 
@@ -273,8 +228,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<VideosApiResponse> call, Response<VideosApiResponse> response) {
                 VideosApiResponse moviesApiResponse = response.body();
                 if (moviesApiResponse != null && moviesApiResponse != null) {
-                    tvShowVideosResult = moviesApiResponse;
-                    tvShowVideosApiResponseMutableLiveData.setValue(tvShowVideosResult);
+                    tvShowVideosApiResponseMutableLiveData.setValue(moviesApiResponse);
                 }
             }
 
@@ -293,8 +247,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse movieApiResponse = response.body();
                 if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    tvShowRecommendationsResult = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    tvShowRecommendationsApiResponseMutableLiveData.setValue(tvShowRecommendationsResult);
+                    tvShowRecommendationsApiResponseMutableLiveData.setValue((ArrayList<MovieResult>) movieApiResponse.getResults());
                 }
             }
 
@@ -313,8 +266,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<MoviesApiResponse> call, Response<MoviesApiResponse> response) {
                 MoviesApiResponse movieApiResponse = response.body();
                 if (movieApiResponse != null && movieApiResponse.getResults() != null) {
-                    tvShowSimilarResult = (ArrayList<MovieResult>) movieApiResponse.getResults();
-                    tvShowSimilarApiResponseMutableLiveData.setValue(tvShowSimilarResult);
+                    tvShowSimilarApiResponseMutableLiveData.setValue((ArrayList<MovieResult>) movieApiResponse.getResults());
                 }
             }
 
@@ -333,8 +285,7 @@ public class MoviesDetailsRepository {
             public void onResponse(Call<CastCrewApiResponse> call, Response<CastCrewApiResponse> response) {
                 CastCrewApiResponse movieApiResponse = response.body();
                 if (movieApiResponse != null && movieApiResponse != null) {
-                    tvShowCastCrewResult = movieApiResponse;
-                    tvShowCastCrewApiResponseMutableLiveData.setValue(tvShowCastCrewResult);
+                    tvShowCastCrewApiResponseMutableLiveData.setValue(movieApiResponse);
                 }
             }
 
@@ -347,6 +298,5 @@ public class MoviesDetailsRepository {
     }
 
     // Tv Shows Region End Region
-
 
 }

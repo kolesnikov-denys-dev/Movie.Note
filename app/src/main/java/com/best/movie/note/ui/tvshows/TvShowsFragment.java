@@ -1,7 +1,6 @@
 package com.best.movie.note.ui.tvshows;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -23,6 +23,7 @@ import com.best.movie.note.adapters.CommonContentAdapter;
 import com.best.movie.note.databinding.FragmentTvShowsBinding;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
+import com.best.movie.note.ui.common.details.movie.MovieDetailsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,10 @@ import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
 import static com.best.movie.note.utils.Constants.CARD_TYPE_VERTICAL;
 import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
+import static com.best.movie.note.utils.Constants.KEY_CONTENT_ID;
+import static com.best.movie.note.utils.Constants.KEY_CONTENT_TYPE;
+import static com.best.movie.note.utils.Constants.KEY_ORIGINAL_NAME;
+import static com.best.movie.note.utils.Constants.KEY_WHAT_OPEN;
 import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 
 public class TvShowsFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener {
@@ -67,11 +72,19 @@ public class TvShowsFragment extends Fragment implements CommonContentAdapter.On
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        moviesViewModel = new ViewModelProvider
-                .AndroidViewModelFactory(getActivity().getApplication())
-                .create(TvShowsViewModel.class);
 
         navController = Navigation.findNavController(view);
+
+//        moviesViewModel = new ViewModelProvider
+//                .AndroidViewModelFactory(getActivity().getApplication())
+//                .create(TvShowsViewModel.class);
+
+
+                NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.mobile_navigation);
+        moviesViewModel = new ViewModelProvider(backStackEntry).get(TvShowsViewModel.class);
+
+
+
         binding.setButtonHandler(new TvShowsFragment.MoviesFragmentButtonsHandler());
 
         getGenres();
@@ -182,13 +195,10 @@ public class TvShowsFragment extends Fragment implements CommonContentAdapter.On
 
     @Override
     public void onMovieClick(int tvShowId, String originalName, int contentType) {
-        Log.i("check", "tvShowId:" + tvShowId);
-
-
         Bundle bundle = new Bundle();
-        bundle.putInt("content_id", tvShowId);
-        bundle.putInt("content_type", contentType);
-        bundle.putString("original_name", originalName);
+        bundle.putInt(KEY_CONTENT_ID, tvShowId);
+        bundle.putInt(KEY_CONTENT_TYPE, contentType);
+        bundle.putString(KEY_ORIGINAL_NAME, originalName);
         navController.navigate(R.id.action_navigation_tv_shows_to_mainMovieFragment, bundle);
     }
 
@@ -197,27 +207,27 @@ public class TvShowsFragment extends Fragment implements CommonContentAdapter.On
         Bundle bundle = new Bundle();
 
         public void popularSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.popular));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.popular));
             navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }
 
         public void nowPlayingSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.playing_in_theathres));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.playing_in_theathres));
             navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }
 
         public void trendingSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.trending));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.trending));
             navController.navigate(R.id.navigation_movies_list, bundle);
         }
 
         public void topRatedSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.top_rated));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.top_rated));
             navController.navigate(R.id.navigation_movies_list, bundle);
         }
 
         public void upComingSeeAll(View view) {
-            bundle.putString("what_open", getString(R.string.upcoming));
+            bundle.putString(KEY_WHAT_OPEN, getString(R.string.upcoming));
             navController.navigate(R.id.navigation_movies_list, bundle);
         }
     }
