@@ -34,57 +34,73 @@ import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;
 
-public class MoviesDetailsRepository extends Application {
-
-    private Application application;
+public class MoviesDetailsRepository {
 
     @Inject
     ApiService apiService;
-
     private CompositeDisposable compositeDisposable;
 
-    public MoviesDetailsRepository(Application application) {
-        this.application = application;
+    public MoviesDetailsRepository() {
         compositeDisposable = new CompositeDisposable();
         getAppComponent().injectMoviesDetailsRepository(this);
     }
 
     // Movies Region
     private ArrayList<GenreResult> genreResults;
-    private final MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
     private MovieDetailsApiResponse movieDetailsResult;
-    private final MutableLiveData<MovieDetailsApiResponse> movieDetailsApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<MovieDetailsApiResponse> movieDetailsApiResponseMutableLiveData = new MutableLiveData<>();
     private VideosApiResponse videosResult;
-    private final MutableLiveData<VideosApiResponse> movieVideosApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<VideosApiResponse> movieVideosApiResponseMutableLiveData = new MutableLiveData<>();
     private ArrayList<MovieResult> recommendationsResult;
-    private final MutableLiveData<List<MovieResult>> recommendationsApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> recommendationsApiResponseMutableLiveData = new MutableLiveData<>();
     private ArrayList<MovieResult> similarResult;
-    private final MutableLiveData<List<MovieResult>> similarApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> similarApiResponseMutableLiveData = new MutableLiveData<>();
     private CastCrewApiResponse castCrewResult;
-    private final MutableLiveData<CastCrewApiResponse> castCrewApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<CastCrewApiResponse> castCrewApiResponseMutableLiveData = new MutableLiveData<>();
     // End Region Movies
 
     // Tv Shows Region
     private ArrayList<GenreResult> tvShowGenreResults;
-    private final MutableLiveData<List<GenreResult>> tvShowGenresMutableLiveData = new MutableLiveData<>();
-
-    // here
+    private MutableLiveData<List<GenreResult>> tvShowGenresMutableLiveData;
     private TvShowsApiResponse tvShowDetailsResult;
-    private final MutableLiveData<TvShowsApiResponse> tvShowDetailsApiResponseMutableLiveData = new MutableLiveData<>();
-
-
+    private MutableLiveData<TvShowsApiResponse> tvShowDetailsApiResponseMutableLiveData;
     private VideosApiResponse tvShowVideosResult;
-    private final MutableLiveData<VideosApiResponse> tvShowVideosApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<VideosApiResponse> tvShowVideosApiResponseMutableLiveData;
     private ArrayList<MovieResult> tvShowRecommendationsResult;
-    private final MutableLiveData<List<MovieResult>> tvShowRecommendationsApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> tvShowRecommendationsApiResponseMutableLiveData;
     private ArrayList<MovieResult> tvShowSimilarResult;
-    private final MutableLiveData<List<MovieResult>> tvShowSimilarApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> tvShowSimilarApiResponseMutableLiveData;
     private CastCrewApiResponse tvShowCastCrewResult;
-    private final MutableLiveData<CastCrewApiResponse> tvShowCastCrewApiResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<CastCrewApiResponse> tvShowCastCrewApiResponseMutableLiveData;
     // End Region
 
+    public MutableLiveData<List<GenreResult>> getGenresMutableLiveData() {
+        return genresMutableLiveData;
+    }
+
+    public MutableLiveData<MovieDetailsApiResponse> getMovieDetailMutableLiveData() {
+        return movieDetailsApiResponseMutableLiveData;
+    }
+
+    public MutableLiveData<VideosApiResponse> getMovieVideosLiveData() {
+        return movieVideosApiResponseMutableLiveData;
+    }
+
+    public MutableLiveData<List<MovieResult>> getTvShowSimilarLiveData() {
+        return similarApiResponseMutableLiveData;
+    }
+
+    public MutableLiveData<List<MovieResult>> getRecommendationsLiveData() {
+        return recommendationsApiResponseMutableLiveData;
+    }
+
+    public MutableLiveData<CastCrewApiResponse> getStvShowCastCrewLiveData() {
+        return castCrewApiResponseMutableLiveData;
+    }
+
     // Movies Region
-    public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
+    public MutableLiveData<List<GenreResult>> updateGenresMoviesMutableLiveData() {
         Disposable disposableSimpleData = apiService.getGenresMovies(API_KEY, QUERY_LANGUAGE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -105,7 +121,8 @@ public class MoviesDetailsRepository extends Application {
         compositeDisposable.add(disposableSimpleData);
         return genresMutableLiveData;
     }
-    public MutableLiveData<MovieDetailsApiResponse> getMovieDetailLiveData(int movieId, String language) {
+
+    public MutableLiveData<MovieDetailsApiResponse> updateMovieDetailLiveData(int movieId, String language) {
         Call<MovieDetailsApiResponse> call = apiService.getMovieDetailsById(movieId, API_KEY, language);
         call.enqueue(new Callback<MovieDetailsApiResponse>() {
             @Override
@@ -124,7 +141,8 @@ public class MoviesDetailsRepository extends Application {
         });
         return movieDetailsApiResponseMutableLiveData;
     }
-    public MutableLiveData<VideosApiResponse> getMovieVideosLiveData(int movieId, String language) {
+
+    public MutableLiveData<VideosApiResponse> updateMovieVideosLiveData(int movieId, String language) {
         Call<VideosApiResponse> call = apiService.getMovieVideosById(movieId, API_KEY, language);
         call.enqueue(new Callback<VideosApiResponse>() {
             @Override
@@ -143,7 +161,8 @@ public class MoviesDetailsRepository extends Application {
         });
         return movieVideosApiResponseMutableLiveData;
     }
-    public MutableLiveData<List<MovieResult>> getRecommendationsLiveData(int movieId, String language) {
+
+    public MutableLiveData<List<MovieResult>> updateRecommendationsLiveData(int movieId, String language) {
         Call<MoviesApiResponse> call = apiService.getRecommendationsById(movieId, API_KEY, language);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
@@ -162,7 +181,8 @@ public class MoviesDetailsRepository extends Application {
         });
         return recommendationsApiResponseMutableLiveData;
     }
-    public MutableLiveData<List<MovieResult>> getSimilarLiveData(int movieId, String language) {
+
+    public MutableLiveData<List<MovieResult>> updateSimilarLiveData(int movieId, String language) {
         Call<MoviesApiResponse> call = apiService.getSimilarById(movieId, API_KEY, language);
         call.enqueue(new Callback<MoviesApiResponse>() {
             @Override
@@ -181,7 +201,8 @@ public class MoviesDetailsRepository extends Application {
         });
         return similarApiResponseMutableLiveData;
     }
-    public MutableLiveData<CastCrewApiResponse> getCreditsLiveData(int movieId, String language) {
+
+    public MutableLiveData<CastCrewApiResponse> updateCreditsLiveData(int movieId, String language) {
         Call<CastCrewApiResponse> call = apiService.getCreditsById(movieId, API_KEY, language);
         call.enqueue(new Callback<CastCrewApiResponse>() {
             @Override
@@ -224,6 +245,7 @@ public class MoviesDetailsRepository extends Application {
         compositeDisposable.add(disposableSimpleData);
         return tvShowGenresMutableLiveData;
     }
+
     public MutableLiveData<TvShowsApiResponse> getTvShowsDetailLiveData(int movieId, String language) {
         Call<TvShowsApiResponse> call = apiService.getTvShowsDetailsById(movieId, API_KEY, language);
         call.enqueue(new Callback<TvShowsApiResponse>() {
@@ -243,6 +265,7 @@ public class MoviesDetailsRepository extends Application {
         });
         return tvShowDetailsApiResponseMutableLiveData;
     }
+
     public MutableLiveData<VideosApiResponse> getTvShowsVideosLiveData(int movieId, String language) {
         Call<VideosApiResponse> call = apiService.getTvShowsVideosById(movieId, API_KEY, language);
         call.enqueue(new Callback<VideosApiResponse>() {
@@ -262,6 +285,7 @@ public class MoviesDetailsRepository extends Application {
         });
         return tvShowVideosApiResponseMutableLiveData;
     }
+
     public MutableLiveData<List<MovieResult>> getTvShowsRecommendationsLiveData(int movieId, String language) {
         Call<MoviesApiResponse> call = apiService.getTvShowsRecommendationsById(movieId, API_KEY, language);
         call.enqueue(new Callback<MoviesApiResponse>() {
@@ -281,6 +305,7 @@ public class MoviesDetailsRepository extends Application {
         });
         return tvShowRecommendationsApiResponseMutableLiveData;
     }
+
     public MutableLiveData<List<MovieResult>> getTvShowsSimilarLiveData(int movieId, String language) {
         Call<MoviesApiResponse> call = apiService.getTvShowsSimilarById(movieId, API_KEY, language);
         call.enqueue(new Callback<MoviesApiResponse>() {
@@ -300,6 +325,7 @@ public class MoviesDetailsRepository extends Application {
         });
         return tvShowSimilarApiResponseMutableLiveData;
     }
+
     public MutableLiveData<CastCrewApiResponse> getTvShowsCreditsLiveData(int movieId, String language) {
         Call<CastCrewApiResponse> call = apiService.getTvShowsCreditsById(movieId, API_KEY, language);
         call.enqueue(new Callback<CastCrewApiResponse>() {

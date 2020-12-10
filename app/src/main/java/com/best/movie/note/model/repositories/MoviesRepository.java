@@ -32,25 +32,18 @@ public class MoviesRepository {
     @Inject
     ApiService apiService;
     private CompositeDisposable compositeDisposable;
+    private MutableLiveData<Throwable> errors = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> popularMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> playingNowMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> trendingMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> topRatedMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieResult>> upcomingMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<GenreResult>> genresMutableLiveData = new MutableLiveData<>();
 
     public MoviesRepository() {
         compositeDisposable = new CompositeDisposable();
         getAppComponent().injectMoviesRepository(this);
     }
-
-    private MutableLiveData<Throwable> errors = new MutableLiveData<>();
-    private ArrayList<MovieResult> movieResults;
-    private MutableLiveData<List<MovieResult>> popularMutableLiveData;
-    private ArrayList<MovieResult> nowPlayingResults;
-    private MutableLiveData<List<MovieResult>> playingNowMutableLiveData;
-    private ArrayList<MovieResult> trendingResults;
-    private MutableLiveData<List<MovieResult>> trendingMutableLiveData;
-    private ArrayList<MovieResult> topRatedResults;
-    private MutableLiveData<List<MovieResult>> topRatedMutableLiveData;
-    private ArrayList<MovieResult> upcomingResults;
-    private MutableLiveData<List<MovieResult>> upcomingMutableLiveData;
-    private ArrayList<GenreResult> genreResults;
-    private MutableLiveData<List<GenreResult>> genresMutableLiveData;
 
     public LiveData<Throwable> getErrors() {
         return errors;
@@ -58,54 +51,6 @@ public class MoviesRepository {
 
     public void clearErrors() {
         errors.setValue(null);
-    }
-
-    public MutableLiveData<List<MovieResult>> getPopularMoviesMutableLiveData() {
-        if (popularMutableLiveData == null) {
-            popularMutableLiveData = new MutableLiveData<>();
-            updatePopularMoviesMutableLiveData();
-        }
-        return this.popularMutableLiveData;
-    }
-
-    public MutableLiveData<List<MovieResult>> getNowPlayingMoviesMutableLiveData() {
-        if (playingNowMutableLiveData == null) {
-            playingNowMutableLiveData = new MutableLiveData<>();
-            updateNowPlayingMoviesMutableLiveData();
-        }
-        return this.playingNowMutableLiveData;
-    }
-
-    public MutableLiveData<List<MovieResult>> getTrendingMoviesMutableLiveData() {
-        if (trendingMutableLiveData == null) {
-            trendingMutableLiveData = new MutableLiveData<>();
-            updateTrendingMoviesMutableLiveData();
-        }
-        return this.trendingMutableLiveData;
-    }
-
-    public MutableLiveData<List<MovieResult>> getTopRatedMoviesMutableLiveData() {
-        if (topRatedMutableLiveData == null) {
-            topRatedMutableLiveData = new MutableLiveData<>();
-            updateTopRatedMoviesMutableLiveData();
-        }
-        return this.topRatedMutableLiveData;
-    }
-
-    public MutableLiveData<List<MovieResult>> getUpcomingMoviesMutableLiveData() {
-        if (upcomingMutableLiveData == null) {
-            upcomingMutableLiveData = new MutableLiveData<>();
-            updateUpcomingMoviesMutableLiveData();
-        }
-        return this.upcomingMutableLiveData;
-    }
-
-    public MutableLiveData<List<GenreResult>> getGenresMoviesMutableLiveData() {
-        if (genresMutableLiveData == null) {
-            genresMutableLiveData = new MutableLiveData<>();
-            updateGenresMoviesMutableLiveData();
-        }
-        return this.genresMutableLiveData;
     }
 
     public MutableLiveData<List<MovieResult>> updatePopularMoviesMutableLiveData() {
@@ -116,8 +61,7 @@ public class MoviesRepository {
                     @Override
                     public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
-                            movieResults = (ArrayList<MovieResult>) moviesApiResponse.getResults();
-                            popularMutableLiveData.setValue(movieResults);
+                            popularMutableLiveData.setValue((ArrayList<MovieResult>) moviesApiResponse.getResults());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -139,8 +83,7 @@ public class MoviesRepository {
                     @Override
                     public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
-                            nowPlayingResults = (ArrayList<MovieResult>) moviesApiResponse.getResults();
-                            playingNowMutableLiveData.setValue(nowPlayingResults);
+                            playingNowMutableLiveData.setValue((ArrayList<MovieResult>) moviesApiResponse.getResults());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -162,8 +105,7 @@ public class MoviesRepository {
                     @Override
                     public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
-                            trendingResults = (ArrayList<MovieResult>) moviesApiResponse.getResults();
-                            trendingMutableLiveData.setValue(trendingResults);
+                            trendingMutableLiveData.setValue((ArrayList<MovieResult>) moviesApiResponse.getResults());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -185,8 +127,7 @@ public class MoviesRepository {
                     @Override
                     public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
-                            topRatedResults = (ArrayList<MovieResult>) moviesApiResponse.getResults();
-                            topRatedMutableLiveData.setValue(topRatedResults);
+                            topRatedMutableLiveData.setValue((ArrayList<MovieResult>) moviesApiResponse.getResults());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -209,8 +150,7 @@ public class MoviesRepository {
                     @Override
                     public void accept(MoviesApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getResults() != null) {
-                            upcomingResults = (ArrayList<MovieResult>) moviesApiResponse.getResults();
-                            upcomingMutableLiveData.setValue(upcomingResults);
+                            upcomingMutableLiveData.setValue((ArrayList<MovieResult>) moviesApiResponse.getResults());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -232,8 +172,7 @@ public class MoviesRepository {
                     @Override
                     public void accept(GenresMovieApiResponse moviesApiResponse) throws Exception {
                         if (moviesApiResponse != null && moviesApiResponse.getGenres() != null) {
-                            genreResults = (ArrayList<GenreResult>) moviesApiResponse.getGenres();
-                            genresMutableLiveData.setValue(genreResults);
+                            genresMutableLiveData.setValue((ArrayList<GenreResult>) moviesApiResponse.getGenres());
                         }
                     }
                 }, new Consumer<Throwable>() {

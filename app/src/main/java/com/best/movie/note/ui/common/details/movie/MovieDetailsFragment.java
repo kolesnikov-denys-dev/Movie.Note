@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,7 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.Season;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
+import com.best.movie.note.ui.movies.MoviesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +93,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_fragment, container, false);
         binding.setButtonHandler(new MovieDetailsFragmentButtonsHandler());
+        binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 
@@ -98,11 +101,9 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        movieDetailsViewModel = new ViewModelProvider
-                .AndroidViewModelFactory(getActivity().getApplication())
-                .create(MovieDetailsViewModel.class);
-
         navController = Navigation.findNavController(view);
+        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.mobile_navigation);
+        movieDetailsViewModel = new ViewModelProvider(backStackEntry).get(MovieDetailsViewModel.class);
 
         if (getArguments() != null) {
             contentId = getArguments().getInt("content_id");
@@ -137,7 +138,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
 
     // Movies Region
     private void getMovieGenres() {
-        movieDetailsViewModel.getGenresMoviesData().observe(getActivity(),
+        movieDetailsViewModel.updateGenresMoviesData().observe(getActivity(),
                 new Observer<List<GenreResult>>() {
                     @Override
                     public void onChanged(List<GenreResult> data) {
@@ -147,7 +148,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieDetail(int movieId, String language) {
-        movieDetailsViewModel.getMovieDetails(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateMovieDetails(movieId, language).observe(getActivity(),
                 new Observer<MovieDetailsApiResponse>() {
                     @Override
                     public void onChanged(MovieDetailsApiResponse data) {
@@ -158,7 +159,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieVideos(int movieId, String language) {
-        movieDetailsViewModel.getMovieVideos(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateMovieVideos(movieId, language).observe(getActivity(),
                 new Observer<VideosApiResponse>() {
                     @Override
                     public void onChanged(VideosApiResponse data) {
@@ -168,7 +169,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieCredits(int movieId, String language) {
-        movieDetailsViewModel.getCredits(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateCredits(movieId, language).observe(getActivity(),
                 new Observer<CastCrewApiResponse>() {
                     @Override
                     public void onChanged(CastCrewApiResponse data) {
@@ -184,7 +185,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieRecommendations(int movieId, String language) {
-        movieDetailsViewModel.getRecommendations(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateRecommendations(movieId, language).observe(getActivity(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
@@ -200,7 +201,7 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
     }
 
     public void getMovieSimilar(int movieId, String language) {
-        movieDetailsViewModel.getSimilar(movieId, language).observe(getActivity(),
+        movieDetailsViewModel.updateSimilar(movieId, language).observe(getActivity(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {

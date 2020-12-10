@@ -1,55 +1,82 @@
 package com.best.movie.note.ui.common.details.movie;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.best.movie.note.model.repositories.MoviesDetailsRepository;
-import com.best.movie.note.model.response.movies.genres.GenreResult;
-import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
 import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
+import com.best.movie.note.model.response.movies.genres.GenreResult;
+import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 
 import java.util.List;
 
-public class MovieDetailsViewModel extends AndroidViewModel {
+public class MovieDetailsViewModel extends ViewModel {
 
     private final MoviesDetailsRepository repository;
 
-    public MovieDetailsViewModel(@NonNull Application application) {
-        super(application);
-        repository = new MoviesDetailsRepository(application);
+    public MovieDetailsViewModel() {
+        repository = new MoviesDetailsRepository();
     }
 
     // Movie Region
-    public LiveData<MovieDetailsApiResponse> getMovieDetails(int movieId, String language) {
-        return repository.getMovieDetailLiveData(movieId, language);
-    }
-
-    public LiveData<VideosApiResponse> getMovieVideos(int movieId, String language) {
-        return repository.getMovieVideosLiveData(movieId, language);
-    }
 
     public LiveData<List<GenreResult>> getGenresMoviesData() {
-        return repository.getGenresMoviesMutableLiveData();
+        return repository.getGenresMutableLiveData();
     }
 
-    public LiveData<List<MovieResult>> getRecommendations(int movieId, String language) {
-        return repository.getRecommendationsLiveData(movieId, language);
+
+    public LiveData<MovieDetailsApiResponse> getMovieDetails() {
+        return repository.getMovieDetailMutableLiveData();
     }
 
-    public LiveData<List<MovieResult>> getSimilar(int movieId, String language) {
-        return repository.getSimilarLiveData(movieId, language);
+    public LiveData<VideosApiResponse> getMovieVideos() {
+        return repository.getMovieVideosLiveData();
     }
 
-    public LiveData<CastCrewApiResponse> getCredits(int movieId, String language) {
-        return repository.getCreditsLiveData(movieId, language);
+
+    public LiveData<List<MovieResult>> getRecommendations() {
+        return repository.getRecommendationsLiveData();
+    }
+
+    public LiveData<List<MovieResult>> getSimilar() {
+        return repository.getTvShowSimilarLiveData();
+    }
+
+    public LiveData<CastCrewApiResponse> getCredits() {
+        return repository.getStvShowCastCrewLiveData();
     }
     // End Region Movie
+
+
+    // Movie Region Update
+    public LiveData<MovieDetailsApiResponse> updateMovieDetails(int movieId, String language) {
+        return repository.updateMovieDetailLiveData(movieId, language);
+    }
+
+    public LiveData<VideosApiResponse> updateMovieVideos(int movieId, String language) {
+        return repository.updateMovieVideosLiveData(movieId, language);
+    }
+
+    public LiveData<List<GenreResult>> updateGenresMoviesData() {
+        return repository.updateGenresMoviesMutableLiveData();
+    }
+
+    public LiveData<List<MovieResult>> updateRecommendations(int movieId, String language) {
+        return repository.updateRecommendationsLiveData(movieId, language);
+    }
+
+    public LiveData<List<MovieResult>> updateSimilar(int movieId, String language) {
+        return repository.updateSimilarLiveData(movieId, language);
+    }
+
+    public LiveData<CastCrewApiResponse> updateCredits(int movieId, String language) {
+        return repository.updateCreditsLiveData(movieId, language);
+    }
+    // End Region Movie
+
 
     // Tv Shows Region
     public LiveData<TvShowsApiResponse> getTvShowsDetails(int movieId, String language) {

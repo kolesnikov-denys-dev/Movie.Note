@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -41,16 +42,12 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
     private FragmentMoviesBinding binding;
     private NavController navController;
 
-    private ArrayList<MovieResult> movieResults;
     private RecyclerView popularMoviesRecyclerView;
     private CommonContentAdapter commonContentAdapter;
-    private ArrayList<MovieResult> playingNowResults;
     private RecyclerView nowPlayingMoviesRecyclerView;
     private CommonContentAdapter nowPlayingCommonContentAdapter;
-    private ArrayList<MovieResult> trendingResults;
     private RecyclerView trendingRecyclerView;
     private CommonContentAdapter trendingCommonContentAdapter;
-    private ArrayList<MovieResult> topRatedResults;
     private RecyclerView topRatedRecyclerView;
     private CommonContentAdapter topRatedCommonContentAdapter;
     private ArrayList<MovieResult> upcomingResults;
@@ -60,7 +57,6 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
         binding.setLifecycleOwner(this);
         return binding.getRoot();
@@ -70,35 +66,11 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        moviesViewModel = new ViewModelProvider
-//                .AndroidViewModelFactory(getActivity().getApplication())
-//                .create(MoviesViewModel.class);
-
         navController = Navigation.findNavController(view);
-        ViewModelProvider viewModelProvider = new ViewModelProvider(navController.getViewModelStoreOwner(R.id.mobile_navigation));
-        moviesViewModel = viewModelProvider.get(MoviesViewModel.class);
-
+        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.mobile_navigation);
+        moviesViewModel = new ViewModelProvider(backStackEntry).get(MoviesViewModel.class);
         binding.setButtonHandler(new MoviesFragment.MoviesFragmentButtonsHandler());
 
-        observeErrors();
-        observeGenres();
-        observePopularMovies();
-        observeNowPlayingMovies();
-        observeTrendingMovies();
-        observeTopRatedMovies();
-        observeUpcomingMovies();
-    }
-
-    public void updateData() {
-        moviesViewModel.updateGenresMoviesData();
-        moviesViewModel.updatePopularMoviesData();
-        moviesViewModel.updateNowPlayingMoviesData();
-        moviesViewModel.updateTrendingMoviesData();
-        moviesViewModel.updateTopRatedMoviesData();
-        moviesViewModel.updateUpcomingMoviesData();
-    }
-
-    private void observeErrors() {
         moviesViewModel.getErrors().observe(getActivity(), new Observer<Throwable>() {
             @Override
             public void onChanged(Throwable throwable) {
@@ -108,64 +80,48 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
                 }
             }
         });
-    }
 
-    private void observeGenres() {
         moviesViewModel.getGenresMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<GenreResult>>() {
                     @Override
                     public void onChanged(List<GenreResult> data) {
-                        Log.i("check","STEP 1");
+                        Log.i("check", "STEP 1");
                         genresResults = (ArrayList<GenreResult>) data;
                     }
                 });
-    }
 
-    public void observePopularMovies() {
         moviesViewModel.getPopularMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
-                        movieResults = (ArrayList<MovieResult>) data;
-                        fillPopularRecyclerView();
+                        fillPopularRecyclerView((ArrayList<MovieResult>) data);
                     }
                 });
-    }
 
-    public void observeNowPlayingMovies() {
         moviesViewModel.getNowPlayingMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
-                        playingNowResults = (ArrayList<MovieResult>) data;
-                        fillPlayingNowRecyclerView();
+                        fillPlayingNowRecyclerView((ArrayList<MovieResult>) data);
                     }
                 });
-    }
 
-    public void observeTrendingMovies() {
         moviesViewModel.getTrendingMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
-                        trendingResults = (ArrayList<MovieResult>) data;
-                        fillTrendingRecyclerView();
+                        fillTrendingRecyclerView((ArrayList<MovieResult>) data);
                     }
                 });
-    }
 
-    public void observeTopRatedMovies() {
         moviesViewModel.getTopRatedMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
                     public void onChanged(List<MovieResult> data) {
-                        topRatedResults = (ArrayList<MovieResult>) data;
-                        fillTopRatedRecyclerView();
+                        fillTopRatedRecyclerView((ArrayList<MovieResult>) data);
                     }
                 });
-    }
 
-    public void observeUpcomingMovies() {
         moviesViewModel.getUpcomingMoviesData().observe(getViewLifecycleOwner(),
                 new Observer<List<MovieResult>>() {
                     @Override
@@ -176,7 +132,8 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
                 });
     }
 
-    private void fillPopularRecyclerView() {
+
+    private void fillPopularRecyclerView(ArrayList<MovieResult> movieResults) {
         popularMoviesRecyclerView = binding.popularRecyclerView;
         commonContentAdapter = new CommonContentAdapter(
                 movieResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
@@ -188,7 +145,7 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
         commonContentAdapter.notifyDataSetChanged();
     }
 
-    private void fillPlayingNowRecyclerView() {
+    private void fillPlayingNowRecyclerView(ArrayList<MovieResult> playingNowResults) {
         nowPlayingMoviesRecyclerView = binding.playingInTheatresRecyclerView;
         nowPlayingCommonContentAdapter = new CommonContentAdapter(
                 playingNowResults, CARD_TYPE_HORIZONTAL, genresResults, CONTENT_TYPE_MOVIE);
@@ -200,7 +157,7 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
         nowPlayingCommonContentAdapter.notifyDataSetChanged();
     }
 
-    private void fillTrendingRecyclerView() {
+    private void fillTrendingRecyclerView(ArrayList<MovieResult> trendingResults) {
         trendingRecyclerView = binding.trendingRecyclerView;
         trendingCommonContentAdapter = new CommonContentAdapter(
                 trendingResults, CARD_TYPE_VERTICAL, genresResults, CONTENT_TYPE_MOVIE);
@@ -212,7 +169,7 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
         trendingCommonContentAdapter.notifyDataSetChanged();
     }
 
-    private void fillTopRatedRecyclerView() {
+    private void fillTopRatedRecyclerView(ArrayList<MovieResult> topRatedResults) {
         topRatedRecyclerView = binding.topRatedRecyclerView;
         topRatedCommonContentAdapter = new CommonContentAdapter(
                 topRatedResults, CARD_TYPE_HORIZONTAL_SMALL, genresResults, CONTENT_TYPE_MOVIE);
@@ -252,9 +209,9 @@ public class MoviesFragment extends Fragment implements CommonContentAdapter.OnM
         Bundle bundle = new Bundle();
 
         public void popularSeeAll(View view) {
-            updateData();
-//            bundle.putString("what_open", getString(R.string.popular));
-//            navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
+//            updateData();
+            bundle.putString("what_open", getString(R.string.popular));
+            navController.navigate(R.id.action_navigation_movies_to_navigation_movies_list, bundle);
         }
 
         public void nowPlayingSeeAll(View view) {
