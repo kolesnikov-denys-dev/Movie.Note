@@ -37,8 +37,8 @@ import static com.best.movie.note.utils.Constants.ERROR_INTERNET;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_ID;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_TYPE;
 import static com.best.movie.note.utils.Constants.KEY_ORIGINAL_NAME;
-import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 import static com.best.movie.note.utils.Constants.KEY_WHAT_OPEN;
+import static com.best.movie.note.utils.Constants.SPAN_COUNT_HORIZONTAL_SMALL;
 
 public class MoviesFragment extends Fragment implements CommonContentAdapter.OnMovieClickListener {
 

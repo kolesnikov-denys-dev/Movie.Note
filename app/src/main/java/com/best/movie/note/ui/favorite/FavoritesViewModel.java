@@ -1,4 +1,4 @@
-package com.best.movie.note.ui.celebrities;
+package com.best.movie.note.ui.favorite;
 
 import android.app.Application;
 
@@ -11,10 +11,10 @@ import com.best.movie.note.model.repositories.CelebritiesRepository;
 import com.best.movie.note.model.response.tvshows.persons.popular.PopularPersonApiResponse;
 import com.best.movie.note.model.response.tvshows.persons.trending.TrendingPersonApiResponse;
 
-public class CelebritiesViewModel extends AndroidViewModel {
+public class FavoritesViewModel extends AndroidViewModel {
     private final CelebritiesRepository repository;
 
-    public CelebritiesViewModel(@NonNull Application application) {
+    public FavoritesViewModel(@NonNull Application application) {
         super(application);
         repository = new CelebritiesRepository(application);
     }
