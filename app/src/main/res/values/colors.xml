@@ -14,4 +14,6 @@
     <color name="special_subtitle_gray">#8E8E93</color>
     <color name="special_placeholder">#212121</color>
     <color name="night_menu_color">#1C1C1E</color>
+    <color name="red_button_color">#E91E63</color>
+    <color name="devider_lines_color">#464648</color>
 </resources>

@@ -47,9 +47,13 @@
         />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.best.movie.note.ui.tmdb.ProfileFragment"
+        android:name="com.best.movie.note.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_movies_list"
         android:name="com.best.movie.note.ui.common.list.movies.MoviesListFragment"
@@ -98,4 +102,12 @@
         android:id="@+id/seasonDetailsFragment"
         android:name="com.best.movie.note.ui.common.details.season.SeasonDetailsFragment"
         android:label="SeasonDetailsFragment" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.best.movie.note.ui.signup.SignInFragment"
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 </navigation>

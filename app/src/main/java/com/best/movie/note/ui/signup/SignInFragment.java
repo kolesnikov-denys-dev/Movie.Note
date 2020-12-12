@@ -1,20 +1,27 @@
-package com.best.movie.note.ui.tmdb;
+package com.best.movie.note.ui.signup;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.FragmentProfileBinding;
+import com.best.movie.note.databinding.SignInFragmentBinding;
 import com.best.movie.note.model.User;
+import com.best.movie.note.ui.profile.ProfileViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,10 +30,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ProfileFragment extends Fragment {
+public class SignInFragment extends Fragment {
 
+    private NavController navController;
     private ProfileViewModel notesViewModel;
-    private FragmentProfileBinding binding;
+    private SignInFragmentBinding binding;
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference usersDatabaseReferences;
@@ -34,8 +42,8 @@ public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
-        binding.setButtonHandler(new ProfileFragmentButtonsHandler());
+        binding = DataBindingUtil.inflate(inflater, R.layout.sign_in_fragment, container, false);
+        binding.setButtonHandler(new SignUpFragmentButtonsHandler());
         return binding.getRoot();
     }
 
@@ -43,6 +51,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        navController = Navigation.findNavController(view);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         usersDatabaseReferences = database.getReference().child("users");
@@ -69,6 +78,10 @@ public class ProfileFragment extends Fragment {
                                     Log.d("check", "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
 //
+
+                                    navController.navigate(R.id.action_signInFragment_to_navigation_profile);
+
+
 //                                    Intent intent = new Intent(SignInActivity.this, UserListActivity.class);
 ////                                    intent.putExtra("user_name",nameEditText.getText().toString().trim());
 //                                    startActivity(intent);
@@ -138,7 +151,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    public class ProfileFragmentButtonsHandler {
+    public class SignUpFragmentButtonsHandler {
 
         Bundle bundle = new Bundle();
 
@@ -162,10 +175,7 @@ public class ProfileFragment extends Fragment {
             }
         }
 
-//        public void upComingSeeAll(View view) {
-//            bundle.putString("what_open", getString(R.string.upcoming));
-//            navController.navigate(R.id.navigation_movies_list, bundle);
-//        }
+
     }
 
 }

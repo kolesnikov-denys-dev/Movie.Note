@@ -1,20 +1,20 @@
 package com.best.movie.note.ui.splash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActionBar;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.best.movie.note.MainActivity;
 import com.best.movie.note.R;
 
 public class SplashActivity extends AppCompatActivity {
+
+    private SplashActivityViewModel viewModel;
+    private boolean stopFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,20 @@ public class SplashActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        viewModel = new ViewModelProvider(this).get(SplashActivityViewModel.class);
+
+        viewModel.getIsLock().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean lock) {
+                if (!lock) {
+                    startActivity();
+                    viewModel.setLock(true);
+                }
+            }
+        });
+    }
+
+    public void startActivity() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -35,7 +49,21 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
-        }, 2000);
+        }, 0);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopFlag = true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (stopFlag) {
+            startActivity();
+        }
     }
 
 }
