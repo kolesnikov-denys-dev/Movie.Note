@@ -49,4 +49,12 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+
+
+
+    <style name="Theme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    </style>
+
+
 </resources>
