@@ -1,27 +1,27 @@
 package com.best.movie.note.ui.signup;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.FragmentProfileBinding;
 import com.best.movie.note.databinding.SignInFragmentBinding;
 import com.best.movie.note.model.User;
 import com.best.movie.note.ui.profile.ProfileViewModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignInFragment extends Fragment {
 
+
     private NavController navController;
     private ProfileViewModel notesViewModel;
     private SignInFragmentBinding binding;
@@ -39,6 +40,9 @@ public class SignInFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference usersDatabaseReferences;
     private boolean loginModeActive;
+
+    private GoogleSignInClient mGoogleSignInClient;
+    private final static int RC_SIGN_IN = 12345;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +59,23 @@ public class SignInFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         usersDatabaseReferences = database.getReference().child("users");
+    }
+
+
+    public void createRequest(){
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
 
@@ -103,12 +124,7 @@ public class SignInFragment extends Fragment {
                                     Log.d("check", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     createUser(user);
-
-//                                    Intent intent = new Intent(SignInActivity.this, UserListActivity.class);
-////                                    intent.putExtra("user_name",nameEditText.getText().toString().trim());
-//                                    startActivity(intent);
-//                                    finish();
-                                    //   updateUI(user);
+                                    navController.navigate(R.id.action_signInFragment_to_navigation_profile);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("check", "createUserWithEmail:failure", task.getException());
@@ -160,8 +176,6 @@ public class SignInFragment extends Fragment {
                 binding.repeatPasswordEditText.setVisibility(View.VISIBLE);
             }
         }
-
-
     }
 
 }

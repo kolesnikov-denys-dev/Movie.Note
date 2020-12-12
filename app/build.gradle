@@ -72,6 +72,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage'
+    // Play  Services
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
     // Material
     implementation 'com.google.android.material:material:1.2.1'
 

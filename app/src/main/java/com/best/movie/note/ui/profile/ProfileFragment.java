@@ -34,7 +34,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference usersDatabaseReferences;
-    private boolean loginModeActive;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +46,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         navController = Navigation.findNavController(view);
 
         mAuth = FirebaseAuth.getInstance();
@@ -56,87 +54,13 @@ public class ProfileFragment extends Fragment {
 //
         if (mAuth.getCurrentUser() != null) {
             binding.logInTextView.setText("Logout");
+            binding.topTextView.setText(mAuth.getCurrentUser().getEmail());
+        } else {
+            binding.logInTextView.setText("Sign in");
+            binding.topTextView.setText("Log In to your profile to have access to MOVINOTES on all your devices");
         }
     }
 
-    //
-//
-//    private void loginSignUpUser(String email, String password) {
-//        if (loginModeActive) {
-//            if (binding.passwordEditText.getText().toString().trim().length() < 7) {
-//                Toast.makeText(getContext(), "Passwords must be at least 7 characters", Toast.LENGTH_SHORT).show();
-//            } else if (binding.emailEditText.getText().toString().trim().equals("")) {
-//                Toast.makeText(getContext(), "Please input your email", Toast.LENGTH_SHORT).show();
-//            } else {
-//                mAuth.signInWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                if (task.isSuccessful()) {
-//                                    // Sign in success, update UI with the signed-in user's information
-//                                    Log.d("check", "signInWithEmail:success");
-//                                    FirebaseUser user = mAuth.getCurrentUser();
-////
-////                                    Intent intent = new Intent(SignInActivity.this, UserListActivity.class);
-//////                                    intent.putExtra("user_name",nameEditText.getText().toString().trim());
-////                                    startActivity(intent);
-////                                    finish();
-//
-////                                updateUI(user);
-//                                } else {
-//                                    // If sign in fails, display a message to the user.
-//                                    Log.w("check", "signInWithEmail:failure", task.getException());
-//                                    Toast.makeText(getActivity(), "Authentication failed.",
-//                                            Toast.LENGTH_SHORT).show();
-////                                updateUI(null);
-//                                }
-//                            }
-//                        });
-//            }
-//        } else {
-//            if (!binding.passwordEditText.getText().toString().trim().equals(binding.repeatPasswordEditText.getText().toString().trim())) {
-//                Toast.makeText(getContext(), "Passwords don't match", Toast.LENGTH_SHORT).show();
-//            } else if (binding.passwordEditText.getText().toString().trim().length() < 7) {
-//                Toast.makeText(getContext(), "Passwords must be at least 7 characters", Toast.LENGTH_SHORT).show();
-//            } else if (binding.emailEditText.getText().toString().trim().equals("")) {
-//                Toast.makeText(getContext(), "Please input your email", Toast.LENGTH_SHORT).show();
-//            } else {
-//                mAuth.createUserWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                if (task.isSuccessful()) {
-//                                    // Sign in success, update UI with the signed-in user's information
-//                                    Log.d("check", "createUserWithEmail:success");
-//                                    FirebaseUser user = mAuth.getCurrentUser();
-//                                    createUser(user);
-//
-////                                    Intent intent = new Intent(SignInActivity.this, UserListActivity.class);
-//////                                    intent.putExtra("user_name",nameEditText.getText().toString().trim());
-////                                    startActivity(intent);
-////                                    finish();
-//                                    //   updateUI(user);
-//                                } else {
-//                                    // If sign in fails, display a message to the user.
-//                                    Log.w("check", "createUserWithEmail:failure", task.getException());
-//                                    Toast.makeText(getActivity(), "Authentication failed.",
-//                                            Toast.LENGTH_SHORT).show();
-//                                    // updateUI(null);
-//                                }
-//                            }
-//                        });
-//            }
-//        }
-//    }
-//
-//    private void createUser(FirebaseUser firebaseUser) {
-//        User user = new User();
-//        user.setId(firebaseUser.getUid());
-//        user.setEmail(firebaseUser.getEmail());
-//        user.setName(binding.nameEditText.getText().toString().trim());
-//        usersDatabaseReferences.push().setValue(user);
-//    }
-//
 //    @Override
 //    public void onStart() {
 //        super.onStart();
@@ -144,18 +68,13 @@ public class ProfileFragment extends Fragment {
 //        FirebaseUser currentUser = mAuth.getCurrentUser();
 ////        updateUI(currentUser);
 //    }
-//
-//
-    public class ProfileFragmentButtonsHandler {
 
+    public class ProfileFragmentButtonsHandler {
         Bundle bundle = new Bundle();
 
-//        public void loginSignUp(View view) {
-//            loginSignUpUser(binding.emailEditText.getText().toString(), binding.passwordEditText.getText().toString());
-//        }
-
-
         public void logInButton(View view) {
+            FirebaseAuth.getInstance().signOut();
+            binding.logInTextView.setText("Sign in");
 //            bundle.putString("what_open", getString(R.string.upcoming));
             navController.navigate(R.id.action_navigation_profile_to_signInFragment);
         }
