@@ -55,15 +55,11 @@ public class SignInFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         usersDatabaseReferences = database.getReference().child("users");
-
-        if (mAuth.getCurrentUser() != null) {
-            binding.loginSignUpButton.setText("Logout");
-        }
     }
 
 
     private void loginSignUpUser(String email, String password) {
-        if (loginModeActive) {
+        if (!loginModeActive) {
             if (binding.passwordEditText.getText().toString().trim().length() < 7) {
                 Toast.makeText(getContext(), "Passwords must be at least 7 characters", Toast.LENGTH_SHORT).show();
             } else if (binding.emailEditText.getText().toString().trim().equals("")) {
@@ -77,17 +73,9 @@ public class SignInFragment extends Fragment {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("check", "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-//
 
                                     navController.navigate(R.id.action_signInFragment_to_navigation_profile);
 
-
-//                                    Intent intent = new Intent(SignInActivity.this, UserListActivity.class);
-////                                    intent.putExtra("user_name",nameEditText.getText().toString().trim());
-//                                    startActivity(intent);
-//                                    finish();
-
-//                                updateUI(user);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("check", "signInWithEmail:failure", task.getException());
@@ -150,9 +138,7 @@ public class SignInFragment extends Fragment {
 //        updateUI(currentUser);
     }
 
-
     public class SignUpFragmentButtonsHandler {
-
         Bundle bundle = new Bundle();
 
         public void loginSignUp(View view) {
@@ -162,16 +148,16 @@ public class SignInFragment extends Fragment {
         public void toggleLoginMode(View view) {
             if (loginModeActive) {
                 loginModeActive = false;
-                binding.nameEditText.setVisibility(View.VISIBLE);
-                binding.loginSignUpButton.setText("Sign Up");
-                binding.toggleLoginSignUpextView.setText("Or, log in");
-                binding.repeatPasswordEditText.setVisibility(View.VISIBLE);
+                binding.nameEditText.setVisibility(View.GONE);
+                binding.loginSignUpButton.setText("Sign IN");
+                binding.toggleLoginSignUpextView.setText("SIGN UP");
+                binding.repeatPasswordEditText.setVisibility(View.GONE);
             } else {
                 loginModeActive = true;
-                binding.nameEditText.setVisibility(View.GONE);
-                binding.loginSignUpButton.setText("Log In");
-                binding.toggleLoginSignUpextView.setText("Or, sign up");
-                binding.repeatPasswordEditText.setVisibility(View.GONE);
+                binding.nameEditText.setVisibility(View.VISIBLE);
+                binding.loginSignUpButton.setText("SIGN UP");
+                binding.toggleLoginSignUpextView.setText("SIGN IN");
+                binding.repeatPasswordEditText.setVisibility(View.VISIBLE);
             }
         }
 
