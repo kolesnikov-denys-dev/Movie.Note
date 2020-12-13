@@ -39,7 +39,11 @@
         android:label="@string/title_notes"
         tools:layout="@layout/fragment_notes"
 
-        />
+        >
+        <action
+            android:id="@+id/action_navigation_notes_to_mainMovieFragment"
+            app:destination="@id/mainMovieFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.best.movie.note.ui.profile.ProfileFragment"

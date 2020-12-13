@@ -1,6 +1,12 @@
 package com.best.movie.note.ui.note;
 
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import static com.best.movie.note.utils.Utils.setImage;
+
 public class Note {
 
     private String idUser;
@@ -11,6 +17,10 @@ public class Note {
     private String genres;
     private String posterPath;
 
+    @BindingAdapter({"posterPath"})
+    public static void loadImage(ImageView imageView, String imageUrl) {
+        setImage(imageView, imageUrl);
+    }
 
     public Note(String idUser, long idContent, long contentType, String note, String name, String genres, String posterPath) {
         this.idUser = idUser;
