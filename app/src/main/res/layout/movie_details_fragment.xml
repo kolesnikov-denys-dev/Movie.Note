@@ -289,6 +289,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/trailerImageView" />
 
             <ImageView
+                android:id="@+id/addNoteImageView"
+                android:layout_width="22dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/ic__add_note"
+                android:onClick="@{buttonHandler.myNote}"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
+                app:layout_constraintStart_toEndOf="@+id/guidelineVertical"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <TextView
+                android:id="@+id/addNoteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:onClick="@{buttonHandler.myNote}"
+                android:text="My note"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
+                app:layout_constraintStart_toEndOf="@+id/guidelineVertical"
+                app:layout_constraintTop_toBottomOf="@+id/trailerImageView" />
+
+            <ImageView
                 android:id="@+id/shareImageView"
                 android:layout_width="22dp"
                 android:layout_height="wrap_content"

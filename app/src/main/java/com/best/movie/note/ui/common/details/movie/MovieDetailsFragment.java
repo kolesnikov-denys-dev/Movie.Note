@@ -458,6 +458,15 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
         }
+
+
+        public void myNote(View view) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(KEY_CONTENT_ID, contentId);
+            bundle.putInt(KEY_CONTENT_TYPE, contentType);
+            bundle.putString(KEY_ORIGINAL_NAME, getArguments().getString(KEY_ORIGINAL_NAME));
+            navController.navigate(R.id.action_mainMovieFragment_to_noteFragment, bundle);
+        }
     }
 
 }

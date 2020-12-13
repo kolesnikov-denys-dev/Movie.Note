@@ -67,7 +67,6 @@ public class ProfileFragment extends Fragment {
 ////        updateUI(currentUser);
 //    }
 
-
     public void logOutGoogle() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

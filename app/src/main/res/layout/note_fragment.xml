@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="buttonHandler"
+            type="com.best.movie.note.ui.note.NoteFragment.NoteFragmentButtonsHandler" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/special_black"
+        tools:context=".ui.note.NoteFragment">
+
+        <EditText
+            android:id="@+id/noteEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/devider_lines_color"
+            android:gravity="top"
+            android:hint="Write your note here...."
+            android:textColorHint="@color/special_subtitle_gray" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginSignUpButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{buttonHandler.saveNoteH}"
+            android:text="Save"
+            app:cornerRadius="8dp"
+            app:strokeColor="@color/special_yellow" />
+
+    </RelativeLayout>
+</layout>
