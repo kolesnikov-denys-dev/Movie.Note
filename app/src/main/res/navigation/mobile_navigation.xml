@@ -34,11 +34,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_celebrities"
-        android:name="com.best.movie.note.ui.favorite.FavoritesFragment"
-        android:label="@string/title_celebrities"
-        tools:layout="@layout/fragment_favorites" />
-    <fragment
         android:id="@+id/navigation_notes"
         android:name="com.best.movie.note.ui.notes.NotesFragment"
         android:label="@string/title_notes"

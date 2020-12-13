@@ -49,7 +49,10 @@ import static com.best.movie.note.utils.Constants.KEY_CAST_ID;
 import static com.best.movie.note.utils.Constants.KEY_CAST_NAME;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_ID;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_TYPE;
+import static com.best.movie.note.utils.Constants.KEY_GENRES;
+import static com.best.movie.note.utils.Constants.KEY_NAME;
 import static com.best.movie.note.utils.Constants.KEY_ORIGINAL_NAME;
+import static com.best.movie.note.utils.Constants.KEY_POSTER_PATH;
 import static com.best.movie.note.utils.Constants.KEY_SEASON_NUMBER;
 import static com.best.movie.note.utils.Constants.KEY_TV_ID;
 import static com.best.movie.note.utils.Constants.LANGUAGE_EN;
@@ -449,22 +452,26 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
         public void share(View view) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-
             String message = "Create notes your movies with the application \"Movie Note\":";
             message += "\n\n" + movieDetailsResult.getOriginalTitle();
             message += "\n\n " + movieDetailsResult.getOverview();
-
             sendIntent.putExtra(Intent.EXTRA_TEXT, message);
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
         }
-
 
         public void myNote(View view) {
             Bundle bundle = new Bundle();
             bundle.putInt(KEY_CONTENT_ID, contentId);
             bundle.putInt(KEY_CONTENT_TYPE, contentType);
             bundle.putString(KEY_ORIGINAL_NAME, getArguments().getString(KEY_ORIGINAL_NAME));
+            bundle.putString(KEY_GENRES, binding.genresTextView.getText().toString());
+            if (contentType == CONTENT_TYPE_MOVIE) {
+                bundle.putString(KEY_POSTER_PATH, movieDetailsResult.getPosterPath());
+            } else if (contentType == CONTENT_TYPE_TV_SHOW) {
+                bundle.putString(KEY_POSTER_PATH, tvShowsDetailsResult.getPosterPath());
+            }
+
             navController.navigate(R.id.action_mainMovieFragment_to_noteFragment, bundle);
         }
     }

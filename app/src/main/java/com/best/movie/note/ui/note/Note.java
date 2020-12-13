@@ -7,12 +7,19 @@ public class Note {
     private long idContent;
     private long contentType;
     private String note;
+    private String name;
+    private String genres;
+    private String posterPath;
 
-    public Note(String idUser, long idContent, long contentType, String note) {
+
+    public Note(String idUser, long idContent, long contentType, String note, String name, String genres, String posterPath) {
         this.idUser = idUser;
         this.idContent = idContent;
         this.contentType = contentType;
         this.note = note;
+        this.name = name;
+        this.genres = genres;
+        this.posterPath = posterPath;
     }
 
     public Note() {
@@ -50,13 +57,27 @@ public class Note {
         this.note = note;
     }
 
-    @Override
-    public String toString() {
-        return "Note{" +
-                "idUser='" + idUser + '\'' +
-                ", idContent=" + idContent +
-                ", contentType=" + contentType +
-                ", note='" + note + '\'' +
-                '}';
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 }

@@ -25,21 +25,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_MOVIE;
+import static com.best.movie.note.utils.Constants.CONTENT_TYPE_TV_SHOW;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_ID;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_TYPE;
+import static com.best.movie.note.utils.Constants.KEY_GENRES;
+import static com.best.movie.note.utils.Constants.KEY_NAME;
 import static com.best.movie.note.utils.Constants.KEY_ORIGINAL_NAME;
+import static com.best.movie.note.utils.Constants.KEY_POSTER_PATH;
 
 public class NoteFragment extends Fragment {
 
     private NoteViewModel mViewModel;
     private int contentId;
     private int contentType;
+    private String name;
+    private String genres;
+    private String posterPath;
     private NoteFragmentBinding binding;
     private FirebaseAuth mAuth;
     private DatabaseReference notesDatabaseReferences;
     private FirebaseDatabase database;
     private ChildEventListener notesChildEventListener;
-
     private Note currentNote;
     private String currentNoteId;
 
@@ -64,8 +71,10 @@ public class NoteFragment extends Fragment {
         if (getArguments() != null) {
             contentId = getArguments().getInt(KEY_CONTENT_ID);
             contentType = getArguments().getInt(KEY_CONTENT_TYPE);
-            String originalName = getArguments().getString(KEY_ORIGINAL_NAME);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(originalName);
+            name = getArguments().getString(KEY_ORIGINAL_NAME);
+            genres = getArguments().getString(KEY_GENRES);
+            posterPath = getArguments().getString(KEY_POSTER_PATH);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(name);
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -121,6 +130,9 @@ public class NoteFragment extends Fragment {
         Note note = new Note();
         note.setIdContent(contentId);
         note.setContentType(contentType);
+        note.setName(name);
+        note.setGenres(genres);
+        note.setPosterPath(posterPath);
         note.setIdUser(mAuth.getCurrentUser().getUid());
         note.setNote(binding.noteEditText.getText().toString());
 

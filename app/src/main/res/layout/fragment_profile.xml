@@ -105,11 +105,12 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/notesCountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/notesImageView"
                     android:layout_marginLeft="24dp"
-                    android:text="45 notes"
+                    android:text="0 notes"
                     android:textColor="@color/special_subtitle_gray" />
 
             </RelativeLayout>
@@ -142,11 +143,12 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/favoritesCountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/favoriteImageView"
                     android:layout_marginLeft="24dp"
-                    android:text="346 notes"
+                    android:text="0 notes"
                     android:textColor="@color/special_subtitle_gray" />
             </RelativeLayout>
 

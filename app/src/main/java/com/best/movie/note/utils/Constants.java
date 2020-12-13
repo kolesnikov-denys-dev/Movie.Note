@@ -41,6 +41,9 @@ public class Constants {
     public static final String KEY_CAST_NAME = "cast_name";
     public static final String KEY_TV_ID = "tv_id";
     public static final String KEY_SEASON_NUMBER = "season_number";
+    public static final String KEY_GENRES = "genres";
+    public static final String KEY_POSTER_PATH = "poster_path";
+    public static final String KEY_NAME = "name";
 
     public static final String ERROR_INTERNET = "Internet Error";
     public static final String ERROR_NOT_TRAILER = "Not trailer";

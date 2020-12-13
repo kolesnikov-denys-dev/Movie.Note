@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +15,16 @@ import androidx.navigation.Navigation;
 
 import com.best.movie.note.R;
 import com.best.movie.note.databinding.FragmentProfileBinding;
+import com.best.movie.note.ui.note.Note;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,9 +34,12 @@ public class ProfileFragment extends Fragment {
     private ProfileViewModel notesViewModel;
     private FragmentProfileBinding binding;
     private FirebaseAuth mAuth;
-    FirebaseDatabase database;
-    DatabaseReference usersDatabaseReferences;
+    private FirebaseDatabase database;
     private GoogleSignInClient mGoogleSignInClient;
+    private DatabaseReference usersDatabaseReferences;
+    private DatabaseReference notesDatabaseReferences;
+    private ChildEventListener notesChildEventListener;
+    private int notesCount = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,24 +56,18 @@ public class ProfileFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        notesDatabaseReferences = database.getReference().child("notes");
 //        usersDatabaseReferences = database.getReference().child("users");
-//
+
         if (mAuth.getCurrentUser() != null) {
             binding.logInTextView.setText("Logout");
             binding.topTextView.setText(mAuth.getCurrentUser().getEmail());
+            attachNotesDatabaseReferenceListener();
         } else {
             binding.logInTextView.setText("Sign in");
             binding.topTextView.setText("Log In to your profile to have access to MOVINOTES on all your devices");
         }
     }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-////        updateUI(currentUser);
-//    }
 
     public void logOutGoogle() {
         // Configure Google Sign In
@@ -85,6 +87,44 @@ public class ProfileFragment extends Fragment {
                     }
                 });
     }
+
+
+    private void attachNotesDatabaseReferenceListener() {
+        if (notesChildEventListener == null) {
+            notesChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Note note = snapshot.getValue(Note.class);
+                    if (note.getIdUser().equals(mAuth.getUid())) {
+                        notesCount++;
+                        binding.notesCountTextView.setText(notesCount + " notes");
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+            notesDatabaseReferences.addChildEventListener(notesChildEventListener);
+        }
+    }
+
 
     public class ProfileFragmentButtonsHandler {
         Bundle bundle = new Bundle();
