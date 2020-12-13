@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,8 +33,7 @@ import com.best.movie.note.model.response.movies.movie.MovieResult;
 import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
 import com.best.movie.note.model.response.tvshows.details.Season;
 import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
-import com.best.movie.note.ui.movies.MoviesFragment;
-import com.best.movie.note.ui.movies.MoviesViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +47,6 @@ import static com.best.movie.note.utils.Constants.KEY_CAST_NAME;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_ID;
 import static com.best.movie.note.utils.Constants.KEY_CONTENT_TYPE;
 import static com.best.movie.note.utils.Constants.KEY_GENRES;
-import static com.best.movie.note.utils.Constants.KEY_NAME;
 import static com.best.movie.note.utils.Constants.KEY_ORIGINAL_NAME;
 import static com.best.movie.note.utils.Constants.KEY_POSTER_PATH;
 import static com.best.movie.note.utils.Constants.KEY_SEASON_NUMBER;
@@ -113,6 +109,13 @@ public class MovieDetailsFragment extends Fragment implements CommonContentAdapt
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
+
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            binding.setAddNoteShow(true);
+        } else {
+            binding.setAddNoteShow(false);
+        }
 
         movieDetailsViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getActivity().getApplication())
