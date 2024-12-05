@@ -216,7 +216,6 @@ public interface ApiService {
             @Query(PARAMS_LANGUAGE) String language);
 
     // End Seasons Region
-
 }
 
 

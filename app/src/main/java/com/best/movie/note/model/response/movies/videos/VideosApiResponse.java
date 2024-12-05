@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class VideosApiResponse {
-
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -29,5 +28,4 @@ public class VideosApiResponse {
     public void setVideosResults(List<VideosResult> videosResults) {
         this.videosResults = videosResults;
     }
-
 }

@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Cast {
-
     @SerializedName("original_name")
     @Expose
     private String originalName;
@@ -183,5 +182,4 @@ public class Cast {
     public void setEpisodeCount(Integer episodeCount) {
         this.episodeCount = episodeCount;
     }
-
 }

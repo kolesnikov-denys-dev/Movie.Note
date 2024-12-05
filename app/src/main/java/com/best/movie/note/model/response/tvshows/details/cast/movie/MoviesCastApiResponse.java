@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class MoviesCastApiResponse {
-
     @SerializedName("cast")
     @Expose
     private List<Cast> cast = null;
@@ -40,5 +39,4 @@ public class MoviesCastApiResponse {
     public void setId(Integer id) {
         this.id = id;
     }
-
 }

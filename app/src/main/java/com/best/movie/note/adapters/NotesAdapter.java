@@ -9,14 +9,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.CastCircleItemBinding;
-import com.best.movie.note.databinding.NoteItemBinding;
-import com.best.movie.note.model.response.movies.cast.Cast;
-import com.best.movie.note.ui.note.Note;
+import com.best.movie.note.databinding.ItemNoteBinding;
+import com.best.movie.note.ui.fragments.note.Note;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
@@ -42,9 +39,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     @NonNull
     @Override
     public NotesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        NoteItemBinding noteItemBinding = DataBindingUtil
+        ItemNoteBinding noteItemBinding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.note_item, parent, false);
+                        R.layout.item_note, parent, false);
         return new NotesViewHolder(noteItemBinding);
     }
 
@@ -59,10 +56,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     }
 
     public class NotesViewHolder extends RecyclerView.ViewHolder {
+        private ItemNoteBinding binding;
 
-        private NoteItemBinding binding;
-
-        public NotesViewHolder(@NonNull NoteItemBinding view) {
+        public NotesViewHolder(@NonNull ItemNoteBinding view) {
             super(view.getRoot());
             this.binding = view;
             binding.cardViewFull.setOnClickListener(new View.OnClickListener() {
@@ -78,5 +74,4 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             });
         }
     }
-
 }

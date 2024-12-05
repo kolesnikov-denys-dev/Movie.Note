@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class KnownFor {
-
     @SerializedName("adult")
     @Expose
     private Boolean adult;
@@ -216,5 +215,4 @@ public class KnownFor {
     public void setOriginalName(String originalName) {
         this.originalName = originalName;
     }
-
 }

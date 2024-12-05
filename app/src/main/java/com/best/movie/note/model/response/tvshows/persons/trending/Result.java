@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Result {
-
     @SerializedName("adult")
     @Expose
     private Boolean adult;
@@ -106,5 +105,4 @@ public class Result {
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
     }
-
 }

@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class PopularPersonApiResponse {
-
     @SerializedName("page")
     @Expose
     private Integer page;
@@ -51,5 +50,4 @@ public class PopularPersonApiResponse {
     public void setTotalResults(Integer totalResults) {
         this.totalResults = totalResults;
     }
-
 }

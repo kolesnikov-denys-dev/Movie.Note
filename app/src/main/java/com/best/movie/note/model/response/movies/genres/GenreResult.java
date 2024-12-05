@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GenreResult {
-
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -27,5 +26,4 @@ public class GenreResult {
     public void setName(String name) {
         this.name = name;
     }
-
 }

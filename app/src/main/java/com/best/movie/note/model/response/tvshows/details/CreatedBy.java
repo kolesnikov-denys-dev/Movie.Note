@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CreatedBy {
-
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -60,5 +59,4 @@ public class CreatedBy {
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
     }
-
 }

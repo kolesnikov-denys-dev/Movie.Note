@@ -13,7 +13,6 @@ import java.util.List;
 import static com.best.movie.note.utils.Utils.setImage;
 
 public class MovieDetailsApiResponse {
-
     @SerializedName("adult")
     @Expose
     private Boolean adult;
@@ -363,5 +362,4 @@ public class MovieDetailsApiResponse {
     public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
-
 }

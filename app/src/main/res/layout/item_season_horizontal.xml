@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="episodeResult"
+            type="com.best.movie.note.model.response.tvshows.seasons.Episode" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fullConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:padding="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/movieCardView"
+            android:layout_width="110dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/posterImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/special_placeholder"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:posterPath="@{episodeResult.still_path}"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/seasonNameTextView"
+            style="@style/card_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{episodeResult.name}"
+            app:layout_constraintEnd_toStartOf="@+id/rating"
+            app:layout_constraintStart_toEndOf="@+id/movieCardView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1. The Undoing" />
+
+        <TextView
+            android:id="@+id/seasonDateTextView"
+            style="@style/card_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="12dp"
+            android:text="@{episodeResult.air_date}"
+            app:layout_constraintEnd_toStartOf="@+id/rating"
+            app:layout_constraintStart_toEndOf="@+id/movieCardView"
+            app:layout_constraintTop_toBottomOf="@+id/seasonNameTextView"
+            tools:text="25-October-2020" />
+
+        <TextView
+            android:id="@+id/seasonOverviewTextView"
+            style="@style/card_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="12dp"
+            android:text="@{episodeResult.overview}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/movieCardView"
+            app:layout_constraintTop_toBottomOf="@+id/seasonDateTextView"
+            tools:text="long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text " />
+
+        <RelativeLayout
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/shape_vote_radius"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/starImageView"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/ic_star_24px" />
+
+            <TextView
+                android:id="@+id/voteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="3dp"
+                android:layout_toRightOf="@+id/starImageView"
+                android:text="@{episodeResult.vote_average.toString()}"
+                android:textColor="@color/special_blue"
+                android:textSize="10sp"
+                tools:text="4.7" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,5 +1,7 @@
 package com.best.movie.note.model.response.tvshows.details;
 
+import static com.best.movie.note.utils.Utils.setImage;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,10 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import static com.best.movie.note.utils.Utils.setImage;
-
 public class TvShowsApiResponse {
-
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
@@ -427,5 +426,4 @@ public class TvShowsApiResponse {
     public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
-
 }

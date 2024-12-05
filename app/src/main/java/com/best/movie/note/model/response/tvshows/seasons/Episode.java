@@ -1,12 +1,12 @@
 package com.best.movie.note.model.response.tvshows.seasons;
 
+import static com.best.movie.note.utils.Utils.setImage;
+
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
 import java.util.List;
-
-import static com.best.movie.note.utils.Utils.setImage;
 
 public class Episode{
     public String air_date;
@@ -26,7 +26,6 @@ public class Episode{
     public static void loadImage(ImageView imageView, String imageUrl) {
         setImage(imageView, imageUrl);
     }
-
 
     public String getAir_date() {
         return air_date;

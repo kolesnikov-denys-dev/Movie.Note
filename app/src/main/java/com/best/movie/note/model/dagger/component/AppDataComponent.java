@@ -1,5 +1,6 @@
 package com.best.movie.note.model.dagger.component;
 
+import com.best.movie.note.model.dagger.module.DataModule;
 import com.best.movie.note.model.repositories.CelebritiesRepository;
 import com.best.movie.note.model.repositories.CelebrityDetailsRepository;
 import com.best.movie.note.model.repositories.MoviesDetailsRepository;
@@ -7,15 +8,12 @@ import com.best.movie.note.model.repositories.MoviesListRepository;
 import com.best.movie.note.model.repositories.MoviesRepository;
 import com.best.movie.note.model.repositories.SeasonsRepository;
 import com.best.movie.note.model.repositories.TvShowsRepository;
-import com.best.movie.note.model.dagger.module.DataModule;
-import com.best.movie.note.ui.common.list.movies.MoviesListViewModel;
-
+import com.best.movie.note.ui.fragments.movies.MoviesListViewModel;
 
 import dagger.Component;
 
 @Component(modules = {DataModule.class})
 public interface AppDataComponent {
-
     void injectMoviesDetailsRepository(MoviesDetailsRepository moviesDetailsRepository);
 
     void injectMoviesListRepository(MoviesListRepository moviesListRepository);
@@ -31,5 +29,4 @@ public interface AppDataComponent {
     void injectCelebritiesRepository(CelebritiesRepository celebritiesRepository);
 
     void injectSeasonsRepository(SeasonsRepository seasonsRepository);
-
 }

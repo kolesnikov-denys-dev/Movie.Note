@@ -9,7 +9,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Cast {
-
     @SerializedName("adult")
     @Expose
     private Boolean adult;
@@ -157,5 +156,4 @@ public class Cast {
     public void setOrder(Integer order) {
         this.order = order;
     }
-
 }

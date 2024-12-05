@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_movies"
-        android:name="com.best.movie.note.ui.movies.MoviesFragment"
+        android:name="com.best.movie.note.ui.fragments.movies.MoviesFragment"
         android:label="@string/title_movies"
         tools:layout="@layout/fragment_movies">
         <action
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_tv_shows"
-        android:name="com.best.movie.note.ui.tvshows.TvShowsFragment"
+        android:name="com.best.movie.note.ui.fragments.tvshows.TvShowsFragment"
         android:label="@string/title_tv_shows"
         tools:layout="@layout/fragment_tv_shows">
         <action
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/navigation_notes"
-        android:name="com.best.movie.note.ui.notes.NotesFragment"
+        android:name="com.best.movie.note.ui.fragments.notes.NotesFragment"
         android:label="@string/title_notes"
         tools:layout="@layout/fragment_notes"
 
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.best.movie.note.ui.profile.ProfileFragment"
+        android:name="com.best.movie.note.ui.fragments.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -55,9 +55,9 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_movies_list"
-        android:name="com.best.movie.note.ui.common.list.movies.MoviesListFragment"
+        android:name="com.best.movie.note.ui.fragments.movies.MoviesListFragment"
         android:label="@string/title_movies_list"
-        tools:layout="@layout/movies_list_fragment">
+        tools:layout="@layout/fragment_movies_list">
         <argument
             android:name="what_open"
             android:defaultValue="popular"
@@ -68,9 +68,9 @@
     </fragment>
     <fragment
         android:id="@+id/mainMovieFragment"
-        android:name="com.best.movie.note.ui.common.details.movie.MovieDetailsFragment"
+        android:name="com.best.movie.note.ui.fragments.details.movie.MovieDetailsFragment"
         android:label="main_movie_fragment"
-        tools:layout="@layout/movie_details_fragment">
+        tools:layout="@layout/fragment_movie_details">
         <action
             android:id="@+id/action_mainMovieFragment_self"
             app:destination="@id/mainMovieFragment" />
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/celebrityDetailsFragment"
-        android:name="com.best.movie.note.ui.common.details.cast.CelebrityDetailsFragment"
+        android:name="com.best.movie.note.ui.fragments.details.cast.CelebrityDetailsFragment"
         android:label="CelebrityDetailsFragment">
         <argument
             android:name="cast_id"
@@ -102,11 +102,11 @@
     </fragment>
     <fragment
         android:id="@+id/seasonDetailsFragment"
-        android:name="com.best.movie.note.ui.common.details.season.SeasonDetailsFragment"
+        android:name="com.best.movie.note.ui.fragments.details.season.SeasonDetailsFragment"
         android:label="SeasonDetailsFragment" />
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.best.movie.note.ui.signup.SignInFragment"
+        android:name="com.best.movie.note.ui.fragments.signup.SignInFragment"
         android:label="SignInFragment">
         <action
             android:id="@+id/action_signInFragment_to_navigation_profile"
@@ -117,7 +117,7 @@
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.best.movie.note.ui.note.NoteFragment"
+        android:name="com.best.movie.note.ui.fragments.note.NoteFragment"
         android:label="note_fragment"
-        tools:layout="@layout/note_fragment" />
+        tools:layout="@layout/fragment_note" />
 </navigation>

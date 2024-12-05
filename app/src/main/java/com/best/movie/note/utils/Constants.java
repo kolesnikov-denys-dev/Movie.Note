@@ -1,9 +1,7 @@
 package com.best.movie.note.utils;
 
 public class Constants {
-
     // Network Region
-
     public static final String BASE_URL = "https://api.themoviedb.org/3/";
     public static final String BASE_URL_IMAGE_500 = "https://image.tmdb.org/t/p/w500/";
 
@@ -48,5 +46,4 @@ public class Constants {
     public static final String ERROR_INTERNET = "Internet Error";
     public static final String ERROR_NOT_TRAILER = "Not trailer";
     public static final String LANGUAGE_EN = "en-US";
-
 }

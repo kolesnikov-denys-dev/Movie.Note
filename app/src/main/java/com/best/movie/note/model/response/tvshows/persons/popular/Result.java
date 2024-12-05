@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Result {
-
     @SerializedName("gender")
     @Expose
     private Integer gender;
@@ -95,5 +94,4 @@ public class Result {
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
     }
-
 }

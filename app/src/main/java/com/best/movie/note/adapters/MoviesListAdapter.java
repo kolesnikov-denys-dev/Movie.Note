@@ -9,11 +9,10 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.MovieHorizontalListItemBinding;
+import com.best.movie.note.databinding.ItemMovieHorizontalListBinding;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 
 public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListAdapter.ResultViewHolder> {
-
     public MoviesListAdapter() {
         super(MovieResult.CALLBACK);
     }
@@ -21,9 +20,9 @@ public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListA
     @NonNull
     @Override
     public ResultViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        MovieHorizontalListItemBinding movieHorizontalListItemBinding = DataBindingUtil
+        ItemMovieHorizontalListBinding movieHorizontalListItemBinding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.movie_horizontal_list_item, parent, false);
+                        R.layout.item_movie_horizontal_list, parent, false);
         return new ResultViewHolder(movieHorizontalListItemBinding);
     }
 
@@ -34,10 +33,9 @@ public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListA
     }
 
     public class ResultViewHolder extends RecyclerView.ViewHolder {
+        private ItemMovieHorizontalListBinding movieHorizontalListItemBinding;
 
-        private MovieHorizontalListItemBinding movieHorizontalListItemBinding;
-
-        public ResultViewHolder(@NonNull MovieHorizontalListItemBinding movieHorizontalListItemBinding) {
+        public ResultViewHolder(@NonNull ItemMovieHorizontalListBinding movieHorizontalListItemBinding) {
             super(movieHorizontalListItemBinding.getRoot());
             this.movieHorizontalListItemBinding = movieHorizontalListItemBinding;
 
@@ -55,5 +53,4 @@ public class MoviesListAdapter extends PagedListAdapter<MovieResult, MoviesListA
 //            });
         }
     }
-
 }

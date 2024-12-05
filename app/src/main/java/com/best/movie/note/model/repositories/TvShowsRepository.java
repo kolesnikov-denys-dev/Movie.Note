@@ -1,5 +1,10 @@
 package com.best.movie.note.model.repositories;
 
+import static com.best.movie.note.MovieApplication.getAppComponent;
+import static com.best.movie.note.utils.Constants.API_KEY;
+import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
+import static com.best.movie.note.utils.Constants.TAG_ERROR;
+
 import android.app.Application;
 import android.util.Log;
 
@@ -22,14 +27,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.best.movie.note.Global.getAppComponent;
-import static com.best.movie.note.utils.Constants.API_KEY;
-import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
-import static com.best.movie.note.utils.Constants.TAG_ERROR;
-
 public class TvShowsRepository {
     private Application application;
-
     @Inject
     ApiService apiService;
     private CompositeDisposable compositeDisposable;
@@ -55,7 +54,6 @@ public class TvShowsRepository {
     // Genres Movies
     private ArrayList<GenreResult> genreTvShowsResults;
     private final MutableLiveData<List<GenreResult>> genresTvShowsMutableLiveData = new MutableLiveData<>();
-
 
     public MutableLiveData<List<MovieResult>> getAiringTodayMutableLiveData() {
         Disposable disposableSimpleData = apiService.getAiringTodayTvShows(API_KEY, QUERY_LANGUAGE, "1")
@@ -172,5 +170,4 @@ public class TvShowsRepository {
             compositeDisposable.dispose();
         }
     }
-
 }

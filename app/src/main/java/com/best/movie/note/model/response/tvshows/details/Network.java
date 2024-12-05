@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Network {
-
     @SerializedName("name")
     @Expose
     private String name;
@@ -49,5 +48,4 @@ public class Network {
     public void setOriginCountry(String originCountry) {
         this.originCountry = originCountry;
     }
-
 }

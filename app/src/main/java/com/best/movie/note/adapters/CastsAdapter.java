@@ -9,14 +9,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.CastCircleItemBinding;
+import com.best.movie.note.databinding.ItemCastCircleBinding;
 import com.best.movie.note.model.response.movies.cast.Cast;
 
 import java.util.List;
 
-
 public class CastsAdapter extends RecyclerView.Adapter<CastsAdapter.MoviesViewHolder> {
-
     private List<Cast> casts;
     private OnCastClickListener onCastClickListener;
 
@@ -35,9 +33,9 @@ public class CastsAdapter extends RecyclerView.Adapter<CastsAdapter.MoviesViewHo
     @NonNull
     @Override
     public MoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CastCircleItemBinding castCrewCircleItemBinding = DataBindingUtil
+        ItemCastCircleBinding castCrewCircleItemBinding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.cast_circle_item, parent, false);
+                        R.layout.item_cast_circle, parent, false);
         return new MoviesViewHolder(castCrewCircleItemBinding);
     }
 
@@ -53,9 +51,9 @@ public class CastsAdapter extends RecyclerView.Adapter<CastsAdapter.MoviesViewHo
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
 
-        private CastCircleItemBinding binding;
+        private ItemCastCircleBinding binding;
 
-        public MoviesViewHolder(@NonNull CastCircleItemBinding view) {
+        public MoviesViewHolder(@NonNull ItemCastCircleBinding view) {
             super(view.getRoot());
             this.binding = view;
             binding.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -69,5 +67,4 @@ public class CastsAdapter extends RecyclerView.Adapter<CastsAdapter.MoviesViewHo
             });
         }
     }
-
 }

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="castDetailsResult"
+            type="com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse" />
+
+        <variable
+            name="tvShowsList"
+            type="Boolean" />
+
+        <variable
+            name="showMoviesList"
+            type="Boolean" />
+
+
+        <variable
+            name="showDeathDay"
+            type="Boolean" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/special_black"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageView2"
+                android:layout_width="97dp"
+                android:layout_height="144dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/special_placeholder"
+                    android:scaleType="centerCrop"
+                    bind:profilePath="@{castDetailsResult.profilePath}"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{castDetailsResult.name}"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/imageView2"
+                tools:text="Anya Taylr-Joy" />
+
+            <TextView
+                android:id="@+id/knownForTitleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="known for:"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+                tools:listitem="@layout/item_genres_item" />
+
+            <TextView
+                android:id="@+id/knownForTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/special_subtitle_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/knownForTitleTextView"
+                app:layout_constraintTop_toTopOf="@+id/knownForTitleTextView"
+                bind:alsoKnownAs="@{castDetailsResult.alsoKnownAs}"
+                tools:listitem="@layout/item_genres_item"
+                tools:text="Acting" />
+
+            <TextView
+                android:id="@+id/birthPlaceTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="6dp"
+                android:text="Birthplace:"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/knownForTextView" />
+
+            <TextView
+                android:id="@+id/birthPlaceTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{castDetailsResult.placeOfBirth}"
+                android:textColor="@color/special_subtitle_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/birthPlaceTitleTextView"
+                app:layout_constraintTop_toTopOf="@+id/birthPlaceTitleTextView"
+                tools:text="Miami, Florida, USA" />
+
+            <TextView
+                android:id="@+id/dateOfBirthTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="6dp"
+                android:text="Date of Birth:"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/birthPlaceTitleTextView" />
+
+            <TextView
+                android:id="@+id/dateOfBirthTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="16dp"
+                android:text="@{castDetailsResult.birthday}"
+                android:textColor="@color/special_subtitle_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dateOfBirthTitleTextView"
+                app:layout_constraintTop_toTopOf="@+id/dateOfBirthTitleTextView"
+                tools:text="16 April 1996" />
+
+            <TextView
+                android:id="@+id/deathDayTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="6dp"
+                android:text="Death day:"
+                android:textColor="@color/white"
+
+                android:visibility="@{showDeathDay ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/dateOfBirthTitleTextView" />
+
+            <TextView
+                android:id="@+id/deathDayTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="16dp"
+                android:text="@{castDetailsResult.deathday}"
+                android:textColor="@color/special_subtitle_gray"
+                android:visibility="@{showDeathDay ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/deathDayTitleTextView"
+                app:layout_constraintTop_toTopOf="@+id/deathDayTitleTextView"
+                tools:text="16 April 2200" />
+
+            <TextView
+                android:id="@+id/biographyTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="25dp"
+                android:text="Biography"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/biographyTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="16dp"
+                android:text="@{castDetailsResult.biography}"
+                android:textColor="@color/special_subtitle_gray"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/biographyTitleTextView"
+                tools:text="long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text " />
+
+            <TextView
+                android:id="@+id/moviesTitleTextView"
+                style="@style/left_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Movies"
+                android:visibility="@{showMoviesList ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/moviesSeeAllButton" />
+
+            <ImageView
+                android:id="@+id/moviesSeeAllButton"
+                style="@style/yellow_arrow"
+                android:visibility="@{showMoviesList ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/biographyTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/moviesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="18dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="@{showMoviesList ? View.VISIBLE : View.GONE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/moviesTitleTextView"
+                tools:listitem="@layout/item_movie_vertical" />
+
+            <TextView
+                android:id="@+id/tvshowsTitleTextView"
+                style="@style/left_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tv Shows"
+                android:visibility="@{tvShowsList ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvshowsSeeAllButton" />
+
+            <ImageView
+                android:id="@+id/tvshowsSeeAllButton"
+                style="@style/yellow_arrow"
+                android:visibility="@{tvShowsList ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/moviesRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tvshowsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="18dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="@{tvShowsList ? View.VISIBLE : View.GONE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/tvshowsTitleTextView"
+                tools:layout_editor_absoluteX="0dp"
+                tools:listitem="@layout/item_movie_vertical" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

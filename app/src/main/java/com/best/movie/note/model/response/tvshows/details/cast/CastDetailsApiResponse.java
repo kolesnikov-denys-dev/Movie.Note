@@ -1,5 +1,7 @@
 package com.best.movie.note.model.response.tvshows.details.cast;
 
+import static com.best.movie.note.utils.Utils.setImage;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,10 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import static com.best.movie.note.utils.Utils.setImage;
-
 public class CastDetailsApiResponse {
-
     @SerializedName("adult")
     @Expose
     private Boolean adult;
@@ -186,5 +185,4 @@ public class CastDetailsApiResponse {
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
     }
-
 }

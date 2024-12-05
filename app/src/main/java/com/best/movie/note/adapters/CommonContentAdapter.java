@@ -1,5 +1,8 @@
 package com.best.movie.note.adapters;
 
+import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL;
+import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +12,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.MovieHorizontalItemBinding;
-import com.best.movie.note.databinding.MovieHorizontalSmallItemBinding;
-import com.best.movie.note.databinding.MovieVerticalItemBinding;
+import com.best.movie.note.databinding.ItemMovieHorizontalBinding;
+import com.best.movie.note.databinding.ItemMovieHorizontalSmallBinding;
+import com.best.movie.note.databinding.ItemMovieVerticalBinding;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.movie.MovieResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL;
-import static com.best.movie.note.utils.Constants.CARD_TYPE_HORIZONTAL_SMALL;
-
-
 public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdapter.MoviesViewHolder> {
-
     private ArrayList<MovieResult> movies;
     private ArrayList<GenreResult> genres;
     private ArrayList<String> subtitles;
@@ -55,19 +53,19 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
     public MoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (cardType) {
             case CARD_TYPE_HORIZONTAL:
-                MovieHorizontalItemBinding horizontalCard = DataBindingUtil
+                ItemMovieHorizontalBinding horizontalCard = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()),
-                                R.layout.movie_horizontal_item, parent, false);
+                                R.layout.item_movie_horizontal, parent, false);
                 return new MoviesViewHolder(horizontalCard);
             case CARD_TYPE_HORIZONTAL_SMALL:
-                MovieHorizontalSmallItemBinding smallHorizontalCard = DataBindingUtil
+                ItemMovieHorizontalSmallBinding smallHorizontalCard = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()),
-                                R.layout.movie_horizontal_small_item, parent, false);
+                                R.layout.item_movie_horizontal_small, parent, false);
                 return new MoviesViewHolder(smallHorizontalCard);
             default:
-                MovieVerticalItemBinding verticalCard = DataBindingUtil
+                ItemMovieVerticalBinding verticalCard = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()),
-                                R.layout.movie_vertical_item, parent, false);
+                                R.layout.item_movie_vertical, parent, false);
                 return new MoviesViewHolder(verticalCard);
         }
     }
@@ -98,11 +96,11 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
     }
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
-        private MovieVerticalItemBinding verticalCard;
-        private MovieHorizontalItemBinding horizontalCard;
-        private MovieHorizontalSmallItemBinding horizontalSmallCard;
+        private ItemMovieVerticalBinding verticalCard;
+        private ItemMovieHorizontalBinding horizontalCard;
+        private ItemMovieHorizontalSmallBinding horizontalSmallCard;
 
-        public MoviesViewHolder(@NonNull MovieVerticalItemBinding view) {
+        public MoviesViewHolder(@NonNull ItemMovieVerticalBinding view) {
             super(view.getRoot());
             this.verticalCard = view;
             if (view != null) {
@@ -123,7 +121,7 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
             }
         }
 
-        public MoviesViewHolder(@NonNull MovieHorizontalItemBinding view) {
+        public MoviesViewHolder(@NonNull ItemMovieHorizontalBinding view) {
             super(view.getRoot());
             this.horizontalCard = view;
             if (view != null) {
@@ -139,7 +137,7 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
             }
         }
 
-        public MoviesViewHolder(@NonNull MovieHorizontalSmallItemBinding view) {
+        public MoviesViewHolder(@NonNull ItemMovieHorizontalSmallBinding view) {
             super(view.getRoot());
             this.horizontalSmallCard = view;
             if (view != null) {
@@ -194,5 +192,4 @@ public class CommonContentAdapter extends RecyclerView.Adapter<CommonContentAdap
         }
         return genreStr;
     }
-
 }

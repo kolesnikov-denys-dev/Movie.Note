@@ -9,15 +9,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.notes.NotesFragment">
+        android:background="@color/special_black"
+        tools:context=".ui.fragments.notes.NotesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/note_item"/>
-
+            tools:listitem="@layout/item_note" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>

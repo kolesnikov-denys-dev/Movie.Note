@@ -2,7 +2,6 @@
     <string name="app_name">Movie note</string>
     <string name="title_movies">Movies</string>
     <string name="title_tv_shows">Tv Shows</string>
-    <string name="title_celebrities">Celebrities</string>
     <string name="title_profile">Profile</string>
     <string name="title_movies_list">Movies list</string>
     <string name="popular">Popular</string>
@@ -10,10 +9,7 @@
     <string name="trending">Trending</string>
     <string name="top_rated">Top Rated</string>
     <string name="upcoming">Upcoming</string>
-    <string name="see_all">See All</string>
     <string name="title_notes">Notes</string>
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_name_upper">MOVINOTES</string>
     <string name="log_in_top_text">Log In to your profile to have access to MOVINOTES on all your devices</string>
 </resources>

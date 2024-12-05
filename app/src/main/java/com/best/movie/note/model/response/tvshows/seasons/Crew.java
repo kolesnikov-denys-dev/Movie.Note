@@ -1,6 +1,6 @@
 package com.best.movie.note.model.response.tvshows.seasons;
 
-public class Crew{
+public class Crew {
     public boolean adult;
     public int id;
     public String name;

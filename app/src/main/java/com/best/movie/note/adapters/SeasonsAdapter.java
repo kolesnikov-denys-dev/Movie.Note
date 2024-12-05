@@ -9,15 +9,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.best.movie.note.R;
-import com.best.movie.note.databinding.SeasonVerticalItemBinding;
+import com.best.movie.note.databinding.ItemSeasonVerticalBinding;
 import com.best.movie.note.model.response.tvshows.details.Season;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.MoviesViewHolder> {
-
     private List<Season> list;
     private OnSeasonClickListener onSeasonClickListener;
 
@@ -37,9 +35,9 @@ public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.MoviesVi
     @NonNull
     @Override
     public MoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        SeasonVerticalItemBinding seasonVerticalItemBinding = DataBindingUtil
+        ItemSeasonVerticalBinding seasonVerticalItemBinding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.season_vertical_item, parent, false);
+                        R.layout.item_season_vertical, parent, false);
         return new MoviesViewHolder(seasonVerticalItemBinding);
     }
 
@@ -54,10 +52,9 @@ public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.MoviesVi
     }
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
+        private ItemSeasonVerticalBinding binding;
 
-        private SeasonVerticalItemBinding binding;
-
-        public MoviesViewHolder(@NonNull SeasonVerticalItemBinding view) {
+        public MoviesViewHolder(@NonNull ItemSeasonVerticalBinding view) {
             super(view.getRoot());
             this.binding = view;
             binding.fullConstraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -75,5 +72,4 @@ public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.MoviesVi
             });
         }
     }
-
 }

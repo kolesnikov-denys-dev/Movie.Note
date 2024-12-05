@@ -1,17 +1,16 @@
 package com.best.movie.note.model.repositories;
 
+import static com.best.movie.note.MovieApplication.getAppComponent;
+import static com.best.movie.note.utils.Constants.API_KEY;
+import static com.best.movie.note.utils.Constants.TAG_ERROR;
+
 import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.best.movie.note.model.response.movies.movie.MovieResult;
-import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
 import com.best.movie.note.model.response.tvshows.seasons.SeasonApiResponse;
 import com.best.movie.note.service.ApiService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,14 +20,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.best.movie.note.Global.getAppComponent;
-import static com.best.movie.note.utils.Constants.API_KEY;
-import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
-import static com.best.movie.note.utils.Constants.TAG_ERROR;
-
 public class SeasonsRepository {
     private Application application;
-
     @Inject
     ApiService apiService;
     private CompositeDisposable compositeDisposable;
@@ -70,5 +63,4 @@ public class SeasonsRepository {
             compositeDisposable.dispose();
         }
     }
-
 }

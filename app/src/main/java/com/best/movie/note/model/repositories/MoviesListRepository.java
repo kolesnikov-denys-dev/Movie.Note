@@ -1,5 +1,7 @@
 package com.best.movie.note.model.repositories;
 
+import static com.best.movie.note.MovieApplication.getAppComponent;
+
 import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
@@ -14,8 +16,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
-
-import static com.best.movie.note.Global.getAppComponent;
 
 public class MoviesListRepository {
     private Application application;
@@ -72,5 +72,4 @@ public class MoviesListRepository {
 //        compositeDisposable.add(disposableSimpleData);
 //        return genresMutableLiveData;
 //    }
-
 }

@@ -1,25 +1,22 @@
 package com.best.movie.note.model.response.movies.movie;
 
+import static com.best.movie.note.utils.Utils.setImage;
+
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import static com.best.movie.note.utils.Utils.setImage;
-
 public class MovieResult {
-
     @SerializedName("original_name")
     @Expose
     private String originalName;
-
 
     public String getOriginalName() {
         return originalName;
@@ -59,14 +56,17 @@ public class MovieResult {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
+
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView imageView, String imageUrl) {
         setImage(imageView, imageUrl);
     }
+
     @BindingAdapter({"backdropPath"})
     public static void loadIBackdropImage(ImageView imageView, String imageUrl) {
         setImage(imageView, imageUrl);
     }
+
     public String getBackdropPath() {
         return backdropPath;
     }
@@ -158,5 +158,4 @@ public class MovieResult {
             return true;
         }
     };
-
 }

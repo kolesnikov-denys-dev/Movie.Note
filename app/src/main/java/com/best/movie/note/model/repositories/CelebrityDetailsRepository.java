@@ -5,14 +5,8 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.best.movie.note.model.response.movies.cast.CastCrewApiResponse;
-import com.best.movie.note.model.response.movies.details.MovieDetailsApiResponse;
 import com.best.movie.note.model.response.movies.genres.GenreResult;
 import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
-import com.best.movie.note.model.response.movies.movie.MovieResult;
-import com.best.movie.note.model.response.movies.movie.MoviesApiResponse;
-import com.best.movie.note.model.response.movies.videos.VideosApiResponse;
-import com.best.movie.note.model.response.tvshows.details.TvShowsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
 import com.best.movie.note.model.response.tvshows.details.cast.tvshows.Cast;
@@ -29,11 +23,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import static com.best.movie.note.Global.getAppComponent;
+import static com.best.movie.note.MovieApplication.getAppComponent;
 import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;
@@ -196,6 +187,4 @@ public class CelebrityDetailsRepository extends Application {
         compositeDisposable.add(disposableSimpleData);
         return tvShowsGenresResultMutableLiveData;
     }
-
-
 }

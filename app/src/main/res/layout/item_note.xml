@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="noteResult"
+            type="com.best.movie.note.ui.fragments.note.Note" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewFull"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/special_black"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="12dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/movieCardView"
+                android:layout_width="66dp"
+                android:layout_height="96dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/posterImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/special_placeholder"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:posterPath="@{noteResult.posterPath}"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/movieNameTextView"
+                style="@style/card_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:text="@{noteResult.name}"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/arrowImageView"
+                app:layout_constraintStart_toEndOf="@+id/movieCardView"
+                app:layout_constraintTop_toTopOf="@+id/movieCardView"
+                tools:text="Iron Man" />
+
+            <TextView
+                android:id="@+id/genreTextView"
+                style="@style/card_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="12dp"
+                android:text="@{noteResult.genres}"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/arrowImageView"
+                app:layout_constraintStart_toEndOf="@+id/movieCardView"
+                app:layout_constraintTop_toBottomOf="@+id/movieNameTextView"
+                tools:text="Action, Thriller" />
+
+            <TextView
+                android:id="@+id/noteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@{noteResult.note}"
+                android:textColor="@color/special_subtitle_gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/movieCardView"
+                app:layout_constraintTop_toBottomOf="@+id/movieCardView"
+                tools:text="text text text text text text text text text text text text text text text text text text text text text text text text text " />
+
+            <ImageView
+                android:id="@+id/arrowImageView"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_dots_menu_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

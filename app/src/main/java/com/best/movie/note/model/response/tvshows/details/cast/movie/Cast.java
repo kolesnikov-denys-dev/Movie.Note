@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Cast {
-
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -194,5 +193,4 @@ public class Cast {
     public void setOrder(Integer order) {
         this.order = order;
     }
-
 }

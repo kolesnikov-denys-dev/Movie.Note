@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class NextEpisodeToAir {
-
     @SerializedName("air_date")
     @Expose
     private String airDate;
@@ -115,5 +114,4 @@ public class NextEpisodeToAir {
     public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
-
 }

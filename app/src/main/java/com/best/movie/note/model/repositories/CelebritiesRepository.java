@@ -5,18 +5,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.best.movie.note.model.response.movies.genres.GenreResult;
-import com.best.movie.note.model.response.movies.genres.GenresMovieApiResponse;
-import com.best.movie.note.model.response.tvshows.details.cast.CastDetailsApiResponse;
-import com.best.movie.note.model.response.tvshows.details.cast.movie.MoviesCastApiResponse;
-import com.best.movie.note.model.response.tvshows.details.cast.tvshows.Cast;
-import com.best.movie.note.model.response.tvshows.details.cast.tvshows.TvShowsCatApiResponse;
 import com.best.movie.note.model.response.tvshows.persons.popular.PopularPersonApiResponse;
 import com.best.movie.note.model.response.tvshows.persons.trending.TrendingPersonApiResponse;
 import com.best.movie.note.service.ApiService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,9 +17,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.best.movie.note.Global.getAppComponent;
+import static com.best.movie.note.MovieApplication.getAppComponent;
 import static com.best.movie.note.utils.Constants.API_KEY;
-import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 import static com.best.movie.note.utils.Constants.TAG_ERROR;
 
 public class CelebritiesRepository extends Application {
@@ -98,5 +88,4 @@ public class CelebritiesRepository extends Application {
         compositeDisposable.add(disposableSimpleData);
         return trendingPersonResultMutableLiveData;
     }
-
 }

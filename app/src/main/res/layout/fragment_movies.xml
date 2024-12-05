@@ -7,14 +7,14 @@
 
         <variable
             name="buttonHandler"
-            type="com.best.movie.note.ui.movies.MoviesFragment.MoviesFragmentButtonsHandler" />
+            type="com.best.movie.note.ui.fragments.movies.MoviesFragment.MoviesFragmentButtonsHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/special_black"
-        tools:context=".ui.movies.MoviesFragment">
+        tools:context=".ui.fragments.movies.MoviesFragment">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context=".ui.movies.MoviesFragment">
+                tools:context=".ui.fragments.movies.MoviesFragment">
 
                 <TextView
                     android:id="@+id/popularTextView"
@@ -58,7 +58,7 @@
                     android:padding="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/popularTextView"
-                    tools:listitem="@layout/movie_vertical_item" />
+                    tools:listitem="@layout/item_movie_vertical" />
 
                 <TextView
                     android:id="@+id/playingInTheatresTextView"
@@ -89,7 +89,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/playingInTheatresTextView"
                     tools:layout_editor_absoluteX="-16dp"
-                    tools:listitem="@layout/movie_horizontal_item" />
+                    tools:listitem="@layout/item_movie_horizontal" />
 
                 <TextView
                     android:id="@+id/trendingTextView"
@@ -119,7 +119,7 @@
                     android:padding="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/trendingTextView"
-                    tools:listitem="@layout/movie_vertical_item" />
+                    tools:listitem="@layout/item_movie_vertical" />
 
                 <TextView
                     android:id="@+id/topRatedTextView"
@@ -150,7 +150,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/topRatedTextView"
                     tools:layout_editor_absoluteY="811dp"
-                    tools:listitem="@layout/movie_horizontal_small_item" />
+                    tools:listitem="@layout/item_movie_horizontal_small" />
 
                 <TextView
                     android:id="@+id/upComingTextView"
@@ -182,7 +182,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/upComingTextView"
                     tools:layout_editor_absoluteY="915dp"
-                    tools:listitem="@layout/movie_vertical_item" />
+                    tools:listitem="@layout/item_movie_vertical" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

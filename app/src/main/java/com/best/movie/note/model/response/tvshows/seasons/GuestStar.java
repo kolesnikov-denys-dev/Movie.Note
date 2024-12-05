@@ -1,6 +1,6 @@
 package com.best.movie.note.model.response.tvshows.seasons;
 
-public class GuestStar{
+public class GuestStar {
     public int id;
     public String name;
     public String original_name;

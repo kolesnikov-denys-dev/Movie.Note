@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Season {
-
     @SerializedName("air_date")
     @Expose
     private String airDate;
@@ -82,5 +81,4 @@ public class Season {
     public void setSeasonNumber(Integer seasonNumber) {
         this.seasonNumber = seasonNumber;
     }
-
 }

@@ -20,15 +20,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.best.movie.note.Global.getAppComponent;
+import static com.best.movie.note.MovieApplication.getAppComponent;
 import static com.best.movie.note.utils.Constants.API_KEY;
 import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
 
 public class MoviesRepository {
-
     @Inject
     ApiService apiService;
-
     private CompositeDisposable compositeDisposable;
     private MutableLiveData<Throwable> errors = new MutableLiveData<>();
     private MutableLiveData<List<MovieResult>> popularMutableLiveData = new MutableLiveData<>();
@@ -183,5 +181,4 @@ public class MoviesRepository {
             compositeDisposable.dispose();
         }
     }
-
 }

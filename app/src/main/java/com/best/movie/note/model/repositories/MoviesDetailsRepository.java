@@ -1,5 +1,10 @@
 package com.best.movie.note.model.repositories;
 
+import static com.best.movie.note.MovieApplication.getAppComponent;
+import static com.best.movie.note.utils.Constants.API_KEY;
+import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
+import static com.best.movie.note.utils.Constants.TAG_ERROR;
+
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -28,13 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.best.movie.note.Global.getAppComponent;
-import static com.best.movie.note.utils.Constants.API_KEY;
-import static com.best.movie.note.utils.Constants.QUERY_LANGUAGE;
-import static com.best.movie.note.utils.Constants.TAG_ERROR;
-
 public class MoviesDetailsRepository {
-
     @Inject
     ApiService apiService;
     private CompositeDisposable compositeDisposable;
@@ -296,7 +295,4 @@ public class MoviesDetailsRepository {
         });
         return tvShowCastCrewApiResponseMutableLiveData;
     }
-
-    // Tv Shows Region End Region
-
 }
